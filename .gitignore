@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+
+# Data / DB
+backend/data/*.sql
+backend/data/*.db
+backend/data/*.db-journal
+backend/data/*.db-wal
+
+# Node / SvelteKit
+node_modules/
+frontend/.svelte-kit/
+frontend/build/
+frontend/.vite/
+
+# Env / editor
+.env
+.DS_Store
