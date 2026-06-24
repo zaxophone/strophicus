@@ -182,11 +182,11 @@ def _tokenize_notes(cleaned: str, clef, events: list[dict], group: int) -> None:
             i += 1
 
 
-def extract_events(gabc: str) -> list[dict]:
-    """Ordered note/bar events with Solesmes durations.
+def _raw_events(gabc: str) -> list[dict]:
+    """Tokenize gabc into per-glyph note/bar events (before fusion/expression).
 
-    Notes: {"type":"note","midi":N,"duration":mult,(optional)"stress":true}
-    Bars:  {"type":"bar","strength":S}  -> a breath pause in playback.
+    One note event per gabc pitch, so the note order is 1:1 with the note
+    glyphs Exsurge renders — which lets per-note scoring colour the notation.
     """
     groups = re.findall(r"\(([^)]*)\)", gabc or "")
     clef: tuple[str, int, int] = ("c", 7, 2)  # default c4
@@ -203,7 +203,17 @@ def extract_events(gabc: str) -> list[dict]:
             if bar in cleaned:
                 events.append({"type": "bar", "strength": strength})
                 break
+    return events
 
+
+def extract_events(gabc: str) -> list[dict]:
+    """Playback events: per-note Solesmes durations, fusion, and expression.
+
+    Notes: {"type":"note","midi":N,"duration":mult,"velocity":v,
+            (optional)"stress","fused"}
+    Bars:  {"type":"bar","strength":S}  -> a breath pause in playback.
+    """
+    events = _raw_events(gabc)
     _apply_fusion(events)
     _apply_dynamic_line(events)
     _apply_phrase_ritardando(events)
@@ -300,9 +310,14 @@ def _apply_phrase_ritardando(events: list[dict]) -> None:
 
 
 def extract_sequence(gabc: str) -> dict:
-    """Full playable payload: events, the bare note list, and the pitch range."""
+    """Full payload.
+
+    - `events`: fused, expressive events for playback.
+    - `notes`: the per-glyph pitch list (un-fused), 1:1 with Exsurge's rendered
+      note glyphs — used for scoring and for colouring the notation per note.
+    """
     events = extract_events(gabc)
-    notes = [e["midi"] for e in events if e["type"] == "note"]
+    notes = [e["midi"] for e in _raw_events(gabc) if e["type"] == "note"]
     return {
         "events": events,
         "notes": notes,

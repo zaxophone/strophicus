@@ -2,7 +2,18 @@
 	import { onMount } from 'svelte';
 
 	// `gabc` is the notation body (e.g. "(c4) AL(dc~)le(...) ..."), as stored.
-	let { gabc = '', annotation = '' } = $props();
+	// `colors` (optional) is a per-note array aligned 1:1 with Exsurge's note
+	// glyphs: each entry is a CSS colour string (or null to leave default).
+	let { gabc = '', annotation = '', colors = null } = $props();
+
+	function applyColors() {
+		if (!container || !colors) return;
+		const glyphs = container.querySelectorAll('use[id^="note-"]');
+		glyphs.forEach((el, i) => {
+			const c = colors[i];
+			if (c) el.setAttribute('fill', c);
+		});
+	}
 
 	let container = $state(null);
 	let error = $state('');
@@ -32,6 +43,7 @@
 			score.performLayout(ctxt, () => {});
 			score.layoutChantLines(ctxt, width, () => {});
 			container.innerHTML = score.createSvg(ctxt);
+			applyColors();
 		} catch (e) {
 			error = String(e?.message ?? e);
 			container.innerHTML = '';
@@ -44,6 +56,12 @@
 	$effect(() => {
 		gabc;
 		render();
+	});
+
+	// Re-apply colours when they change (no full re-render needed).
+	$effect(() => {
+		colors;
+		applyColors();
 	});
 </script>
 

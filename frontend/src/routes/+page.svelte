@@ -216,7 +216,7 @@
 						{/key}
 						<PlayButton chantId={current.chant.id} label="Play melody" />
 						{#key current.chant.id + ':practice'}
-							<Practice chantId={current.chant.id} />
+							<Practice chantId={current.chant.id} gabc={current.chant.gabc} />
 						{/key}
 					{/if}
 				{:else if current.card_type === 'cloze' && current.cloze}

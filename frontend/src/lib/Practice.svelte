@@ -2,14 +2,18 @@
 	import { api } from '$lib/api.js';
 	import { PitchRecorder, midiToName } from '$lib/pitch.js';
 	import { scorePerformance } from '$lib/score.js';
+	import Notation from '$lib/Notation.svelte';
 
-	let { chantId } = $props();
+	let { chantId, gabc = '' } = $props();
+
+	const NOTE_COLORS = { good: '#2e8b57', bad: '#c0392b', missed: '#c9c0b0' };
 
 	let phase = $state('idle'); // idle | recording | done | error
 	let ref = null;
 	let recorder = null;
 	let live = $state(null);
 	let result = $state(null);
+	let noteColors = $state(null);
 	let error = $state('');
 
 	async function ensureRef() {
@@ -46,12 +50,22 @@
 			finalisPitchClass: ref.finalis_pitch_class
 		});
 		result.frameCount = frames.length;
+		noteColors = buildNoteColors(result);
 		phase = 'done';
 	}
 
-	const ARROW = { '1': '↑', '0': '→', '-1': '↓' };
-	function arrow(dir) {
-		return dir == null ? '·' : ARROW[String(dir)];
+	// One colour per reference note (1:1 with the rendered note glyphs): a note is
+	// "good" if the step leading into it matched the chant's contour, "bad" if it
+	// drifted, and "missed" (grey) if nothing was heard there.
+	function buildNoteColors(r) {
+		const sung = r.sungNotes ?? [];
+		const intervals = r.intervals ?? [];
+		return sung.map((s, i) => {
+			if (s == null) return NOTE_COLORS.missed;
+			if (i === 0) return NOTE_COLORS.good; // first note: no interval to judge
+			const iv = intervals[i - 1];
+			return iv && iv.match ? NOTE_COLORS.good : NOTE_COLORS.bad;
+		});
 	}
 
 	const pct = (x) => Math.round(x * 100);
@@ -100,26 +114,15 @@
 					</div>
 				{/each}
 			</div>
-			{#if result.intervals?.length}
-				<div class="contour-feedback">
-					<span class="cf-label">Contour</span>
-					<div class="cf-strip">
-						{#each result.intervals as iv}
-							<span
-								class="cf-cell"
-								class:match={iv.match}
-								class:miss={iv.sungDir != null && !iv.match}
-								class:skip={iv.sungDir == null}
-								title={iv.sungDir == null
-									? 'not heard'
-									: `chant ${arrow(iv.refDir)} · you ${arrow(iv.sungDir)}`}>{arrow(iv.refDir)}</span
-							>
-						{/each}
-					</div>
+			{#if gabc && noteColors}
+				<div class="scored-notation">
+					{#key chantId}
+						<Notation {gabc} colors={noteColors} annotation="Your performance" />
+					{/key}
 				</div>
 				<p class="muted small legend">
-					Each mark is a step in the chant: <b class="ok">green</b> = your direction matched,
-					<b class="bad">red</b> = it drifted, grey = not heard.
+					Notes are coloured by how you sang: <b class="ok">green</b> matched the chant,
+					<b class="bad">red</b> drifted, <b class="grey">grey</b> wasn't heard.
 				</p>
 			{/if}
 			<p class="muted small">
@@ -231,44 +234,12 @@
 		font-size: 0.82rem;
 		color: #8a7f70;
 	}
-	.contour-feedback {
-		display: flex;
-		gap: 0.5rem;
-		align-items: flex-start;
+	.scored-notation {
 		margin-top: 0.7rem;
-	}
-	.cf-label {
-		flex: 0 0 4rem;
-		font-size: 0.85rem;
-		padding-top: 0.15rem;
-	}
-	.cf-strip {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 2px;
-	}
-	.cf-cell {
-		width: 1.1rem;
-		height: 1.1rem;
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		font-size: 0.8rem;
-		border-radius: 3px;
-		background: #ece5d8;
-		color: #6b5;
-	}
-	.cf-cell.match {
-		background: #cdeccf;
-		color: #2e7d32;
-	}
-	.cf-cell.miss {
-		background: #f3cfcf;
-		color: #b23;
-	}
-	.cf-cell.skip {
-		background: #ece5d8;
-		color: #b8ad9c;
+		background: #fff;
+		border: 1px solid #ece5d8;
+		border-radius: 8px;
+		padding: 0.4rem 0.6rem;
 	}
 	.legend {
 		margin-top: 0.3rem;
@@ -278,5 +249,8 @@
 	}
 	.legend .bad {
 		color: #b23;
+	}
+	.legend .grey {
+		color: #9a8f80;
 	}
 </style>

@@ -69,9 +69,11 @@ project spec in [`CLAUDE.md`](./CLAUDE.md):
     scored against the chant's modal finalis (I/II→re, III/IV→mi, V/VI→fa,
     VII/VIII→sol; `backend/app/audio.py`), falling back to the reference's last
     note when the mode is unknown;
-  - returns **per-interval feedback** rendered as a contour strip in the Practice
-    panel (green = your direction matched the chant, red = drifted, grey = not
-    heard).
+  - **colours the notation by performance**: after singing, the Practice panel
+    re-renders the chant with each note glyph filled green (your contour matched),
+    red (drifted), or grey (not heard). This relies on the audio endpoint's
+    `notes` list being the un-fused per-glyph pitch sequence, which is 1:1 with
+    Exsurge's rendered note glyphs (`<use id="note-N">`), so colours map exactly.
 
   All client-side per the spec's v1 plan. The scoring core is pure and
   unit-tested on synthetic traces (perfect→100%, transposed→100%,
