@@ -1,7 +1,17 @@
 """ORM models: cached chants (from GregoBase) and local SRS review state."""
 from datetime import datetime, timezone
 
-from sqlalchemy import Boolean, DateTime, Float, ForeignKey, Integer, String, Text
+from sqlalchemy import (
+    Boolean,
+    Column,
+    DateTime,
+    Float,
+    ForeignKey,
+    Integer,
+    String,
+    Table,
+    Text,
+)
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db import Base
@@ -9,6 +19,15 @@ from app.db import Base
 
 def _utcnow() -> datetime:
     return datetime.now(timezone.utc)
+
+
+# GregoBase many-to-many: a chant carries liturgical/feast/office tags.
+chant_tags = Table(
+    "chant_tags",
+    Base.metadata,
+    Column("chant_id", ForeignKey("chants.id"), primary_key=True),
+    Column("tag_id", ForeignKey("tags.id"), primary_key=True),
+)
 
 
 class Chant(Base):
@@ -34,6 +53,22 @@ class Chant(Base):
 
     reviews: Mapped[list["ReviewState"]] = relationship(
         back_populates="chant", cascade="all, delete-orphan"
+    )
+    tags: Mapped[list["Tag"]] = relationship(
+        secondary=chant_tags, back_populates="chants"
+    )
+
+
+class Tag(Base):
+    """A GregoBase tag (liturgical season, feast, office, ordinary setting, …)."""
+
+    __tablename__ = "tags"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    name: Mapped[str] = mapped_column(String, index=True)
+
+    chants: Mapped[list[Chant]] = relationship(
+        secondary=chant_tags, back_populates="tags"
     )
 
 

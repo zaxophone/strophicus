@@ -15,14 +15,19 @@ async function request(path, options = {}) {
 }
 
 export const api = {
-	listChants: ({ search = '', mode = '', office = '', limit = 50, offset = 0 } = {}) => {
+	listChants: ({ search = '', mode = '', office = '', tagId = null, limit = 50, offset = 0 } = {}) => {
 		const p = new URLSearchParams({ limit, offset });
 		if (search) p.set('search', search);
 		if (mode) p.set('mode', mode);
 		if (office) p.set('office', office);
+		if (tagId != null) p.set('tag_id', tagId);
 		return request(`/chants?${p}`);
 	},
+	collections: () => request('/collections'),
+	bulkAdd: (filter) =>
+		request('/reviews/bulk-add', { method: 'POST', body: JSON.stringify(filter) }),
 	getChant: (id) => request(`/chants/${id}`),
+	chantAudio: (id) => request(`/chants/${id}/audio`),
 	addToDeck: (id) => request(`/reviews/deck/${id}`, { method: 'POST' }),
 	removeFromDeck: (id) => request(`/reviews/deck/${id}`, { method: 'DELETE' }),
 	dueCards: (limit = 20) => request(`/reviews/due?limit=${limit}`),

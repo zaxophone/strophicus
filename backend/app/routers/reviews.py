@@ -15,8 +15,10 @@ from app.constants import (
     office_label,
 )
 from app.db import get_db
-from app.models import Chant, ReviewState
+from app.models import Chant, ReviewState, chant_tags
 from app.schemas import (
+    BulkAddIn,
+    BulkAddResult,
     ChantDetail,
     ClozePayload,
     ContinuationPayload,
@@ -113,6 +115,49 @@ def add_to_deck(
         ).all()
     )
     return DeckCardCount(chant_id=chant_id, card_types=have)
+
+
+@router.post("/bulk-add", response_model=BulkAddResult, status_code=201)
+def bulk_add_to_deck(body: BulkAddIn, db: Session = Depends(get_db)):
+    """Add every chant matching a collection filter to the deck."""
+    stmt = select(Chant)
+    if body.search:
+        stmt = stmt.where(Chant.incipit.ilike(f"%{body.search}%"))
+    if body.mode:
+        stmt = stmt.where(Chant.mode == body.mode)
+    if body.office:
+        stmt = stmt.where(Chant.office_part == body.office)
+    if body.tag_id is not None:
+        stmt = stmt.where(
+            Chant.id.in_(
+                select(chant_tags.c.chant_id).where(
+                    chant_tags.c.tag_id == body.tag_id
+                )
+            )
+        )
+    chants = db.scalars(stmt.limit(body.limit)).all()
+
+    now = _now()
+    chants_added = cards_added = 0
+    for chant in chants:
+        applicable = cards.applicable_card_types(chant.id, chant.gabc or "")
+        requested = [t for t in (body.card_types or applicable) if t in applicable]
+        existing = {
+            rs.card_type
+            for rs in db.scalars(
+                select(ReviewState).where(ReviewState.chant_id == chant.id)
+            )
+        }
+        added_here = 0
+        for ct in requested:
+            if ct not in existing:
+                db.add(ReviewState(chant_id=chant.id, card_type=ct, due_at=now))
+                added_here += 1
+        if added_here:
+            chants_added += 1
+            cards_added += added_here
+    db.commit()
+    return BulkAddResult(chants_added=chants_added, cards_added=cards_added)
 
 
 @router.delete("/deck/{chant_id}", status_code=204)

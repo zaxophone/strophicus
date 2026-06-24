@@ -25,6 +25,26 @@ class ChantList(BaseModel):
     items: list[ChantSummary]
 
 
+class AudioEvent(BaseModel):
+    type: str  # "note" | "bar"
+    midi: int | None = None
+    duration: float | None = None  # Solesmes multiplier of the basic note value
+    velocity: float | None = None  # dynamic line (0..1), crescendo up / dim down
+    stress: bool | None = None  # ictus (vertical episema)
+    fused: bool | None = None  # held bi/tristropha / pressus / fusion (not repercussed)
+    strength: int | None = None  # bar strength (1..4)
+
+
+class AudioSequence(BaseModel):
+    events: list[AudioEvent]
+    notes: list[int]
+    note_count: int
+    low: int | None = None
+    high: int | None = None
+    mode: str | None = None
+    finalis_pitch_class: int | None = None
+
+
 class ReviewStateOut(BaseModel):
     chant_id: int
     card_type: str
@@ -74,3 +94,35 @@ class DeckStats(BaseModel):
     due_now: int
     reviewed_today: int
     chants_in_deck: int
+
+
+class Facet(BaseModel):
+    key: str
+    label: str
+    count: int
+
+
+class TagFacet(BaseModel):
+    id: int
+    label: str
+    count: int
+
+
+class Collections(BaseModel):
+    modes: list[Facet]
+    offices: list[Facet]
+    tags: list[TagFacet]
+
+
+class BulkAddIn(BaseModel):
+    search: str | None = None
+    mode: str | None = None
+    office: str | None = None
+    tag_id: int | None = None
+    card_types: list[str] | None = None
+    limit: int = Field(200, ge=1, le=1000)
+
+
+class BulkAddResult(BaseModel):
+    chants_added: int
+    cards_added: int

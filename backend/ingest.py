@@ -24,7 +24,7 @@ import sys
 from pathlib import Path
 
 from app.db import DATA_DIR, SessionLocal, engine, init_db
-from app.models import Chant
+from app.models import Chant, Tag, chant_tags
 
 DEFAULT_DUMP = DATA_DIR / "gregobase_online.sql"
 
@@ -153,13 +153,66 @@ def extract_gabc(col_value: str | None) -> str | None:
     return None
 
 
-def iter_chant_blocks(text: str):
-    for m in re.finditer(r"INSERT INTO `gregobase_chants`[^V]*VALUES", text):
+def iter_value_blocks(text: str, table: str):
+    """Yield the VALUES section text for each INSERT into `table`."""
+    for m in re.finditer(rf"INSERT INTO `{table}`[^V]*VALUES", text):
         start = m.end()
         end = text.find("\nINSERT INTO", start)
         if end == -1:
             end = len(text)
         yield text[start:end].rstrip().rstrip(";")
+
+
+def iter_chant_blocks(text: str):
+    yield from iter_value_blocks(text, "gregobase_chants")
+
+
+def ingest_tags(text: str, session) -> dict:
+    """Load gregobase_tags and gregobase_chant_tags."""
+    session.execute(chant_tags.delete())
+    session.query(Tag).delete()
+    session.commit()
+
+    tags = 0
+    for block in iter_value_blocks(text, "gregobase_tags"):
+        objs = []
+        for fields in parse_tuples(block):
+            if len(fields) < 2:
+                continue
+            tid = _decode_str(fields[0])
+            name = _decode_str(fields[1])
+            if tid is None or name is None:
+                continue
+            objs.append(Tag(id=int(tid), name=name.strip()))
+        session.bulk_save_objects(objs)
+        tags += len(objs)
+    session.commit()
+
+    valid_tags = {t for (t,) in session.query(Tag.id).all()}
+    valid_chants = {c for (c,) in session.query(Chant.id).all()}
+    links = 0
+    rows: list[dict] = []
+    for block in iter_value_blocks(text, "gregobase_chant_tags"):
+        for fields in parse_tuples(block):
+            if len(fields) < 2:
+                continue
+            cid = _decode_str(fields[0])
+            tid = _decode_str(fields[1])
+            if cid is None or tid is None:
+                continue
+            cid, tid = int(cid), int(tid)
+            # Skip links whose endpoints we didn't keep (e.g. chants without gabc).
+            if cid in valid_chants and tid in valid_tags:
+                rows.append({"chant_id": cid, "tag_id": tid})
+            if len(rows) >= 5000:
+                session.execute(chant_tags.insert(), rows)
+                links += len(rows)
+                rows.clear()
+    if rows:
+        session.execute(chant_tags.insert(), rows)
+        links += len(rows)
+    session.commit()
+    return {"tags": tags, "links": links}
 
 
 def ingest(dump_path: Path) -> dict:
@@ -207,8 +260,15 @@ def ingest(dump_path: Path) -> dict:
     if batch:
         session.bulk_save_objects(batch)
         session.commit()
+
+    tag_stats = ingest_tags(text, session)
     session.close()
-    return {"parsed": total, "inserted": inserted, "skipped_no_gabc": skipped_no_gabc}
+    return {
+        "parsed": total,
+        "inserted": inserted,
+        "skipped_no_gabc": skipped_no_gabc,
+        **tag_stats,
+    }
 
 
 if __name__ == "__main__":
@@ -220,4 +280,5 @@ if __name__ == "__main__":
     print(f"Done. Parsed {stats['parsed']} rows, "
           f"inserted {stats['inserted']} chants, "
           f"skipped {stats['skipped_no_gabc']} without gabc.")
+    print(f"Tags: {stats['tags']} tags, {stats['links']} chant-tag links.")
     print(f"SQLite cache: {engine.url}")

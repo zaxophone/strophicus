@@ -20,3 +20,5 @@ frontend/.vite/
 # Env / editor
 .env
 .DS_Store
+
+CLAUDE.md

@@ -2,6 +2,8 @@
 	import { onMount } from 'svelte';
 	import { api } from '$lib/api.js';
 	import Notation from '$lib/Notation.svelte';
+	import PlayButton from '$lib/PlayButton.svelte';
+	import Practice from '$lib/Practice.svelte';
 
 	let tab = $state('study');
 	let stats = $state({ deck_size: 0, due_now: 0, reviewed_today: 0, chants_in_deck: 0 });
@@ -89,17 +91,94 @@
 		previewId = item.id;
 	}
 
+	// --- Collections state ---
+	let collections = $state({ modes: [], offices: [], tags: [] });
+	let tagFilter = $state('');
+	let activeCollection = $state(null); // { type, key, id, label, count }
+	let colResults = $state([]);
+	let colTotal = $state(0);
+	let colLoading = $state(false);
+	let bulkBusy = $state(false);
+
+	let filteredTags = $derived(
+		collections.tags.filter((t) =>
+			t.label.toLowerCase().includes(tagFilter.toLowerCase())
+		)
+	);
+
+	async function loadCollections() {
+		collections = await api.collections();
+	}
+
+	function listFilter(c) {
+		if (c.type === 'mode') return { mode: c.key };
+		if (c.type === 'office') return { office: c.key };
+		return { tagId: c.id };
+	}
+
+	function bulkFilter(c) {
+		if (c.type === 'mode') return { mode: c.key };
+		if (c.type === 'office') return { office: c.key };
+		return { tag_id: c.id };
+	}
+
+	async function openCollection(c) {
+		activeCollection = c;
+		colLoading = true;
+		const data = await api.listChants({ ...listFilter(c), limit: 100 });
+		colResults = data.items;
+		colTotal = data.total;
+		colLoading = false;
+	}
+
+	async function addWholeCollection() {
+		if (!activeCollection) return;
+		bulkBusy = true;
+		await api.bulkAdd({ ...bulkFilter(activeCollection), limit: 1000 });
+		bulkBusy = false;
+		await Promise.all([openCollection(activeCollection), refreshStats()]);
+	}
+
 	onMount(async () => {
-		await Promise.all([refreshStats(), loadQueue()]);
+		await Promise.all([refreshStats(), loadQueue(), loadCollections()]);
 		await runSearch();
 	});
 </script>
+
+{#snippet chantRow(item)}
+	<li>
+		<div class="row">
+			<div class="info">
+				<span class="title">{item.incipit ?? 'Untitled'}</span>
+				<span class="sub">
+					{#if item.office_label}{item.office_label}{/if}
+					{#if item.mode}· Mode {item.mode}{/if}
+				</span>
+			</div>
+			<div class="actions">
+				<button class="ghost" onclick={() => togglePreview(item)}>
+					{previewId === item.id ? 'Hide' : 'Preview'}
+				</button>
+				<button class:added={item.in_deck} onclick={() => toggleDeck(item)}>
+					{item.in_deck ? '✓ In deck' : '+ Add'}
+				</button>
+			</div>
+		</div>
+		{#if previewId === item.id}
+			<Notation gabc={previewGabc} annotation={item.office_label ?? ''} />
+			<PlayButton chantId={item.id} />
+		{/if}
+	</li>
+{/snippet}
 
 <nav class="tabs">
 	<button class:active={tab === 'study'} onclick={() => (tab = 'study')}>
 		Study {#if stats.due_now}<span class="badge">{stats.due_now}</span>{/if}
 	</button>
 	<button class:active={tab === 'browse'} onclick={() => (tab = 'browse')}>Browse</button>
+	<button class:active={tab === 'collections'} onclick={() => (tab = 'collections')}>
+		Collections
+	</button>
 	<div class="stats">
 		<span>{stats.deck_size} cards · {stats.chants_in_deck} chants</span>
 		<span>Due: {stats.due_now}</span>
@@ -135,6 +214,10 @@
 						{#key current.chant.id + ':recall'}
 							<Notation gabc={current.chant.gabc} annotation={current.chant.office_label ?? ''} />
 						{/key}
+						<PlayButton chantId={current.chant.id} label="Play melody" />
+						{#key current.chant.id + ':practice'}
+							<Practice chantId={current.chant.id} />
+						{/key}
 					{/if}
 				{:else if current.card_type === 'cloze' && current.cloze}
 					<p class="cloze-text">
@@ -158,6 +241,7 @@
 						{#key current.chant.id + ':full'}
 							<Notation gabc={current.chant.gabc} annotation={current.chant.office_label ?? ''} />
 						{/key}
+						<PlayButton chantId={current.chant.id} label="Play full melody" />
 					{/if}
 				{/if}
 
@@ -175,7 +259,7 @@
 			<p class="muted queue-count">{queue.length} due in this session</p>
 		{/if}
 	</section>
-{:else}
+{:else if tab === 'browse'}
 	<section class="browse">
 		<form
 			class="filters"
@@ -197,31 +281,63 @@
 		{:else}
 			<p class="muted">{total} matching chants</p>
 			<ul class="results">
-				{#each results as item (item.id)}
-					<li>
-						<div class="row">
-							<div class="info">
-								<span class="title">{item.incipit ?? 'Untitled'}</span>
-								<span class="sub">
-									{#if item.office_label}{item.office_label}{/if}
-									{#if item.mode}· Mode {item.mode}{/if}
-								</span>
-							</div>
-							<div class="actions">
-								<button class="ghost" onclick={() => togglePreview(item)}>
-									{previewId === item.id ? 'Hide' : 'Preview'}
-								</button>
-								<button class:added={item.in_deck} onclick={() => toggleDeck(item)}>
-									{item.in_deck ? '✓ In deck' : '+ Add'}
-								</button>
-							</div>
-						</div>
-						{#if previewId === item.id}
-							<Notation gabc={previewGabc} annotation={item.office_label ?? ''} />
-						{/if}
-					</li>
-				{/each}
+				{#each results as item (item.id)}{@render chantRow(item)}{/each}
 			</ul>
+		{/if}
+	</section>
+{:else}
+	<section class="collections">
+		{#if !activeCollection}
+			<div class="facet-group">
+				<h3>By mode</h3>
+				<div class="chips">
+					{#each collections.modes as f}
+						<button class="chip" onclick={() => openCollection({ type: 'mode', key: f.key, label: f.label, count: f.count })}>
+							{f.label} <span class="count">{f.count}</span>
+						</button>
+					{/each}
+				</div>
+			</div>
+			<div class="facet-group">
+				<h3>By office</h3>
+				<div class="chips">
+					{#each collections.offices as f}
+						<button class="chip" onclick={() => openCollection({ type: 'office', key: f.key, label: f.label, count: f.count })}>
+							{f.label} <span class="count">{f.count}</span>
+						</button>
+					{/each}
+				</div>
+			</div>
+			<div class="facet-group">
+				<h3>By liturgical season / feast</h3>
+				<input class="tag-search" placeholder="Filter tags…" bind:value={tagFilter} />
+				<div class="chips">
+					{#each filteredTags.slice(0, 60) as f}
+						<button class="chip" onclick={() => openCollection({ type: 'tag', id: f.id, label: f.label, count: f.count })}>
+							{f.label} <span class="count">{f.count}</span>
+						</button>
+					{/each}
+				</div>
+				{#if filteredTags.length > 60}
+					<p class="muted">Showing 60 of {filteredTags.length} — refine with the filter above.</p>
+				{/if}
+			</div>
+		{:else}
+			<div class="collection-header">
+				<button class="ghost back" onclick={() => (activeCollection = null)}>← Collections</button>
+				<h2>{activeCollection.label}</h2>
+				<button class="add-all" onclick={addWholeCollection} disabled={bulkBusy}>
+					{bulkBusy ? 'Adding…' : `Add all ${activeCollection.count} to deck`}
+				</button>
+			</div>
+			{#if colLoading}
+				<p class="muted">Loading…</p>
+			{:else}
+				<p class="muted">{colTotal} chants in this collection</p>
+				<ul class="results">
+					{#each colResults as item (item.id)}{@render chantRow(item)}{/each}
+				</ul>
+			{/if}
 		{/if}
 	</section>
 {/if}
@@ -431,5 +547,72 @@
 	}
 	.ghost {
 		color: #8a7f70;
+	}
+	.facet-group {
+		margin-bottom: 1.5rem;
+	}
+	.facet-group h3 {
+		margin: 0 0 0.6rem;
+		font-size: 1rem;
+		color: #6b2d10;
+	}
+	.chips {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+	}
+	.chip {
+		border: 1px solid #d8cfc0;
+		background: #fff;
+		border-radius: 999px;
+		padding: 0.4rem 0.8rem;
+		cursor: pointer;
+		font-size: 0.9rem;
+	}
+	.chip:hover {
+		border-color: #6b2d10;
+	}
+	.chip .count {
+		color: #9a8f80;
+		font-size: 0.8rem;
+		margin-left: 0.2rem;
+	}
+	.tag-search {
+		width: 100%;
+		max-width: 320px;
+		padding: 0.45rem 0.7rem;
+		border: 1px solid #d8cfc0;
+		border-radius: 8px;
+		margin-bottom: 0.7rem;
+	}
+	.collection-header {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		flex-wrap: wrap;
+		margin-bottom: 0.5rem;
+	}
+	.collection-header h2 {
+		margin: 0;
+		font-size: 1.3rem;
+		flex: 1;
+	}
+	.back {
+		background: none;
+		border: none;
+		cursor: pointer;
+		padding: 0;
+	}
+	.add-all {
+		background: #6b2d10;
+		color: #fff;
+		border: none;
+		padding: 0.5rem 1rem;
+		border-radius: 8px;
+		cursor: pointer;
+	}
+	.add-all:disabled {
+		opacity: 0.6;
+		cursor: default;
 	}
 </style>

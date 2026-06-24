@@ -5,7 +5,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.db import init_db
-from app.routers import chants, reviews
+from app.routers import chants, collections, reviews
 
 
 @asynccontextmanager
@@ -30,6 +30,7 @@ app.add_middleware(
 )
 
 app.include_router(chants.router)
+app.include_router(collections.router)
 app.include_router(reviews.router)
 
 
