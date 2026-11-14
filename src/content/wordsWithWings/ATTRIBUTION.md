@@ -47,3 +47,8 @@ assumed to cover them**. Ask the Church Music Association of America for
 permission before the app is published, or drop the `audio/` folder and
 `recordings.ts`. Each exercise's `recording` is the number the instructor
 edition prints beside it.
+
+**Flat sign.** From Lesson 8 on, an `x` after a note letter puts a flat sign
+before it (as in gabc); it is allowed only on ti, which is then sung as te, and
+holds until the next bar. Recordings 19 and 20 (Lesson 8) are bundled like 1-18,
+with the same unclear-rights note.

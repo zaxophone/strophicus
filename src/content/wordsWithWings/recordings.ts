@@ -21,4 +21,6 @@ export const RECORDINGS: Record<number, number> = {
   16: require('./audio/16_benedictus_es.mp3'),
   17: require('./audio/17_ad_te_clamamus.mp3'),
   18: require('./audio/18_et_in_terra_pax_hominibus.mp3'),
+  19: require('./audio/19_puer_natus_spoken.mp3'),
+  20: require('./audio/20_puer_natus_in_bethlehem.mp3'),
 };
