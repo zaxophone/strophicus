@@ -1,0 +1,15 @@
+export const colors = {
+  ink: '#111827',
+  body: '#374151',
+  muted: '#6b7280',
+  faint: '#9ca3af',
+  line: '#e5e7eb',
+  surface: '#f9fafb',
+  card: '#ffffff',
+  primary: '#4f46e5',
+  primaryTint: '#e0e7ff',
+  primaryInk: '#3730a3',
+  success: '#16a34a',
+  successTint: '#dcfce7',
+  danger: '#b91c1c',
+};

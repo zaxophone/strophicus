@@ -1,0 +1,28 @@
+{
+  "expo": {
+    "name": "Chant",
+    "slug": "chant-app",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "bundleIdentifier": "app.chant.dev",
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "app.chant.dev",
+      "permissions": ["android.permission.RECORD_AUDIO"]
+    },
+    "plugins": [
+      [
+        "react-native-audio-api",
+        {
+          "iosMicrophonePermission": "Chant listens to your voice to check your pitch.",
+          "iosBackgroundMode": false,
+          "androidForegroundService": false,
+          "androidPermissions": ["android.permission.RECORD_AUDIO"]
+        }
+      ]
+    ]
+  }
+}
