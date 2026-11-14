@@ -16,7 +16,6 @@ export const LESSON_INTRO: Lesson = {
       recording: 1,
       title: 'Gregorian chant',
       kind: 'read',
-      notes: '',
       instructions: `
 Gregorian chant is very old music: over a thousand years old. It is music from the Middle Ages, and it is still sung in many monasteries and churches all over the world.
 
@@ -33,23 +32,22 @@ We will not sing as well as the monks do. After all, they sing chant every day a
       id: 'wow-intro-notation',
       title: 'The staff and the notes',
       kind: 'read',
-      notes: '',
       instructions: `
 You will notice that a Gregorian staff has four lines, not five as is usual. And the notes are not round, but square.
 
-{{staff; 4; ghihgfg}}
+{{gabc: (c4) (g) (h) (i) (h) (g) (f) (g)}}
 
 The sign at the start of the staff is a clef, which means "key". This one is the do clef. It sits on a line, and the note on that line is do.
 
-{{staff; 4; j; do}}
+{{gabc: (c4) do(j)}}
 
 The do clef can sit on other lines too, and then do moves with it.
 
-{{staff; 3; h; do}}
+{{gabc: (c3) do(h)}}
 
 We will sing the names of the notes: do, re, mi, fa, sol, la, ti, and do again. Did you know those names were invented in the Middle Ages?
 
-{{staff; 4; cdefghij; do re mi fa sol la ti do}}`,
+{{gabc: (c4) do(c) re(d) mi(e) fa(f) sol(g) la(h) ti(i) do(j)}}`,
       source: `${instructor}, "In the Beginning ...", p. 3`,
     }),
   ],

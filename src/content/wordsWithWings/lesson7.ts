@@ -18,7 +18,6 @@ export const LESSON_7: Lesson = {
       id: 'wow-7-draw',
       kind: 'read',
       title: 'Draw the wavy lines',
-      notes: '',
       instructions: `
 Now try to draw the wavy lines that appear on pages 9 and 10 of your workbook yourself, on pages 11 and 12. Draw with smooth and continuous motion.
 

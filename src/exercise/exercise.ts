@@ -3,6 +3,7 @@ import type { TimingSpec } from './judge';
 import { ExerciseKey, parseKey } from './key';
 import {
   Chant,
+  gabcWords,
   makeChant,
   flattened,
   semitonesAboveDo,
@@ -22,6 +23,8 @@ export interface Exercise {
   id: string;
   title: string;
   kind: ExerciseKind;
+  /** The melody as written in gabc, if the exercise has a staff (see `chant/gabc.ts`). */
+  gabc?: string;
   /**
    * For naming exercises, how many notes from the start are already named, as
    * the book often writes the first few syllables as a start.
@@ -80,6 +83,8 @@ export interface Lesson {
 }
 
 const DEFAULT_BPM = 80;
+/** The gabc of an exercise that has no staff: just a clef. */
+const NO_STAFF = '(c2)';
 /** A note with an episema, or before a tick: sung a little longer, not twice as long. */
 const LONGER = 1.5;
 
@@ -93,13 +98,12 @@ export interface ExerciseSpec {
   /** The book's key tag, such as "do=d". */
   key?: string;
   /**
-   * Pitch letters, with `|` for a bar line between phrases, `||` for a double
-   * bar, `,` for a tick, and `.` or `_` after a note for a dot or an episema.
-   * Empty for an exercise with no staff.
+   * The melody as a gabc snippet (see `chant/gabc.ts`): its clef, then each syllable's text and
+   * notes, as in `(c4) Pu(d)er(f) na(f)tus(e)`. The text is the words under the notes as the
+   * book prints them; leave it out for an exercise that shows the note names instead. Omitted
+   * for an exercise with no staff.
    */
-  notes: string;
-  /** The words under the notes, one per syllable (a group in brackets is one), written as the book prints them ("Gre- gó- ri,"). */
-  text?: string;
+  gabc?: string;
   /** Accent exercises without a staff: the lines to pick a word from. */
   lines?: string[];
   /** Accent exercises on a melody: the index of the word that is the right answer. */
@@ -110,8 +114,6 @@ export interface ExerciseSpec {
    * `-` for a note between ictus marks (it passes above). As the workbook draws it.
    */
   gestures?: string;
-  /** Line (1 = bottom) carrying the do clef; the second line if omitted. */
-  clefLine?: number;
   /** Indexes where a new line must start. */
   breaks?: number[];
   beats?: number[];
@@ -143,20 +145,18 @@ function specGestures(spec: ExerciseSpec, chant: Chant): (Gesture | null)[] {
  * syllables and the pitches that are judged cannot disagree.
  */
 export function exercise(spec: ExerciseSpec): Exercise {
-  const chant: Chant = makeChant(spec.notes, spec.clefLine ?? 2, spec.breaks);
+  const gabc = spec.gabc ?? NO_STAFF;
+  const chant: Chant = makeChant(gabc, spec.breaks);
   const { notes, moras, episemas, ticks } = chant;
   const letters = [...notes];
   const flat = flattened(chant);
-  const words = spec.text === undefined ? undefined : spec.text.trim().split(/\s+/);
-  const syllables = units(chant).length;
+  const words = gabcWords(gabc);
   if (spec.kind === 'mark' && chant.ictus.length === 0) throw new Error(`${spec.id}: a mark exercise needs ictus`);
-  if (words && words.length !== syllables) {
-    throw new Error(`${spec.id}: ${words.length} words under ${syllables} syllables`);
-  }
   return {
     id: spec.id,
     title: spec.title,
     kind: spec.kind ?? 'sing',
+    gabc: spec.gabc,
     given: spec.given ?? 0,
     key: spec.key === undefined ? undefined : parseKey(spec.key),
     chant,

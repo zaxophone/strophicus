@@ -18,7 +18,6 @@ export const LESSON_1: Lesson = {
       id: 'wow-1-words',
       title: 'Some words are more important',
       kind: 'read',
-      notes: '',
       instructions: `
 To understand how to sing Gregorian chant, let us begin with a sentence. Speaking and singing chant fit closely together.
 
@@ -35,7 +34,6 @@ How can you hear that one word matters more than the others? Your voice goes up 
       id: 'wow-1-pick',
       title: 'Choose your word',
       kind: 'accent',
-      notes: '',
       lines: [
         'I will thank you forever.',
         'O that I had wings like a dove.',

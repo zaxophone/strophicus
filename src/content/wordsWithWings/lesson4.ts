@@ -7,7 +7,6 @@ import { exercise, Lesson } from '../../exercise/exercise';
 //
 // The words are split into one per note, since the app labels each note:
 // "Sancte" is two syllables and is printed here as "Sanc- te".
-const clefLine = 3;
 const key = 'do=a';
 const workbook = "Words with Wings Children's Workbook";
 const instructor = 'Words with Wings Instructor Edition';
@@ -24,9 +23,7 @@ export const LESSON_4: Lesson = {
       title: 'The note with wings',
       kind: 'accent',
       key,
-      notes: 'hhhig',
-      clefLine,
-      text: 'Sanc- te Gre- gó- ri,',
+      gabc: '(c3) Sanc(h)te(h) Gre(h)gó(i)ri,(g)',
       answer: 3,
       instructions: `
 A litany is a prayer made of many short calls, each one answered. In the Litany of the Saints we call on the saints by name, and the answer is the same every time: "pray for us".
@@ -41,15 +38,13 @@ Which note has wings? Which word does the melody go up on? Look for the accent m
       recording: 8,
       title: 'Sancte Gregóri, ora pro nobis',
       key,
-      notes: 'hhhig||gfghh',
-      clefLine,
-      text: 'Sanc- te Gre- gó- ri, o- ra pro no- bis.',
+      gabc: '(c3) Sanc(h)te(h) Gre(h)gó(i)ri,(g::) o(g)ra(f) pro(g) no(h)bis.(h)',
       instructions: `
 Now sing the whole line. It means: "St. Gregory, pray for us."
 
 Look at the clef. Do you see that it is in a different place than it was in the last lesson?
 
-{{staff; 3; hhhig; Sanc- te Gre- gó- ri,}}
+{{gabc: (c3) Sanc(h)te(h) Gre(h)gó(i)ri,(g)}}
 
 The clef is now on the third line, so the note on that line is do. This is a double bar. It ends the first phrase, and you take a breath there.
 
@@ -61,9 +56,7 @@ With Gregorian chant, the clef can be in different places. Find do on the clef a
       title: 'Name the notes of "ora pro nobis"',
       kind: 'name',
       key,
-      notes: 'gfghh',
-      clefLine,
-      text: 'o- ra pro no- bis.',
+      gabc: '(c3) o(g)ra(f) pro(g) no(h)bis.(h)',
       instructions: `
 What are the names of the notes of "ora pro nobis"? The words are written under the notes. Find do on the clef, then count the steps up or down to each note.
 
@@ -74,9 +67,7 @@ Tap a note, then choose its name.`,
       id: 'wow-4-2',
       title: 'Sancte Bonefáti, ora pro nobis',
       key,
-      notes: 'hhhhig||gfghh',
-      clefLine,
-      text: 'Sanc- te Bo- ne- fá- ti, o- ra pro no- bis.',
+      gabc: '(c3) Sanc(h)te(h) Bo(h)ne(h)fá(i)ti,(g::) o(g)ra(f) pro(g) no(h)bis.(h)',
       instructions: `
 In the workbook you write the name of a saint you chose, and its notes. Here is how. These four rules fit every name:
 

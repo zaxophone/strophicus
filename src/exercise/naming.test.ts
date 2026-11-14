@@ -2,7 +2,7 @@ import { exercise } from './exercise';
 import { allNamed, nameNote, selectNote, startNaming } from './naming';
 
 // do re mi re do on the second-line clef
-const e = exercise({ id: 'n', title: 'n', notes: 'fghgf', kind: 'name', given: 1, instructions: 'x' });
+const e = exercise({ id: 'n', title: 'n', gabc: '(c2) (f) (g) (h) (g) (f)', kind: 'name', given: 1, instructions: 'x' });
 
 describe('naming the notes', () => {
   it('starts with the given notes named and the first other note selected', () => {

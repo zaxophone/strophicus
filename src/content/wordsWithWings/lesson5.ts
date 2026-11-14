@@ -4,7 +4,6 @@ import { exercise, Lesson } from '../../exercise/exercise';
 // practice with note names, and the Kyrie that opens and closes the Litany of
 // the Saints (workbook p. 7-8). The key tag is [do=a].
 // Pitch letters: h is do, g is ti, f is la, e is sol.
-const clefLine = 3;
 const key = 'do=a';
 const workbook = "Words with Wings Children's Workbook";
 const instructor = 'Words with Wings Instructor Edition';
@@ -21,12 +20,11 @@ export const LESSON_5: Lesson = {
       kind: 'name',
       given: 4,
       key,
-      notes: 'hgfe|efgh|hgfh|hffef',
-      clefLine,
+      gabc: '(c3) (h) (g) (f) (e;) (e) (f) (g) (h;) (h) (g) (f) (h;) (h) (f) (f) (e) (f)',
       instructions: `
 On which line does the do clef sit in Gregorian chant? That was a trick question. As we have seen, it can be found in different places.
 
-{{staff; 3; h; do}}
+{{gabc: (c3) do(h)}}
 
 Name the notes of the first exercise. The first four are given: do ti la sol. Find do on the clef and count from there.`,
       source: `${workbook}, p. 7, exercise 1; ${instructor}, Lesson 5, p. 13`,
@@ -36,8 +34,7 @@ Name the notes of the first exercise. The first four are given: do ti la sol. Fi
       recording: 9,
       title: 'Exercise 1: sing the names',
       key,
-      notes: 'hgfe|efgh|hgfh|hffef',
-      clefLine,
+      gabc: '(c3) (h) (g) (f) (e;) (e) (f) (g) (h;) (h) (g) (f) (h;) (h) (f) (f) (e) (f)',
       instructions: `
 Now sing exercise 1 with the note names. Sing each name, and form the words clearly with your mouth.
 
@@ -50,8 +47,7 @@ At each vertical line, take a breath. The note just before it is sung a little l
       kind: 'name',
       given: 1,
       key,
-      notes: 'hffffef||hfffef||hghfgh',
-      clefLine,
+      gabc: '(c3) (h) (f) (f) (f) (f) (e) (f::) (h) (f) (f) (f) (e) (f::) (h) (g) (h) (f) (g) (h)',
       instructions: `
 Now name the notes of exercise 2. The first note is given. Each part ends at a double bar.
 
@@ -63,8 +59,7 @@ Take it one part at a time. Find do on the clef and count from there.`,
       recording: 10,
       title: 'Exercise 2: sing the names',
       key,
-      notes: 'hffffef||hfffef||hghfgh',
-      clefLine,
+      gabc: '(c3) (h) (f) (f) (f) (f) (e) (f::) (h) (f) (f) (f) (e) (f::) (h) (g) (h) (f) (g) (h)',
       instructions: `
 Sing exercise 2 with the note names. Try the first part, up to the double bar, silently to yourself first. Take care to form the words with your mouth while you do.
 
@@ -76,9 +71,7 @@ Then sing it out loud. Do the same with the other two parts.`,
       recording: 11,
       title: 'Kyrie eleison',
       key,
-      notes: 'hffffef||hfffef||hffffef',
-      clefLine,
-      text: 'Ký- ri- e e- lé- i- son. Chris- te, e- lé- i- son. Ký- ri- e e- lé- i- son.',
+      gabc: '(c3) Ký(h)ri(f)e(f) e(f)lé(f)i(e)son.(f::) Chris(h)te,(f) e(f)lé(f)i(e)son.(f::) Ký(h)ri(f)e(f) e(f)lé(f)i(e)son.(f)',
       instructions: `
 In the last lesson we sang the names of the saints. Something comes before and after them in the litany, and you have just learned it! The words are Greek: "Kýrie eléison" means "Lord, have mercy". You could also say "Lord, have mercy on me".
 
@@ -91,9 +84,7 @@ Now sing the Kyrie. You already know this melody: the first two parts are the fi
       id: 'wow-5-4',
       title: 'Christe, exáudi nos',
       key,
-      notes: 'hghfgh',
-      clefLine,
-      text: 'Chris- te, ex- áu- di nos.',
+      gabc: '(c3) Chris(h)te,(g) ex(h)áu(f)di(g) nos.(h)',
       instructions: `
 The piece that ends the litany means "Christ, hear us". You could also say "Christ, hear our prayer."
 

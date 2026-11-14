@@ -1,0 +1,137 @@
+import { parseGabc, joinGabc, withoutText } from './gabc';
+
+describe('parseGabc', () => {
+  const plain = { bars: [], doubles: [], ticks: [], moras: [], episemas: [], ictus: [], flats: [], groups: [] };
+
+  it('reads the clef and one note per syllable', () => {
+    expect(parseGabc('(c4) (f) (g) (h)')).toEqual({ ...plain, clefLine: 4, notes: 'fgh' });
+  });
+
+  it('needs a clef first, and only reads the do clef', () => {
+    expect(() => parseGabc('(f) (g)')).toThrow(/clef/);
+    expect(() => parseGabc('(f3) (g)')).toThrow(/do clef/);
+    expect(() => parseGabc('(cb4) (g)')).toThrow(/do clef/);
+    expect(() => parseGabc('(c4) (g) (c3) (h)')).toThrow(/start/);
+  });
+
+  it('accepts a gabc header and comments', () => {
+    const gabc = 'name: Test;\nmode: 1;\n%%\n(c3) % a comment\n(h) (g)';
+    expect(parseGabc(gabc)).toEqual({ ...plain, clefLine: 3, notes: 'hg' });
+  });
+
+  it('turns a bar after a syllable into a bar before the next note', () => {
+    expect(parseGabc('(c2) (c) (d) (e;) (e) (d) (c;) (c) (d) (d)')).toMatchObject({ notes: 'cdeedccdd', bars: [3, 6] });
+    // inside the syllable's parentheses, or on its own
+    expect(parseGabc('(c2) (c) (d;) (e)').bars).toEqual([2]);
+    expect(parseGabc('(c2) (c) (d) (;) (e)').bars).toEqual([2]);
+  });
+
+  it('reads :: as a double bar, which is also a bar', () => {
+    expect(parseGabc('(c2) (c) (d::) (e) (f;) (g) (h)')).toMatchObject({ bars: [2, 4], doubles: [2] });
+  });
+
+  it('reads a comma as a tick, which is not a bar', () => {
+    expect(parseGabc('(c2) (c) (d,) (e) (f)')).toMatchObject({ ticks: [2], bars: [] });
+  });
+
+  it('ignores divisions before the first note or after the last', () => {
+    expect(parseGabc('(c2) (;) (c) (d) (::)')).toEqual({ ...plain, clefLine: 2, notes: 'cd' });
+    expect(parseGabc('(c2) (c) (d;)')).toEqual({ ...plain, clefLine: 2, notes: 'cd' });
+  });
+
+  it('reads . as a dot, _ as an episema, \' as an ictus and x as a flat sign, on the note before', () => {
+    expect(parseGabc('(c3) (h.) (g_) (f._) (e\') (gx)')).toMatchObject({
+      moras: [0, 2],
+      episemas: [1, 2],
+      ictus: [3],
+      flats: [4],
+    });
+  });
+
+  it('refuses a modifier that follows nothing, or is repeated', () => {
+    for (const bad of ['(c2) (.)', '(c2) (c..)', '(c2) (c__)', "(c2) (c'')", '(c2) (cxx)', '(c2) (;.)']) {
+      expect(() => parseGabc(bad)).toThrow();
+    }
+  });
+
+  it('reads notes in one pair of parentheses as a group on one syllable', () => {
+    const parsed = parseGabc('(c2) (c) (de) (f) (ghg)');
+    expect(parsed.notes).toBe('cdefghg');
+    expect(parsed.groups).toEqual([{ start: 1, length: 2 }, { start: 4, length: 3 }]);
+  });
+
+  it('puts a division before a group at its first note', () => {
+    const parsed = parseGabc('(c2) (c;) (de,) (fg)');
+    expect(parsed.bars).toEqual([1]);
+    expect(parsed.ticks).toEqual([3]);
+  });
+
+  it('gives each note of a group its own dot or episema', () => {
+    expect(parseGabc('(c2) (c) (de.)').moras).toEqual([2]);
+    expect(parseGabc('(c2) (c) (d_e_)').episemas).toEqual([1, 2]);
+    expect(parseGabc('(c2) (d_e_.)')).toMatchObject({ episemas: [0, 1], moras: [1] });
+  });
+
+  it('refuses a division inside a group, or a note after one', () => {
+    expect(() => parseGabc('(c2) (c) (d;e)')).toThrow();
+    expect(() => parseGabc('(c2) (c) (d,e)')).toThrow();
+  });
+
+  it('refuses gabc it cannot draw instead of misreading it', () => {
+    expect(() => parseGabc('(c2) (c) (d e)')).toThrow(/Separate neumes/);
+    expect(() => parseGabc('(c2) (c) (d/e)')).toThrow(/Separate neumes/);
+    expect(() => parseGabc('(c2) (c) (D)')).toThrow(/not read yet/);
+    expect(() => parseGabc('(c2) (c) (d:)')).toThrow(/divisions/);
+    expect(() => parseGabc('(c2) (c) (iy)')).toThrow(/not read yet/);
+    expect(() => parseGabc('(c2) (c) (d~)')).toThrow(/not read yet/);
+    expect(() => parseGabc('(c2) (n)')).toThrow();
+    expect(() => parseGabc('(c2) (c')).toThrow(/never closed/);
+    expect(() => parseGabc('(c2) (c) text')).toThrow();
+  });
+
+  describe('text', () => {
+    it('has no words for a snippet without text', () => {
+      expect(parseGabc('(c2) (c) (d)').words).toBeUndefined();
+    });
+
+    it('joins the syllables of a word, and splits words at a space', () => {
+      const parsed = parseGabc('(c4) Pu(d)er(f) na(f)tus(e) in(f) Bét(g)le(f)hem,(e)');
+      expect(parsed.words).toEqual(['Pu-', 'er', 'na-', 'tus', 'in', 'Bét-', 'le-', 'hem,']);
+      expect(parsed.notes).toBe('dffefgfe');
+    });
+
+    it('keeps one word per syllable, a joined group counting as one', () => {
+      const parsed = parseGabc('(c3) Ky(h)ri(f)e(fg) e(f)lé(f)i(e)son(f)');
+      expect(parsed.words).toEqual(['Ky-', 'ri-', 'e', 'e-', 'lé-', 'i-', 'son']);
+    });
+
+    it('accepts a hyphen at the start of a syllable', () => {
+      expect(parseGabc('(c2) Ky(f)-ri(g)-e(h)').words).toEqual(['Ky-', 'ri-', 'e']);
+    });
+
+    it('wants every syllable to have text, or none', () => {
+      expect(() => parseGabc('(c2) Ky(f) (g) e(h)')).toThrow(/every syllable/);
+    });
+
+    it('does not allow a space inside one syllable\'s text', () => {
+      expect(() => parseGabc('(c2) Ky ri(f)')).toThrow(/space/);
+    });
+
+    it('puts a bar after a word with its punctuation', () => {
+      const parsed = parseGabc('(c4) Come,(h_;) let(h)');
+      expect(parsed.words).toEqual(['Come,', 'let']);
+      expect(parsed.bars).toEqual([1]);
+      expect(parsed.episemas).toEqual([0]);
+    });
+  });
+});
+
+describe('gabc helpers', () => {
+  it('takes the text away, keeping the clef and the divisions', () => {
+    expect(withoutText('(c4) Pu(d)er(f) na(f;)tus(e)')).toBe('(c4) (d) (f) (f;) (e)');
+  });
+
+  it('joins snippets under the first one\'s clef', () => {
+    expect(joinGabc('(c4) Pu(d)er(f;)', '(c4) Un(d)de(f)')).toBe('(c4) Pu(d)er(f;) Un(d)de(f)');
+  });
+});

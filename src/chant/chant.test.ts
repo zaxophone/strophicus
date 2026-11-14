@@ -4,7 +4,6 @@ import {
   flattened,
   layoutBreaks,
   makeChant,
-  parsePhrases,
   separators,
   systemUnits,
   ledgerLines,
@@ -73,73 +72,9 @@ describe('splitSystems', () => {
   });
 });
 
-describe('parsePhrases', () => {
-  const plain = { bars: [], doubles: [], ticks: [], moras: [], episemas: [], ictus: [], flats: [], groups: [] };
-
-  it('turns bars between phrases into note indexes', () => {
-    expect(parsePhrases('cde|edc|cdd')).toEqual({ ...plain, notes: 'cdeedccdd', bars: [3, 6] });
-    expect(parsePhrases(' cd | e ')).toEqual({ ...plain, notes: 'cde', bars: [2] });
-    expect(parsePhrases('fgh')).toEqual({ ...plain, notes: 'fgh' });
-  });
-
-  it('reads a dot as a mora on the note before it', () => {
-    expect(parsePhrases('cd.e')).toEqual({ ...plain, notes: 'cde', moras: [1] });
-    expect(parsePhrases('c.d|e.f')).toEqual({ ...plain, notes: 'cdef', bars: [2], moras: [0, 2] });
-  });
-
-  it('reads an underscore as an episema on the note before it', () => {
-    expect(parsePhrases('c_de_.')).toEqual({ ...plain, notes: 'cde', episemas: [0, 2], moras: [2] });
-  });
-
-  it('reads two bars together as a double bar, which is also a bar', () => {
-    expect(parsePhrases('cd||ef|gh')).toEqual({ ...plain, notes: 'cdefgh', bars: [2, 4], doubles: [2] });
-    expect(parsePhrases('cd | | ef').doubles).toEqual([2]);
-  });
-
-  it('reads a comma as a tick, which is not a bar', () => {
-    expect(parsePhrases('c,def')).toEqual({ ...plain, notes: 'cdef', ticks: [1] });
-  });
-
-  it('ignores a bar or tick before the first note or after the last', () => {
-    expect(parsePhrases('|cd||')).toEqual({ ...plain, notes: 'cd' });
-    expect(parsePhrases(',cd,')).toEqual({ ...plain, notes: 'cd' });
-  });
-
-  it('rejects a dot or episema that follows nothing or the same mark twice', () => {
-    expect(() => parsePhrases('.cd')).toThrow();
-    expect(() => parsePhrases('cd..')).toThrow();
-    expect(() => parsePhrases('_c')).toThrow();
-    expect(() => parsePhrases('c|.d')).toThrow();
-  });
-});
-
 describe('groups of notes', () => {
-  it('reads square brackets as notes on one syllable', () => {
-    const parsed = parsePhrases('c[de]f[ghg]');
-    expect(parsed.notes).toBe('cdefghg');
-    expect(parsed.groups).toEqual([{ start: 1, length: 2 }, { start: 4, length: 3 }]);
-  });
-
-  it('puts a bar or tick before a group, at its first note', () => {
-    const parsed = parsePhrases('c|[de],[fg]');
-    expect(parsed.bars).toEqual([1]);
-    expect(parsed.ticks).toEqual([3]);
-  });
-
-  it('lets a dot after a group go on its last note, and an episema over all of them', () => {
-    expect(parsePhrases('c[de].').moras).toEqual([2]);
-    expect(parsePhrases('c[de]_').episemas).toEqual([1, 2]);
-    expect(parsePhrases('[de]_.')).toMatchObject({ episemas: [0, 1], moras: [1] });
-  });
-
-  it('rejects groups that are unfinished, nested, tiny, or hold a bar', () => {
-    for (const bad of ['c[de', 'cd]e', 'c[[de]]', 'c[d]e', 'c[d|e]f', 'c[d,e]f', 'c[]d']) {
-      expect(() => parsePhrases(bad)).toThrow();
-    }
-  });
-
   it('counts a syllable for each group and for each note on its own', () => {
-    const chant = makeChant('c[de]f[ghg]', 2);
+    const chant = makeChant('(c2) (c) (de) (f) (ghg)');
     expect(units(chant)).toEqual([
       { start: 0, length: 1 },
       { start: 1, length: 2 },
@@ -151,9 +86,9 @@ describe('groups of notes', () => {
   });
 
   it('refuses a group that cannot be drawn as one figure', () => {
-    expect(() => makeChant('c[dd]e', 2)).toThrow(/single figure/);
-    expect(() => makeChant('c[fedc]e', 2)).toThrow(/single figure/);
-    expect(() => makeChant('c[de]e', 2)).not.toThrow();
+    expect(() => makeChant('(c2) (c) (dd) (e)')).toThrow(/single figure/);
+    expect(() => makeChant('(c2) (c) (fedc) (e)')).toThrow(/single figure/);
+    expect(() => makeChant('(c2) (c) (de) (e)')).not.toThrow();
   });
 });
 
@@ -208,19 +143,19 @@ describe('layoutBreaks', () => {
 describe('flat sign', () => {
   // with the do clef on line 4, do is j and ti is i
   it('parses x after a note and keeps the flat until the next bar', () => {
-    const chant = makeChant('jixhi|i', 4);
+    const chant = makeChant('(c4) (j) (ix) (h) (i;) (i)');
     expect(chant.flats).toEqual([1]);
     expect(flattened(chant)).toEqual([false, true, false, true, false]);
   });
 
   // with the do clef on line 3, do is h and ti is g
   it('lowers the pitch and renames ti to te', () => {
-    const e = exercise({ id: 'f', title: 'f', notes: 'hgxhg|g', clefLine: 3, instructions: 'x' });
+    const e = exercise({ id: 'f', title: 'f', gabc: '(c3) (h) (gx) (h) (g;) (g)', instructions: 'x' });
     expect(e.labels).toEqual(['do', 'te', 'do', 'te', 'ti']);
     expect(e.offsets).toEqual([0, -2, 0, -2, -1]);
   });
 
   it('refuses a flat on anything but ti', () => {
-    expect(() => makeChant('hix', 3)).toThrow(/ti/);
+    expect(() => makeChant('(c3) (h) (ix)')).toThrow(/ti/);
   });
 });

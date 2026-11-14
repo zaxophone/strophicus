@@ -1,5 +1,6 @@
 import { exercise, Exercise, Lesson } from '../../exercise/exercise';
-import { MELODY, PUER_NATUS_CLEF, PUER_NATUS_KEY, VERSE_TEXT } from './puerNatus';
+import { withoutText } from '../../chant/gabc';
+import { PUER_NATUS, PUER_NATUS_KEY } from './puerNatus';
 
 // Lesson 9, "It Came to Pass": Puer natus in Bethlehem again. The song is first
 // sung with the note names (the names written as homework in Lesson 8), then the
@@ -17,8 +18,7 @@ const withNames = (i: number): Exercise =>
     id: `wow-9-names-${i + 1}`,
     title: `Sing the names: line ${i + 1}`,
     key: PUER_NATUS_KEY,
-    notes: MELODY[i],
-    clefLine: PUER_NATUS_CLEF,
+    gabc: withoutText(PUER_NATUS[1][i]),
     instructions: `
 Now sing the ${LINE_NAMES[i]} line of Puer natus with the names of the notes. Sing each name, and form the words clearly with your mouth.${
       i === 2 ? ' The note with the flat sign is te.' : ''
@@ -33,9 +33,7 @@ const verseLine = (verse: 2 | 3, i: number, page: number): Exercise =>
     recording: verse === 2 ? 22 : undefined,
     title: `Verse ${verse}, line ${i + 1}`,
     key: PUER_NATUS_KEY,
-    notes: MELODY[i],
-    text: VERSE_TEXT[verse][i],
-    clefLine: PUER_NATUS_CLEF,
+    gabc: PUER_NATUS[verse][i],
     instructions: `
 ${
   i < 2
@@ -57,7 +55,6 @@ export const LESSON_9: Lesson = {
       recording: 21,
       title: 'The second verse',
       kind: 'read',
-      notes: '',
       instructions: `
 Now learn the words of the second verse. Read along on page 17 of your workbook.
 
@@ -78,7 +75,6 @@ Did you notice anything? The last part of this verse is the same as the last par
       recording: 23,
       title: 'The third verse',
       kind: 'read',
-      notes: '',
       instructions: `
 And now the third verse. Follow along on page 18 of your workbook.
 
@@ -97,7 +93,6 @@ In English: through the messenger Gabriel, alleluia; the Virgin conceived a son,
       recording: 25,
       title: 'Listen to the song',
       kind: 'read',
-      notes: '',
       instructions: `
 Now listen to a recording of the verses, following along on page 19 of your workbook. Press Hear the choir and read the words as the choir sings.
 

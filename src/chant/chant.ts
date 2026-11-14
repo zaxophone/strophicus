@@ -1,5 +1,5 @@
 /**
- * Square-note chant on a four-line staff, with pitches written as gabc letters.
+ * Square-note chant on a four-line staff, written in gabc (see `gabc.ts`).
  *
  * In gabc `a` is the lowest pitch and each letter is one step (a line or the
  * space beside it) above the one before; on a four-line staff the lines are
@@ -7,6 +7,7 @@
  * solfege name and interval follows from where it sits relative to that line.
  */
 
+import { parseGabc } from './gabc';
 import { neumeFor } from './neumes';
 
 const FIRST_LINE = 'd'.charCodeAt(0);
@@ -49,7 +50,9 @@ export interface Chant {
   breaks: number[];
 }
 
+/** What a gabc snippet says about its notes, as `parseGabc` reads it. */
 export interface ParsedPhrases {
+  clefLine: number;
   notes: string;
   bars: number[];
   doubles: number[];
@@ -62,106 +65,30 @@ export interface ParsedPhrases {
 }
 
 /**
- * Reads notes with phrases split by `|`, as bars are written in the book:
- * "cde|edc" is six notes with a bar between the third and fourth. `||` is a
- * double bar, and a comma is the short tick that asks for a longer note
- * without a breath. Notes in square brackets are joined into one figure on a
- * syllable: "c[de]f". After a note or a group, `.` gives the note (the last
- * one, for a group) a dot (punctum mora) and `_` a line over it (episema, over
- * every note of a group), as in gabc: "cd.e_" or "c[de]_.". An apostrophe puts an
- * ictus (a small vertical stroke) under the note, or the first note of a group.
- * An `x` after a single note's letter puts a flat sign before it ("hix"), as in gabc.
+ * A chant from a gabc snippet (see `parseGabc`), with each group checked to be
+ * drawable, and any flat sign checked to be before ti.
  */
-export function parsePhrases(text: string): ParsedPhrases {
-  let notes = '';
-  const bars: number[] = [];
-  const doubles: number[] = [];
-  const ticks: number[] = [];
-  const moras: number[] = [];
-  const episemas: number[] = [];
-  const ictus: number[] = [];
-  const flats: number[] = [];
-  const groups: Group[] = [];
-  let pending: 'tick' | 'bar' | 'double' | null = null;
-  let previous = '';
-  let open: number | null = null; // where the group being read began
-  // The notes that a following `.` or `_` belongs to: the last note, or the whole group.
-  let target: number[] | null = null;
-  const fail = (message: string): never => {
-    throw new Error(`${message}: "${text}"`);
-  };
-
-  for (const ch of text) {
-    if (/\s/.test(ch)) continue;
-    if (ch === '|' || ch === ',') {
-      if (open !== null) fail('A bar or tick cannot be inside a group');
-      if (ch === '|') pending = previous === '|' ? 'double' : 'bar';
-      else pending ??= 'tick';
-      target = null;
-    } else if (ch === '[') {
-      if (open !== null) fail('Groups cannot be nested');
-      open = notes.length;
-      target = null;
-    } else if (ch === ']') {
-      if (open === null) fail('A group is closed that was never opened');
-      const length = notes.length - open!;
-      if (length < 2) fail('A group needs at least two notes');
-      groups.push({ start: open!, length });
-      target = Array.from({ length }, (_, i) => open! + i);
-      open = null;
-    } else if (ch === 'x') {
-      if (open !== null) fail('A flat sign cannot be inside a group yet');
-      if (target === null || target.length !== 1 || previous === ']') fail('"x" must follow a single note');
-      if (flats.includes(target![0])) fail('A note has only one flat sign');
-      flats.push(target![0]);
-    } else if (ch === "'") {
-      if (target === null) fail(`"'" must follow a note or a group`);
-      if (ictus.includes(target![0])) fail('A note has only one ictus');
-      ictus.push(target![0]);
-    } else if (ch === '.' || ch === '_') {
-      if (target === null) fail(`"${ch}" must follow a note or a group`);
-      if (ch === '.') {
-        const last = target![target!.length - 1];
-        if (moras.includes(last)) fail('A note has only one dot');
-        moras.push(last);
-      } else {
-        if (episemas.includes(target![0])) fail('A note has only one episema');
-        episemas.push(...target!);
-      }
-    } else {
-      // a note, or the first note of a group, takes the division waiting before it
-      if (pending !== null && notes.length > 0 && (open === null || open === notes.length)) {
-        if (pending === 'tick') ticks.push(notes.length);
-        else {
-          bars.push(notes.length);
-          if (pending === 'double') doubles.push(notes.length);
-        }
-      }
-      pending = null;
-      notes += ch;
-      target = open === null ? [notes.length - 1] : null;
-    }
-    previous = ch;
-  }
-  if (open !== null) fail('A group is never closed');
-  return { notes, bars, doubles, ticks, moras, episemas, ictus, flats, groups };
-}
-
-/** A chant from notation as `parsePhrases` reads it, with each group checked to be drawable. */
-export function makeChant(text: string, clefLine: number, breaks: number[] = []): Chant {
-  const chant: Chant = { clefLine, breaks, ...parsePhrases(text) };
+export function makeChant(gabc: string, breaks: number[] = []): Chant {
+  const { words: _words, ...parsed } = parseGabc(gabc);
+  const chant: Chant = { breaks, ...parsed };
+  const { clefLine } = chant;
   for (const k of chant.flats) {
     if (solfegeName(chant.notes[k], clefLine) !== 'ti') {
-      throw new Error(`A flat sign goes before ti, not ${solfegeName(chant.notes[k], clefLine)}: "${text}"`);
+      throw new Error(`A flat sign goes before ti, not ${solfegeName(chant.notes[k], clefLine)}: "${gabc}"`);
     }
   }
   for (const { start, length } of chant.groups) {
     const positions = [...chant.notes.slice(start, start + length)].map(staffPosition);
     if (!neumeFor(positions)) {
-      throw new Error(`No single figure for the group "${chant.notes.slice(start, start + length)}": "${text}"`);
+      throw new Error(`No single figure for the group "${chant.notes.slice(start, start + length)}": "${gabc}"`);
     }
   }
   return chant;
+}
+
+/** The text under each syllable of a gabc snippet, if it has any (see `parseGabc`). */
+export function gabcWords(gabc: string): string[] | undefined {
+  return parseGabc(gabc).words;
 }
 
 /** One syllable's worth of notes: a joined group, or a note on its own. */

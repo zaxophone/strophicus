@@ -10,7 +10,6 @@ import { exercise, Lesson } from '../../exercise/exercise';
 // (`key`, the book's [do=d]). The wording is the instructor's script turned
 // into directions for a student working alone: the teacher's questions become
 // instructions, and "write the names" becomes the naming exercises.
-const clefLine = 4;
 const workbook = "Words with Wings Children's Workbook";
 const instructor = 'Words with Wings Instructor Edition';
 
@@ -27,14 +26,13 @@ export const LESSON_3: Lesson = {
       given: 1,
       key: 'do=d',
       // the staff printed at the top of workbook page 4: the scale from high to low
-      notes: 'jihgfedc',
-      clefLine,
+      gabc: '(c4) (j) (i) (h) (g) (f) (e) (d) (c)',
       instructions: `
 Gregorian chant is written on a staff of four lines, not five, and the notes are square.
 
 The sign at the start of the staff is the do clef. It sits on the top line, so the note on that line is do.
 
-{{staff; 4; j; do}}
+{{gabc: (c4) do(j)}}
 
 The notes of this scale go down the staff, from the highest to the lowest.
 
@@ -47,8 +45,7 @@ Tap a note, then choose its name: do re mi fa sol la ti. The first one is given 
       key: 'do=d',
       // up from the low do to the do on the clef line, then back down; the
       // books print only the descending half
-      notes: 'cdefghijihgfedc',
-      clefLine,
+      gabc: '(c4) (c) (d) (e) (f) (g) (h) (i) (j) (i) (h) (g) (f) (e) (d) (c)',
       breaks: [8],
       instructions: `
 Now sing what you have named: the scale from the low do up to the high do and back down again.
@@ -64,8 +61,7 @@ Give every note the same length, like steady footsteps, and choose a pace that f
       kind: 'name',
       given: 3,
       key: 'do=d',
-      notes: 'cde|edc|cdd|dcd|ded',
-      clefLine,
+      gabc: '(c4) (c) (d) (e;) (e) (d) (c;) (c) (d) (d;) (d) (c) (d;) (d) (e) (d)',
       instructions: `
 Here is a longer line. The first three notes are named for you: do, re, mi. Name the rest.
 
@@ -79,8 +75,7 @@ The short vertical lines divide the music into small phrases, like commas in a s
       recording: 5,
       title: 'Exercise 1: sing it',
       key: 'do=d',
-      notes: 'cde|edc|cdd|dcd|ded',
-      clefLine,
+      gabc: '(c4) (c) (d) (e;) (e) (d) (c;) (c) (d) (d;) (d) (c) (d;) (d) (e) (d)',
       instructions: `
 Sing the names you just worked out: do re mi, mi re do, and so on.
 
@@ -95,8 +90,7 @@ Start on do, the lowest note, and use your first note as the key for the whole e
       kind: 'name',
       given: 1,
       key: 'do=d',
-      notes: 'cded|ddde|eded|cded',
-      clefLine,
+      gabc: '(c4) (c) (d) (e) (d;) (d) (d) (d) (e;) (e) (d) (e) (d;) (c) (d) (e) (d)',
       instructions: `
 The next line starts on do. Name the rest of the notes, group by group.
 
@@ -108,8 +102,7 @@ Look for notes that sit side by side at the same height. They have the same name
       recording: 6,
       title: 'Exercise 2: sing it',
       key: 'do=d',
-      notes: 'cded|ddde|eded|cded',
-      clefLine,
+      gabc: '(c4) (c) (d) (e) (d;) (d) (d) (d) (e;) (e) (d) (e) (d;) (c) (d) (e) (d)',
       instructions: `
 Four groups of four notes. Start on do and sing the names you just worked out.
 
@@ -125,8 +118,7 @@ At each vertical line, sing the last note for one beat and then rest for one bea
       given: 1,
       key: 're=e',
       // the book labels the four phrases A to D and starts this one on re
-      notes: 'dcde|ddecd|eccd|deced',
-      clefLine,
+      gabc: '(c4) (d) (c) (d) (e;) (d) (d) (e) (c) (d;) (e) (c) (c) (d;) (d) (e) (c) (e) (d)',
       instructions: `
 This is the hardest one, and it does not start on do. The first note is re, on the bottom line, and the next note goes down to do.
 
@@ -138,8 +130,7 @@ Name every note. The four groups are called A, B, C and D in your workbook.`,
       recording: 7,
       title: 'Exercise 3: sing it',
       key: 're=e',
-      notes: 'dcde|ddecd|eccd|deced',
-      clefLine,
+      gabc: '(c4) (d) (c) (d) (e;) (d) (d) (e) (c) (d;) (e) (c) (c) (d;) (d) (e) (c) (e) (d)',
       instructions: `
 Sing the names of this line, starting on re.
 

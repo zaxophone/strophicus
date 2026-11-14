@@ -23,7 +23,7 @@ describe('instruction pages', () => {
   it('keeps a picture on the page with the paragraph that introduces it', () => {
     const a = 'a'.repeat(200);
     const b = 'b'.repeat(200);
-    const figure = '{{staff; 4; hij}}';
+    const figure = '{{gabc: (c4) (h) (i) (j)}}';
     // without the rule, b would sit at the end of the first page and its figure would start the next
     expect(paginate(`${a}\n\n${b}\n\n${figure}`, 380)).toEqual([[a], [b, figure]]);
   });

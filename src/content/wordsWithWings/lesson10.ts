@@ -1,5 +1,6 @@
 import { exercise, Lesson } from '../../exercise/exercise';
-import { MELODY, PUER_NATUS_CLEF, PUER_NATUS_KEY, VERSE_TEXT } from './puerNatus';
+import { joinGabc, withoutText } from '../../chant/gabc';
+import { PUER_NATUS, PUER_NATUS_KEY } from './puerNatus';
 
 // Lesson 10, "Practice Makes Perfect": Puer natus in Bethlehem sung from the
 // beginning to the end, with all the verses on workbook p. 19. The four lines of
@@ -11,8 +12,7 @@ const instructor = 'Words with Wings Instructor Edition';
 
 /** The song in two halves: lines 1 and 2, then lines 3 and 4 (the refrain). */
 const HALVES = [[0, 1], [2, 3]];
-const halfNotes = (half: number) => HALVES[half].map((i) => MELODY[i]).join('|');
-const halfText = (verse: number, half: number) => HALVES[half].map((i) => VERSE_TEXT[verse][i]).join(' ');
+const halfOf = (verse: number, which: number) => joinGabc(...HALVES[which].map((i) => PUER_NATUS[verse][i]));
 const HALF_NAMES = ['first half', 'second half'];
 
 export const LESSON_10: Lesson = {
@@ -26,7 +26,6 @@ export const LESSON_10: Lesson = {
       recording: 25,
       title: 'Practice',
       kind: 'read',
-      notes: '',
       instructions: `
 What do you think the saying "practice makes perfect" has to do with singing Gregorian chant?
 
@@ -38,7 +37,6 @@ Today you practise Puer natus in Bethlehem from the beginning and all the way th
       recording: 24,
       title: 'Verses 1 to 3',
       kind: 'read',
-      notes: '',
       instructions: `
 1. Puer natus in Bethlehem, alleluia,
 unde gaudet Jerusalem, alleluia, alleluia.
@@ -61,7 +59,6 @@ In cordis jubilo ...
       id: 'wow-10-verses-4-7',
       title: 'Verses 4 to 7',
       kind: 'read',
-      notes: '',
       instructions: `
 4. Hic jacet in praesepio, alleluia,
 qui regnat sine termino, alleluia, alleluia.
@@ -93,8 +90,7 @@ On this joyous natal day, alleluia. Let us bless the Lord, alleluia, alleluia.`,
         id: `wow-10-names-${half + 1}`,
         title: `Sing the names: ${HALF_NAMES[half]}`,
         key: PUER_NATUS_KEY,
-        notes: halfNotes(half),
-        clefLine: PUER_NATUS_CLEF,
+        gabc: withoutText(halfOf(1, half)),
         instructions: `
 Sing the ${HALF_NAMES[half]} of the song with the names of the notes. Take a breath at each bar.${
           half === 1 ? ' The flat sign in the first line makes that note te.' : ''
@@ -109,9 +105,7 @@ Sing the ${HALF_NAMES[half]} of the song with the names of the notes. Take a bre
           recording: verse === 1 ? 25 : undefined,
           title: `Verse ${verse}: ${HALF_NAMES[half]}`,
           key: PUER_NATUS_KEY,
-          notes: halfNotes(half),
-          text: halfText(verse, half),
-          clefLine: PUER_NATUS_CLEF,
+          gabc: halfOf(verse, half),
           instructions: `
 Sing the ${HALF_NAMES[half]} of verse ${verse} of Puer natus in Bethlehem. Take a breath at each bar, and hold the notes with a line over them or a dot a little longer.${
             verse === 1 ? ' Hear the choir sings the first five verses.' : ''

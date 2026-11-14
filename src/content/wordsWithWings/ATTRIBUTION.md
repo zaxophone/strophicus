@@ -2,8 +2,10 @@
 
 The exercises in this folder are transcribed from **Words with Wings: Children's
 Workbook** by Wilko Brouwers, which is licensed under **CC BY-SA**. They are
-adapted here into a machine-readable form (pitch letters as in gabc, with `|`
-for the small bar line, and the do clef on the line the book prints it).
+adapted here into a machine-readable form: standard **gabc** snippets (the text
+format of [Gregorio](https://gregorio-project.github.io/gabc/)), each with the
+do clef on the line the book prints it and the words under the notes as the book
+prints them.
 
 Because of the share-alike condition, this folder (and anything derived from the
 workbook) should be kept apart from the app's code, with its own licence notice,
@@ -19,10 +21,18 @@ Each exercise records the workbook page it was read from in its `source` field.
 Pages are the printed page numbers.
 
 
-**Notation beyond plain notes.** Later lessons also use `||` (double bar), `,`
-(divisio minima, the short tick), and `_` and `.` after a note (episema and
-dot). Words printed under the notes are split to one per note, so "Sancte" is
-written "Sanc- te".
+**Notation.** Melodies are written as gabc snippets, as `\gabcsnippet` takes them: a
+clef, then each syllable's text with its notes in parentheses, for example
+`(c4) Pu(d)er(f) na(f)tus(e) in(f) Bét(g)le(f)hem,(e;)`. The app reads this subset:
+pitches `a`-`m` after a do clef (`c1`-`c4`); notes in one pair of parentheses are a
+joined figure on one syllable (`(de)`); after a note `.` is a dot (punctum mora), `_`
+an episema, `'` an ictus and `x` a flat sign (before ti only); and the divisions `,`
+(divisio minima), `;` (divisio minor, a half bar) and `::` (a double bar). Syllables of
+one word touch, and a space starts the next word, so the hyphens printed under the
+notes are derived. Anything else in gabc is refused with an error rather than misread.
+Every snippet is also compiled with the `gregorio` program by a test
+(`src/content/gabc.compile.test.ts`), so each one is valid gabc and not only valid for
+this app.
 
 **Psalm texts need a separate permission check.** The sentences in Lessons 1
 and 2 ("Come, let us ring out our joy to the LORD", and the seven workbook

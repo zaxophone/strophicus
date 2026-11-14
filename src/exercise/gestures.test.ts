@@ -5,37 +5,37 @@ import { LESSONS } from './lessons';
 
 describe('ruleGestures', () => {
   it('lifts at the start, on rising notes and after a bar, and settles otherwise', () => {
-    expect(ruleGestures(makeChant("ee'eg'hi'", 3))).toEqual([null, 'thesis', null, 'arsis', null, 'thesis']);
+    expect(ruleGestures(makeChant("(c3) (e) (e') (e) (g') (h) (i')"))).toEqual([null, 'thesis', null, 'arsis', null, 'thesis']);
     // a phrase after a bar begins with an arsis even when it does not rise
-    expect(ruleGestures(makeChant("h'gf'|f'e", 3))).toEqual(['arsis', null, 'thesis', 'arsis', null]);
+    expect(ruleGestures(makeChant("(c3) (h') (g) (f';) (f') (e)"))).toEqual(['arsis', null, 'thesis', 'arsis', null]);
   });
 
   it('gives the Alleluia a thesis on le and on ia', () => {
-    expect(ruleGestures(makeChant("gg'hg'", 4))).toEqual([null, 'thesis', null, 'thesis']);
+    expect(ruleGestures(makeChant("(c4) (g) (g') (h) (g')"))).toEqual([null, 'thesis', null, 'thesis']);
   });
 
   it('always ends a phrase with a thesis, even when the melody rises into it', () => {
     // do ti la do: the last note rises, but it ends the phrase
-    expect(ruleGestures(makeChant("hg'fh'", 3))).toEqual([null, 'thesis', null, 'thesis']);
-    expect(ruleGestures(makeChant("hg'fh'|hg'f", 3))).toEqual([null, 'thesis', null, 'thesis', null, 'thesis', null]);
+    expect(ruleGestures(makeChant("(c3) (h) (g') (f) (h')"))).toEqual([null, 'thesis', null, 'thesis']);
+    expect(ruleGestures(makeChant("(c3) (h) (g') (f) (h';) (h) (g') (f)"))).toEqual([null, 'thesis', null, 'thesis', null, 'thesis', null]);
   });
 
   it('only gives a gesture at the notes with an ictus', () => {
-    expect(ruleGestures(makeChant('hgf', 3))).toEqual([null, null, null]);
+    expect(ruleGestures(makeChant('(c3) (h) (g) (f)'))).toEqual([null, null, null]);
   });
 });
 
 describe('ictus and gestures in notation', () => {
   it('reads an apostrophe as an ictus on the note before it', () => {
-    expect(makeChant("g'gh'g", 4).ictus).toEqual([0, 2]);
-    expect(makeChant("[gh]'g", 4).ictus).toEqual([0]);
-    expect(() => makeChant("'g", 4)).toThrow();
+    expect(makeChant("(c4) (g') (g) (h') (g)").ictus).toEqual([0, 2]);
+    expect(makeChant("(c4) (g'h) (g)").ictus).toEqual([0]);
+    expect(() => makeChant("(c4) (')")).toThrow();
   });
 
   it('reads a figure with a gesture for each syllable', () => {
-    const block = parseBlock("{{staff; 4; g'gh'g; Al- le- lú- ia; a - t -}}");
+    const block = parseBlock("{{gabc: (c4) Al(g')le(g)lú(h')ia(g) @ a - t -}}");
     expect(block.kind === 'staff' && block.gestures).toEqual(['arsis', null, 'thesis', null]);
-    expect(() => parseBlock('{{staff; 4; gghg; Al- le- lú- ia; a t}}')).toThrow();
+    expect(() => parseBlock('{{gabc: (c4) Al(g)le(g)lú(h)ia(g) @ a t}}')).toThrow();
   });
 });
 
