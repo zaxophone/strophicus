@@ -1,4 +1,5 @@
 import { exercise, Exercise, Lesson } from '../../exercise/exercise';
+import { MELODY, PUER_NATUS_CLEF, PUER_NATUS_KEY, VERSE_TEXT } from './puerNatus';
 
 // Lesson 8, "A Child Is Born": the Christmas chant Puer natus in Bethlehem
 // (workbook p. 15, with the words, and p. 16, the same five staves without them
@@ -6,8 +7,8 @@ import { exercise, Exercise, Lesson } from '../../exercise/exercise';
 // and re is d; the key tag is [re=d]. The third staff has the first flat sign:
 // the ti of "jubilo" is sung as te. Read from the instructor edition p. 21-22
 // (the workbook's own scan of p. 15-16 has the same staves).
-const clefLine = 4;
-const key = 're=d';
+const clefLine = PUER_NATUS_CLEF;
+const key = PUER_NATUS_KEY;
 const workbook = "Words with Wings Children's Workbook";
 const instructor = 'Words with Wings Instructor Edition';
 
@@ -23,26 +24,26 @@ interface Line {
 const LINES: Line[] = [
   {
     n: 1,
-    notes: 'dffefgfedfe_d.',
-    text: 'Pu- er na- tus in Bét- le- hem, al- le- lú- ia',
+    notes: MELODY[0],
+    text: VERSE_TEXT[1][0],
     intro: 'The first line of the song. It climbs gently to its highest note on "Bét", the accented syllable of Bethlehem.',
   },
   {
     n: 2,
-    notes: 'dfghghgf_|ffffhgf_e.',
-    text: 'Un- de gau- det Je- rú- sa- lem, al- le- lú- ia, al- le- lú- ia',
+    notes: MELODY[1],
+    text: VERSE_TEXT[1][1],
     intro: 'The second line has a bar in the middle: take a breath there. The four notes in a row on "alleluia" are all the same.',
   },
   {
     n: 3,
-    notes: 'dfghixj_',
-    text: 'In cor- dis jú- bi- lo',
+    notes: MELODY[2],
+    text: VERSE_TEXT[1][2],
     intro: 'Look at the fifth note: it has a flat sign in front of it, so you sing te there, not ti.',
   },
   {
     n: 4,
-    notes: 'jfffhgf_e|dffeed',
-    text: 'Chri- stum na- tum a- do- ré- mus, Cum no- vo cán- ti- co',
+    notes: MELODY[3],
+    text: VERSE_TEXT[1][3],
     intro: 'The last line starts on the highest note, do, on the top line. Take a breath at the bar.',
   },
 ];

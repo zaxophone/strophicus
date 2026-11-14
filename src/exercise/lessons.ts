@@ -7,10 +7,12 @@ import { LESSON_5 } from '../content/wordsWithWings/lesson5';
 import { LESSON_6 } from '../content/wordsWithWings/lesson6';
 import { LESSON_7 } from '../content/wordsWithWings/lesson7';
 import { LESSON_8 } from '../content/wordsWithWings/lesson8';
+import { LESSON_9 } from '../content/wordsWithWings/lesson9';
+import { LESSON_10 } from '../content/wordsWithWings/lesson10';
 import { ARSIS_THESIS } from '../content/arsisThesis';
 import { PRACTICE } from '../content/practice';
 import type { Exercise, Lesson } from './exercise';
 
-export const LESSONS: Lesson[] = [LESSON_INTRO, LESSON_1, LESSON_2, LESSON_3, LESSON_4, LESSON_5, LESSON_6, ARSIS_THESIS, LESSON_7, LESSON_8, PRACTICE];
+export const LESSONS: Lesson[] = [LESSON_INTRO, LESSON_1, LESSON_2, LESSON_3, LESSON_4, LESSON_5, LESSON_6, ARSIS_THESIS, LESSON_7, LESSON_8, LESSON_9, LESSON_10, PRACTICE];
 
 export const ALL_EXERCISES: Exercise[] = LESSONS.flatMap((lesson) => lesson.exercises);

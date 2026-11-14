@@ -23,4 +23,9 @@ export const RECORDINGS: Record<number, number> = {
   18: require('./audio/18_et_in_terra_pax_hominibus.mp3'),
   19: require('./audio/19_puer_natus_spoken.mp3'),
   20: require('./audio/20_puer_natus_in_bethlehem.mp3'),
+  21: require('./audio/21_assumpsit_carnem_filius_spoken.mp3'),
+  22: require('./audio/22_assumpsit_carnem_filius.mp3'),
+  23: require('./audio/23_per_gabrielem_nuntum_spoken.mp3'),
+  24: require('./audio/24_puer_natus_in_bethlehem_verses_15_spoken.mp3'),
+  25: require('./audio/25_puer_natus_in_bethlehem_verses_15.mp3'),
 };
