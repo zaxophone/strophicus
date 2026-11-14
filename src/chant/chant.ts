@@ -41,6 +41,8 @@ export interface Chant {
   episemas: number[];
   /** Indexes of notes with an ictus, the small vertical stroke under a note (the first note of a group). */
   ictus: number[];
+  /** Indexes of notes with a flat sign written before them; each lowers its ti to te (see `flattened`). */
+  flats: number[];
   /** The notes joined into one figure (two or three on a syllable); every other note stands alone. */
   groups: Group[];
   /** Indexes where a new line of the staff must begin. */
@@ -55,6 +57,7 @@ export interface ParsedPhrases {
   moras: number[];
   episemas: number[];
   ictus: number[];
+  flats: number[];
   groups: Group[];
 }
 
@@ -67,6 +70,7 @@ export interface ParsedPhrases {
  * one, for a group) a dot (punctum mora) and `_` a line over it (episema, over
  * every note of a group), as in gabc: "cd.e_" or "c[de]_.". An apostrophe puts an
  * ictus (a small vertical stroke) under the note, or the first note of a group.
+ * An `x` after a single note's letter puts a flat sign before it ("hix"), as in gabc.
  */
 export function parsePhrases(text: string): ParsedPhrases {
   let notes = '';
@@ -76,6 +80,7 @@ export function parsePhrases(text: string): ParsedPhrases {
   const moras: number[] = [];
   const episemas: number[] = [];
   const ictus: number[] = [];
+  const flats: number[] = [];
   const groups: Group[] = [];
   let pending: 'tick' | 'bar' | 'double' | null = null;
   let previous = '';
@@ -104,6 +109,11 @@ export function parsePhrases(text: string): ParsedPhrases {
       groups.push({ start: open!, length });
       target = Array.from({ length }, (_, i) => open! + i);
       open = null;
+    } else if (ch === 'x') {
+      if (open !== null) fail('A flat sign cannot be inside a group yet');
+      if (target === null || target.length !== 1 || previous === ']') fail('"x" must follow a single note');
+      if (flats.includes(target![0])) fail('A note has only one flat sign');
+      flats.push(target![0]);
     } else if (ch === "'") {
       if (target === null) fail(`"'" must follow a note or a group`);
       if (ictus.includes(target![0])) fail('A note has only one ictus');
@@ -134,12 +144,17 @@ export function parsePhrases(text: string): ParsedPhrases {
     previous = ch;
   }
   if (open !== null) fail('A group is never closed');
-  return { notes, bars, doubles, ticks, moras, episemas, ictus, groups };
+  return { notes, bars, doubles, ticks, moras, episemas, ictus, flats, groups };
 }
 
 /** A chant from notation as `parsePhrases` reads it, with each group checked to be drawable. */
 export function makeChant(text: string, clefLine: number, breaks: number[] = []): Chant {
   const chant: Chant = { clefLine, breaks, ...parsePhrases(text) };
+  for (const k of chant.flats) {
+    if (solfegeName(chant.notes[k], clefLine) !== 'ti') {
+      throw new Error(`A flat sign goes before ti, not ${solfegeName(chant.notes[k], clefLine)}: "${text}"`);
+    }
+  }
   for (const { start, length } of chant.groups) {
     const positions = [...chant.notes.slice(start, start + length)].map(staffPosition);
     if (!neumeFor(positions)) {
@@ -244,6 +259,21 @@ export function degree(letter: string, clefLine: number): number {
 export function solfegeName(letter: string, clefLine: number): string {
   const d = degree(letter, clefLine);
   return SOLFEGE[((d % 7) + 7) % 7];
+}
+
+/**
+ * Which notes are sung flat. A flat sign lowers its note, and the notes after
+ * it on the same line or space, until the next bar.
+ */
+export function flattened(chant: Pick<Chant, 'notes' | 'bars' | 'flats'>): boolean[] {
+  const out: boolean[] = [];
+  let active: string | null = null;
+  for (let k = 0; k < chant.notes.length; k++) {
+    if (chant.bars.includes(k)) active = null;
+    if (chant.flats.includes(k)) active = chant.notes[k];
+    out.push(active === chant.notes[k]);
+  }
+  return out;
 }
 
 /** Semitones above the tonic of a note `d` degrees above do (re is 1). */

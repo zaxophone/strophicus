@@ -109,7 +109,9 @@ export function ChantStaff({ width, chant, labels, captions, marks, gestures, wa
   const needed = Math.max(0, ...widths.map((w, i) => (w + (widths[i + 1] ?? w)) / 2));
   // and a joined figure must fit its column
   const widestFigure = Math.max(0, ...neumes.map((n) => (n ? (n.glyph.advance * SPACE) / LINE_PITCH : 0)));
-  const minUnit = Math.max(MIN_UNIT, Math.ceil(needed + 6), Math.ceil(widestFigure + 8));
+  // and a note with a flat sign needs room for the sign beside it
+  const flatFigure = chant.flats.length ? ((GLYPHS.Punctum.advance + GLYPHS.Flat.advance) * SPACE) / LINE_PITCH : 0;
+  const minUnit = Math.max(MIN_UNIT, Math.ceil(needed + 6), Math.ceil(widestFigure + 8), Math.ceil(flatFigure + 8));
   const maxUnit = Math.max(MAX_UNIT, minUnit);
   const breaks = layoutBreaks(
     syllables.length,
@@ -237,6 +239,11 @@ export function ChantStaff({ width, chant, labels, captions, marks, gestures, wa
         );
       } else {
         elements.push(glyph(key('note', column), 'Punctum', x - noteW / 2, onStaff(ps[0]), ink));
+        if (chant.flats.includes(start)) {
+          // The flat sign stands just before its note, on the same line or space.
+          const flatW = GLYPHS.Flat.advance * scl;
+          elements.push(glyph(key('flat', column), 'Flat', x - noteW / 2 - flatW - sp * 0.1, onStaff(ps[0]), ink));
+        }
       }
       if (notes.some((n) => chant.episemas.includes(n))) {
         // The line over the notes: in the space above the highest head, clear of the line above a space note.

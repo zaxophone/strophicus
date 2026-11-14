@@ -1,6 +1,7 @@
 import {
   BAR_UNITS,
   degree,
+  flattened,
   layoutBreaks,
   makeChant,
   parsePhrases,
@@ -15,6 +16,7 @@ import {
   unitLabels,
   units,
 } from './chant';
+import { exercise } from '../exercise/exercise';
 
 describe('chant pitches', () => {
   it('puts the staff lines at d, f, h and j', () => {
@@ -72,7 +74,7 @@ describe('splitSystems', () => {
 });
 
 describe('parsePhrases', () => {
-  const plain = { bars: [], doubles: [], ticks: [], moras: [], episemas: [], ictus: [], groups: [] };
+  const plain = { bars: [], doubles: [], ticks: [], moras: [], episemas: [], ictus: [], flats: [], groups: [] };
 
   it('turns bars between phrases into note indexes', () => {
     expect(parsePhrases('cde|edc|cdd')).toEqual({ ...plain, notes: 'cdeedccdd', bars: [3, 6] });
@@ -200,5 +202,25 @@ describe('layoutBreaks', () => {
     for (let i = 0; i < edges.length - 1; i++) {
       expect(systemUnits(edges[i], edges[i + 1], bars)).toBeLessThanOrEqual(7);
     }
+  });
+});
+
+describe('flat sign', () => {
+  // with the do clef on line 4, do is j and ti is i
+  it('parses x after a note and keeps the flat until the next bar', () => {
+    const chant = makeChant('jixhi|i', 4);
+    expect(chant.flats).toEqual([1]);
+    expect(flattened(chant)).toEqual([false, true, false, true, false]);
+  });
+
+  // with the do clef on line 3, do is h and ti is g
+  it('lowers the pitch and renames ti to te', () => {
+    const e = exercise({ id: 'f', title: 'f', notes: 'hgxhg|g', clefLine: 3, instructions: 'x' });
+    expect(e.labels).toEqual(['do', 'te', 'do', 'te', 'ti']);
+    expect(e.offsets).toEqual([0, -2, 0, -2, -1]);
+  });
+
+  it('refuses a flat on anything but ti', () => {
+    expect(() => makeChant('hix', 3)).toThrow(/ti/);
   });
 });

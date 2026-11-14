@@ -4,6 +4,7 @@ import { ExerciseKey, parseKey } from './key';
 import {
   Chant,
   makeChant,
+  flattened,
   semitonesAboveDo,
   solfegeName,
   unitIndexOf,
@@ -145,6 +146,7 @@ export function exercise(spec: ExerciseSpec): Exercise {
   const chant: Chant = makeChant(spec.notes, spec.clefLine ?? 2, spec.breaks);
   const { notes, moras, episemas, ticks } = chant;
   const letters = [...notes];
+  const flat = flattened(chant);
   const words = spec.text === undefined ? undefined : spec.text.trim().split(/\s+/);
   const syllables = units(chant).length;
   if (spec.kind === 'mark' && chant.ictus.length === 0) throw new Error(`${spec.id}: a mark exercise needs ictus`);
@@ -160,11 +162,11 @@ export function exercise(spec: ExerciseSpec): Exercise {
     chant,
     gestures:
       spec.gestures !== undefined ? specGestures(spec, chant) : spec.kind === 'mark' ? ruleGestures(chant) : undefined,
-    labels: letters.map((n) => solfegeName(n, chant.clefLine)),
+    labels: letters.map((n, k) => (flat[k] ? 'te' : solfegeName(n, chant.clefLine))),
     words,
     lines: spec.lines,
     answer: spec.answer,
-    offsets: letters.map((n) => semitonesAboveDo(n, chant.clefLine)),
+    offsets: letters.map((n, k) => semitonesAboveDo(n, chant.clefLine) - (flat[k] ? 1 : 0)),
     beats:
       spec.beats ??
       letters.map((_, i) => (moras.includes(i) ? 2 : episemas.includes(i) || ticks.includes(i + 1) ? LONGER : 1)),
