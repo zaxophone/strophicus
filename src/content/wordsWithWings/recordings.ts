@@ -28,4 +28,11 @@ export const RECORDINGS: Record<number, number> = {
   23: require('./audio/23_per_gabrielem_nuntum_spoken.mp3'),
   24: require('./audio/24_puer_natus_in_bethlehem_verses_15_spoken.mp3'),
   25: require('./audio/25_puer_natus_in_bethlehem_verses_15.mp3'),
+  26: require('./audio/26_deus_canticum_novum_cantabo_tibi_spoken.mp3'),
+  27: require('./audio/27_deus_canticum_novum_cantabo_tibi.mp3'),
+  28: require('./audio/28_deus_canticum_novum_cantabo_tibi.mp3'),
+  29: require('./audio/29_deus_canticum_novum_cantabo_tibi.mp3'),
+  30: require('./audio/30_deus_canticum_novum_cantabo_tibi.mp3'),
+  31: require('./audio/31_deus_canticum_novum_cantabo_tibi.mp3'),
+  32: require('./audio/32_deus_canticum_novum_cantabo_tibi.mp3'),
 };
