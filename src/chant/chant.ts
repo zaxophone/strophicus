@@ -68,9 +68,9 @@ export interface ParsedPhrases {
  * A chant from a gabc snippet (see `parseGabc`), with each group checked to be
  * drawable, and any flat sign checked to be before ti.
  */
-export function makeChant(gabc: string, breaks: number[] = []): Chant {
+export function makeChant(gabc: string): Chant {
   const { words: _words, ...parsed } = parseGabc(gabc);
-  const chant: Chant = { breaks, ...parsed };
+  const chant: Chant = parsed;
   const { clefLine } = chant;
   for (const k of chant.flats) {
     if (solfegeName(chant.notes[k], clefLine) !== 'ti') {

@@ -1,7 +1,7 @@
 import { parseGabc, joinGabc, withoutText } from './gabc';
 
 describe('parseGabc', () => {
-  const plain = { bars: [], doubles: [], ticks: [], moras: [], episemas: [], ictus: [], flats: [], groups: [] };
+  const plain = { bars: [], doubles: [], ticks: [], moras: [], episemas: [], ictus: [], flats: [], groups: [], breaks: [], words: undefined };
 
   it('reads the clef and one note per syllable', () => {
     expect(parseGabc('(c4) (f) (g) (h)')).toEqual({ ...plain, clefLine: 4, notes: 'fgh' });
@@ -70,6 +70,15 @@ describe('parseGabc', () => {
     expect(parseGabc('(c2) (c) (de.)').moras).toEqual([2]);
     expect(parseGabc('(c2) (c) (d_e_)').episemas).toEqual([1, 2]);
     expect(parseGabc('(c2) (d_e_.)')).toMatchObject({ episemas: [0, 1], moras: [1] });
+  });
+
+ it('reads a forced line break as the note where the new line starts', () => {
+    const p = parseGabc('(c4) De(h)us,(h) a(g;)(z) b(h) c(h)');
+    expect(p.breaks).toEqual([3]);
+    expect(p.notes).toBe('hhghh');
+    expect(p.bars).toEqual([3]); // the bar before the break still belongs to the new line's first note
+    expect(parseGabc('(c4) a(h) (z)').breaks).toEqual([]); // nothing follows it
+    expect(() => parseGabc('(c4) a(h) x(z) b(h)')).toThrow();
   });
 
   it('refuses a division inside a group, or a note after one', () => {

@@ -114,8 +114,6 @@ export interface ExerciseSpec {
    * `-` for a note between ictus marks (it passes above). As the workbook draws it.
    */
   gestures?: string;
-  /** Indexes where a new line must start. */
-  breaks?: number[];
   beats?: number[];
   bpm?: number;
   instructions: string;
@@ -146,7 +144,7 @@ function specGestures(spec: ExerciseSpec, chant: Chant): (Gesture | null)[] {
  */
 export function exercise(spec: ExerciseSpec): Exercise {
   const gabc = spec.gabc ?? NO_STAFF;
-  const chant: Chant = makeChant(gabc, spec.breaks);
+  const chant: Chant = makeChant(gabc);
   const { notes, moras, episemas, ticks } = chant;
   const letters = [...notes];
   const flat = flattened(chant);

@@ -17,6 +17,8 @@
  *   - divisions inside the parentheses after the notes, or alone: `,` divisio minima (a
  *     short tick), `;` divisio minor (a half bar: a one-beat rest), `::` divisio finalis
  *     (a double bar)
+ *   - `(z)`: a line break, so the staff starts a new line there (with a custos, the little
+ *     guide note, at the end of the line above)
  *   - text: syllables of one word touch each other and a space starts the next word, so
  *     `Pu(d)er(f) na(f)tus(e)` is Pu- er na- tus; `-` after a syllable's text is allowed
  *
@@ -28,6 +30,8 @@
 import type { Group, ParsedPhrases } from './chant';
 
 export interface ParsedGabc extends ParsedPhrases {
+  /** Notes where a new staff line starts, from forced line breaks `(z)`. */
+  breaks: number[];
   /** Line (1 = bottom) carrying the do clef. */
   clefLine: number;
   /** The text under each syllable, with a trailing `-` where the word goes on, as the book prints it; absent if the snippet has no text. */
@@ -56,6 +60,7 @@ export function parseGabc(source: string): ParsedGabc {
   const episemas: number[] = [];
   const ictus: number[] = [];
   const flats: number[] = [];
+  const breaks: number[] = [];
   const groups: Group[] = [];
   const lyrics: string[] = [];
   /** Whether a space came before each syllable's text, which starts a new word. */
@@ -90,6 +95,13 @@ export function parseGabc(source: string): ParsedGabc {
       continue;
     }
     if (clefLine === null) fail('A snippet starts with its clef, such as (c4)');
+
+    // a forced line break: the staff starts a new line before the next note, and shows a custos
+    if (music === 'z') {
+      if (lyric.trim() !== '') fail('A line break has no text');
+      if (notes.length > 0 && !breaks.includes(notes.length)) breaks.push(notes.length);
+      continue;
+    }
 
     // a division on its own: it belongs after the notes before it
     if (/^[,;:]/.test(music) && !/[a-m]/.test(music)) {
@@ -162,7 +174,7 @@ export function parseGabc(source: string): ParsedGabc {
     if (lyrics.some((t) => t === '')) fail('Either every syllable has text or none does');
     words = lyrics.map((t, i) => (i < lyrics.length - 1 && !wordStart[i + 1] ? `${t}-` : t));
   }
-  return { clefLine, notes, bars, doubles, ticks, moras, episemas, ictus, flats, groups, words };
+  return { clefLine, notes, bars, doubles, ticks, moras, episemas, ictus, flats, groups, breaks: breaks.filter((b) => b < notes.length), words };
 }
 
 /** The same snippet without its text: every syllable just its notes, as `(g) (h)`. */

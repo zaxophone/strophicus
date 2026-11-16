@@ -10,8 +10,7 @@ export const PRACTICE: Lesson = {
     exercise({
       id: 'scale',
       title: 'Scale',
-      gabc: '(c2) (f) (g) (h) (i) (j) (k) (l) (m) (l) (k) (j) (i) (h) (g) (f)',
-      breaks: [8],
+      gabc: '(c2) (f) (g) (h) (i) (j) (k) (l) (m) (z) (l) (k) (j) (i) (h) (g) (f)',
       instructions: `
 Sing up the scale one step at a time, then back down again: do re mi fa sol la ti do, and then ti la sol fa mi re do.
 

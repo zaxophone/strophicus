@@ -45,8 +45,7 @@ Tap a note, then choose its name: do re mi fa sol la ti. The first one is given 
       key: 'do=d',
       // up from the low do to the do on the clef line, then back down; the
       // books print only the descending half
-      gabc: '(c4) (c) (d) (e) (f) (g) (h) (i) (j) (i) (h) (g) (f) (e) (d) (c)',
-      breaks: [8],
+      gabc: '(c4) (c) (d) (e) (f) (g) (h) (i) (j) (z) (i) (h) (g) (f) (e) (d) (c)',
       instructions: `
 Now sing what you have named: the scale from the low do up to the high do and back down again.
 
