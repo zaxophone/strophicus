@@ -57,7 +57,7 @@ So now, in one breath, sing the groups that go down in the middle.`,
 const PUZZLE: Phrase[] = [
   { n: 1, recording: 43, gabc: '(f3) (f) (g) (hih) (gf)', intro: 'Phrase A' },
   { n: 2, recording: 44, gabc: '(f3) (f) (h;) (ihi) (hg) (f)', intro: 'Phrase B' },
-  { n: 3, recording: 45, gabc: '(f3) (fhg) (ge) (f)', intro: 'Phrase C' },
+  { n: 3, recording: 45, gabc: '(f3) (fhg) (eg) (f)', intro: 'Phrase C' },
 ];
 
 export const LESSON_13: Lesson = {
