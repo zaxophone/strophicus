@@ -83,7 +83,7 @@ Sing it while you trace this figure in the air (workbook page 21). What you are 
   },
 ];
 
-export const GLORIA = '(c4) Et(e) in(g) ter(h)ra(h) pax(g) ho(h)mi(i)ni(h)bus(h,) bo(h)nae(h) vo(g)lun(h)tá(g)tis(e)';
+export const GLORIA = '(c4) Et(e) in(g) ter(h)ra(h) pax(g) ho(h)mi(i)ni(h)bus(h,) bo(h)nae(h) vo(g)lun(hh)tá(g)tis(e)';
 
 export const LESSON_11: Lesson = {
   id: 'wow-11',

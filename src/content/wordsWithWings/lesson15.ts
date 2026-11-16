@@ -146,7 +146,7 @@ These words mean "Thy will be done". Do you recognize them? They come from the O
       recording: 62,
       title: 'Alleluia 2',
       key,
-      gabc: '(c3) Al(h)le(h)lú(iji)ia.(ih)',
+      gabc: '(c3) Al(h)le(h)lú(iji)ia.(hi)',
       instructions: `The second Alleluia. Notice that this one starts on do, and the first one started on la.`,
       source: `${workbook}, p. 30; ${instructor}, Lesson 15, p. 46`,
     }),

@@ -112,7 +112,7 @@ This is phrase ${p.intro.slice(-1)}. Sing it on "nu", and notice which kinds of 
       recording: 46,
       title: 'A short Alleluia',
       key: 'do=e-flat',
-      gabc: '(f3) Al(fe)le(f)lú(fgf)ia.(f)',
+      gabc: '(f3) Al(ef)le(f)lú(fgf)ia.(f)',
       instructions: `
 We will conclude this lesson with a short Alleluia (workbook, page 25). Look for the groups: two notes on "Al", three on "lú".`,
       source: `${workbook}, p. 25; ${instructor}, Lesson 13, p. 39`,
@@ -122,7 +122,7 @@ We will conclude this lesson with a short Alleluia (workbook, page 25). Look for
       recording: 47,
       title: 'The Alleluia, once more',
       key: 'do=e-flat',
-      gabc: '(f3) Al(fe)le(f)lú(f_g_f_)ia.(f)',
+      gabc: '(f3) Al(ef)le(f)lú(f_g_f_)ia.(f)',
       instructions: `
 This time make the three notes on "lú" a little longer: the line over them is an episema.`,
       source: `${workbook}, p. 25; ${instructor}, Lesson 13, p. 39`,

@@ -7,7 +7,7 @@
 export const HAEC_DIES_KEY = 'do=a';
 
 /** The Alleluia sung before each passage. */
-export const AL_OPEN = 'Al(h)le(h)lú(iji)ia.(ih;)';
+export const AL_OPEN = 'Al(h)le(h)lú(iji)ia.(hi;)';
 /** The shorter Alleluia between the halves of a passage, with a double bar after it. */
 export const AL_SECOND = 'al(f)le(e)lú(fe)ia,(d::)';
 /** The two Alleluias that close each verse; the tick after the first is a short pause. */
