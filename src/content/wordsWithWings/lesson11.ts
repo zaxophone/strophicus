@@ -11,6 +11,8 @@ import { withoutText } from '../../chant/gabc';
 const workbook = "Words with Wings Children's Workbook";
 const instructor = 'Words with Wings Instructor Edition';
 
+export const KYRIE = '(c3) Ký(h)ri(f)e(f) e(f)lé(f)i(e)son(f)';
+
 const WORDS = 'Deus, canticum novum cantabo tibi.';
 
 /** The sentence on one pitch, with the notes given for each syllable (De us cán ti cum no vum can tá bo ti bi). */
@@ -23,14 +25,14 @@ const deus = (
 ): string =>
   `(c4) De(${de})us,(${us}) cán(${mid})ti(${mid})cum(${mid}) no(${mid})vum(${mid}) can(${mid})tá(${tá})bo(${end[0]}) ti(${end[1]})bi.(${end[2]})`;
 
-interface Melody {
+export interface Melody {
   n: number;
   key: string;
   gabc: string;
   intro: string;
 }
 
-const MELODIES: Melody[] = [
+export const MELODIES: Melody[] = [
   {
     n: 1,
     key: 'la=a',
@@ -81,7 +83,7 @@ Sing it while you trace this figure in the air (workbook page 21). What you are 
   },
 ];
 
-const GLORIA = '(c4) Et(e) in(g) ter(h)ra(h) pax(g) ho(h)mi(i)ni(h)bus(h,) bo(h)nae(h) vo(g)lun(h)tá(g)tis(e)';
+export const GLORIA = '(c4) Et(e) in(g) ter(h)ra(h) pax(g) ho(h)mi(i)ni(h)bus(h,) bo(h)nae(h) vo(g)lun(h)tá(g)tis(e)';
 
 export const LESSON_11: Lesson = {
   id: 'wow-11',
@@ -94,7 +96,7 @@ export const LESSON_11: Lesson = {
       recording: 15,
       title: 'Warm-up: Kyrie eleison',
       key: 'do=a/b-flat/b',
-      gabc: '(c3) Ký(h)ri(f)e(f) e(f)lé(f)i(e)son(f)',
+      gabc: KYRIE,
       instructions: `
 Let us begin by singing. The names of the notes are: do, la, la, la, la, sol, la. Sing the Kyrie eleison with the words.
 

@@ -1,7 +1,7 @@
 import { parseGabc, joinGabc, withoutText } from './gabc';
 
 describe('parseGabc', () => {
-  const plain = { bars: [], doubles: [], ticks: [], moras: [], episemas: [], ictus: [], flats: [], groups: [], breaks: [], words: undefined };
+  const plain = { bars: [], doubles: [], majors: [], ticks: [], moras: [], episemas: [], ictus: [], flats: [], groups: [], breaks: [], words: undefined };
 
   it('reads the clef and one note per syllable', () => {
     expect(parseGabc('(c4) (f) (g) (h)')).toEqual({ ...plain, clefLine: 4, notes: 'fgh' });
@@ -81,6 +81,13 @@ describe('parseGabc', () => {
     expect(() => parseGabc('(c4) a(h) x(z) b(h)')).toThrow();
   });
 
+  it('reads a full bar (:) as a bar drawn across the whole staff', () => {
+    const p = parseGabc('(c4) a(h:) b(h)');
+    expect(p.bars).toEqual([1]);
+    expect(p.majors).toEqual([1]);
+    expect(p.doubles).toEqual([]);
+  });
+
   it('refuses a division inside a group, or a note after one', () => {
     expect(() => parseGabc('(c2) (c) (d;e)')).toThrow();
     expect(() => parseGabc('(c2) (c) (d,e)')).toThrow();
@@ -90,7 +97,7 @@ describe('parseGabc', () => {
     expect(() => parseGabc('(c2) (c) (d e)')).toThrow(/Separate neumes/);
     expect(() => parseGabc('(c2) (c) (d/e)')).toThrow(/Separate neumes/);
     expect(() => parseGabc('(c2) (c) (D)')).toThrow(/not read yet/);
-    expect(() => parseGabc('(c2) (c) (d:)')).toThrow(/divisions/);
+    expect(() => parseGabc('(c2) (c) (d:::)')).toThrow(/one division/);
     expect(() => parseGabc('(c2) (c) (iy)')).toThrow(/not read yet/);
     expect(() => parseGabc('(c2) (c) (d~)')).toThrow(/not read yet/);
     expect(() => parseGabc('(c2) (n)')).toThrow();

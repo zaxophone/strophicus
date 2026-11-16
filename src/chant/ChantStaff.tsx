@@ -74,11 +74,12 @@ const HALO = 'rgba(79, 70, 229, 0.16)';
 const WAVE = 'rgba(79, 70, 229, 0.75)';
 const PLAYING_HALO = 'rgba(245, 158, 11, 0.38)';
 
-type Division = 'bar' | 'double' | 'tick';
+type Division = 'bar' | 'major' | 'double' | 'tick';
 
 /** Which kind of division, if any, comes just before a note. */
 function divisionBefore(chant: Chant, noteIndex: number): Division | null {
   if (chant.doubles.includes(noteIndex)) return 'double';
+  if (chant.majors.includes(noteIndex)) return 'major';
   if (chant.bars.includes(noteIndex)) return 'bar';
   if (chant.ticks.includes(noteIndex)) return 'tick';
   return null;
@@ -185,7 +186,7 @@ export function ChantStaff({ width, chant, labels, captions, marks, gestures, wa
           glyph(`${k}-b`, 'DivisioMaiorFour', first + stroke + gap, origin),
         ];
       }
-      const name = kind === 'tick' ? 'DivisioMinimaFour' : 'DivisioMinorFour';
+      const name = kind === 'tick' ? 'DivisioMinimaFour' : kind === 'major' ? 'DivisioMaiorFour' : 'DivisioMinorFour';
       return [glyph(k, name, centred(name, centre), origin)];
     };
 

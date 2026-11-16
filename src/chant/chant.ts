@@ -34,6 +34,8 @@ export interface Chant {
   bars: number[];
   /** The bars among `bars` that are drawn as a double bar. */
   doubles: number[];
+  /** The bars among `bars` that are drawn as a full bar across the staff (divisio maior, `:`). */
+  majors: number[];
   /** Indexes of notes with a short tick (divisio minima) before them. */
   ticks: number[];
   /** Indexes of notes with a dot (punctum mora), which lasts twice as long. */
@@ -56,6 +58,8 @@ export interface ParsedPhrases {
   notes: string;
   bars: number[];
   doubles: number[];
+  /** The bars among `bars` that are drawn as a full bar across the staff (divisio maior, `:`). */
+  majors: number[];
   ticks: number[];
   moras: number[];
   episemas: number[];

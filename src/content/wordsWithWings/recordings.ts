@@ -35,4 +35,10 @@ export const RECORDINGS: Record<number, number> = {
   30: require('./audio/30_deus_canticum_novum_cantabo_tibi.mp3'),
   31: require('./audio/31_deus_canticum_novum_cantabo_tibi.mp3'),
   32: require('./audio/32_deus_canticum_novum_cantabo_tibi.mp3'),
+  33: require('./audio/33_in_psalterio_decachordo_psallam_tibi_spoken.mp3'),
+  34: require('./audio/34_in_psalterio_decachordo_psallam_tibi.mp3'),
+  35: require('./audio/35_in_psalterio_decachordo_psallam_tibi.mp3'),
+  36: require('./audio/36_in_psalterio_decachordo_psallam_tibi.mp3'),
+  37: require('./audio/37_in_psalterio_decachordo_psallam_tibi.mp3'),
+  38: require('./audio/38_deus_canticum_novum_cantabo_tibi_in_psalterio_decachordo_psallam_tibi.mp3'),
 };

@@ -15,7 +15,8 @@
  *   - after a note: `.` dot (punctum mora), `_` line over it (episema), `'` ictus,
  *     `x` flat sign (only before ti; it holds on that line or space until the next bar)
  *   - divisions inside the parentheses after the notes, or alone: `,` divisio minima (a
- *     short tick), `;` divisio minor (a half bar: a one-beat rest), `::` divisio finalis
+ *     short tick), `;` divisio minor (a half bar: a one-beat rest), `:` divisio maior (a full bar, also a
+ *     rest), `::` divisio finalis
  *     (a double bar)
  *   - `(z)`: a line break, so the staff starts a new line there (with a custos, the little
  *     guide note, at the end of the line above)
@@ -38,7 +39,7 @@ export interface ParsedGabc extends ParsedPhrases {
   words?: string[];
 }
 
-const DIVISION = /^(,|;|::)$/;
+const DIVISION = /^(,|;|:|::)$/;
 
 /** Reads a gabc snippet; throws if it uses anything the app does not draw. */
 export function parseGabc(source: string): ParsedGabc {
@@ -55,6 +56,7 @@ export function parseGabc(source: string): ParsedGabc {
   let notes = '';
   const bars: number[] = [];
   const doubles: number[] = [];
+  const majors: number[] = [];
   const ticks: number[] = [];
   const moras: number[] = [];
   const episemas: number[] = [];
@@ -66,11 +68,11 @@ export function parseGabc(source: string): ParsedGabc {
   /** Whether a space came before each syllable's text, which starts a new word. */
   const wordStart: boolean[] = [];
   let clefLine: number | null = null;
-  let pending: 'tick' | 'bar' | 'double' | null = null;
+  let pending: 'tick' | 'bar' | 'major' | 'double' | null = null;
 
   const setPending = (division: string) => {
     if (division === ',') pending ??= 'tick';
-    else pending = division === '::' ? 'double' : 'bar';
+    else pending = division === '::' ? 'double' : division === ':' ? 'major' : 'bar';
   };
 
   let rest = body;
@@ -105,7 +107,7 @@ export function parseGabc(source: string): ParsedGabc {
 
     // a division on its own: it belongs after the notes before it
     if (/^[,;:]/.test(music) && !/[a-m]/.test(music)) {
-      if (!DIVISION.test(music)) fail(`Only the divisions , ; and :: are read, not "${music}"`);
+      if (!DIVISION.test(music)) fail(`Only the divisions , ; : and :: are read, not "${music}"`);
       if (lyric.trim() !== '') fail('A division on its own has no text');
       if (notes.length > 0) setPending(music);
       continue;
@@ -127,6 +129,7 @@ export function parseGabc(source: string): ParsedGabc {
           else {
             bars.push(notes.length);
             if (pendingBeforeFirst === 'double') doubles.push(notes.length);
+            if (pendingBeforeFirst === 'major') majors.push(notes.length);
           }
           pendingBeforeFirst = null;
         }
@@ -142,8 +145,8 @@ export function parseGabc(source: string): ParsedGabc {
         i++;
       } else if (ch === ',' || ch === ';' || ch === ':') {
         if (lastNote < 0) fail('A division needs a note before it');
+        if (afterNotes) fail('Only one division is read in one pair of parentheses');
         const division = music.startsWith('::', i) ? '::' : ch;
-        if (division === ':') fail('Only the divisions , ; and :: are read, not ":"');
         // anything after a division in the same parentheses must be another division or nothing
         setPending(division);
         afterNotes = true;
@@ -174,7 +177,7 @@ export function parseGabc(source: string): ParsedGabc {
     if (lyrics.some((t) => t === '')) fail('Either every syllable has text or none does');
     words = lyrics.map((t, i) => (i < lyrics.length - 1 && !wordStart[i + 1] ? `${t}-` : t));
   }
-  return { clefLine, notes, bars, doubles, ticks, moras, episemas, ictus, flats, groups, breaks: breaks.filter((b) => b < notes.length), words };
+  return { clefLine, notes, bars, doubles, majors, ticks, moras, episemas, ictus, flats, groups, breaks: breaks.filter((b) => b < notes.length), words };
 }
 
 /** The same snippet without its text: every syllable just its notes, as `(g) (h)`. */
