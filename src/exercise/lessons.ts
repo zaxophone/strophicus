@@ -15,10 +15,11 @@ import { LESSON_13 } from '../content/wordsWithWings/lesson13';
 import { LESSON_14 } from '../content/wordsWithWings/lesson14';
 import { LESSON_15 } from '../content/wordsWithWings/lesson15';
 import { LESSON_16 } from '../content/wordsWithWings/lesson16';
+import { LESSON_17 } from '../content/wordsWithWings/lesson17';
 import { ARSIS_THESIS } from '../content/arsisThesis';
 import { PRACTICE } from '../content/practice';
 import type { Exercise, Lesson } from './exercise';
 
-export const LESSONS: Lesson[] = [LESSON_INTRO, LESSON_1, LESSON_2, LESSON_3, LESSON_4, LESSON_5, LESSON_6, ARSIS_THESIS, LESSON_7, LESSON_8, LESSON_9, LESSON_10, LESSON_11, LESSON_12, LESSON_13, LESSON_14, LESSON_15, LESSON_16, PRACTICE];
+export const LESSONS: Lesson[] = [LESSON_INTRO, LESSON_1, LESSON_2, LESSON_3, LESSON_4, LESSON_5, LESSON_6, ARSIS_THESIS, LESSON_7, LESSON_8, LESSON_9, LESSON_10, LESSON_11, LESSON_12, LESSON_13, LESSON_14, LESSON_15, LESSON_16, LESSON_17, PRACTICE];
 
 export const ALL_EXERCISES: Exercise[] = LESSONS.flatMap((lesson) => lesson.exercises);

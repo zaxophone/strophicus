@@ -8,6 +8,10 @@ describe('the book key tag', () => {
     expect(parseKey('fa=b-flat')).toEqual({ syllable: 'fa', pitchClass: 10 });
   });
 
+  it('reads te as the flatted ti', () => {
+    expect(parseKey('te=c')).toEqual({ syllable: 'ti', pitchClass: 1 });
+  });
+
   it('takes the first of several alternatives', () => {
     expect(parseKey('do=a/b-flat/b')).toEqual({ syllable: 'do', pitchClass: 9 });
     expect(parseKey('sol=g/g-sharp/a')).toEqual({ syllable: 'sol', pitchClass: 7 });

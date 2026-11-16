@@ -87,7 +87,7 @@ describe('groups of notes', () => {
   });
 
   it('refuses a group that cannot be drawn as one figure', () => {
-    expect(() => makeChant('(c2) (c) (dd) (e)')).toThrow(/single figure/);
+    expect(() => makeChant('(c2) (c) (dddd) (e)')).toThrow(/single figure/);
     expect(() => makeChant('(c2) (c) (fedc) (e)')).toThrow(/single figure/);
     expect(() => makeChant('(c2) (c) (de) (e)')).not.toThrow();
   });

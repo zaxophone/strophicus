@@ -1,6 +1,11 @@
 import { HEAD_UNITS, neumeFor } from './neumes';
 
 describe('neumeFor', () => {
+  it('draws a repeated note as separate puncta side by side', () => {
+    expect(neumeFor([2, 2])?.heads).toEqual([0, 1]);
+    expect(neumeFor([2, 2, 2])?.glyph.char.length).toBe(3);
+  });
+
   it('draws two rising notes as a podatus, one head wide, whatever the interval', () => {
     for (const second of [1, 2, 3, 4, 5]) {
       const n = neumeFor([2, 2 + second])!;
@@ -30,7 +35,7 @@ describe('neumeFor', () => {
   });
 
   it('declines groups it cannot draw as one figure', () => {
-    expect(neumeFor([2, 2])).toBeNull(); // the same note twice
+    expect(neumeFor([2, 2, 2, 2])).toBeNull(); // the same note four times
     expect(neumeFor([4, 3, 2])).toBeNull(); // three falling notes
     expect(neumeFor([2, 3, 4, 5])).toBeNull(); // four notes
     expect(neumeFor([2, 9])).toBeNull(); // too wide a leap

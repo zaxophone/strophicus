@@ -16,16 +16,18 @@ const LETTERS: Record<string, number> = { c: 0, d: 2, e: 4, f: 5, g: 7, a: 9, b:
 const NAMES = ['C', 'C♯', 'D', 'E♭', 'E', 'F', 'F♯', 'G', 'A♭', 'A', 'B♭', 'B'];
 
 /**
- * Reads the book's tag: "do=d", "mi=f-sharp", "fa=b-flat". Where the book
+ * Reads the book's tag: "do=d", "mi=f-sharp", "fa=b-flat", "te=c" (te is the flatted ti). Where the book
  * lists alternatives ("do=a/b-flat/b") the first is used.
  */
 export function parseKey(text: string): ExerciseKey {
-  const match = /^\s*(do|re|mi|fa|sol|la|ti)\s*=\s*([a-g])(?:-(sharp|flat))?\s*(?:\/.*)?$/i.exec(text);
+  const match = /^\s*(do|re|mi|fa|sol|la|ti|te)\s*=\s*([a-g])(?:-(sharp|flat))?\s*(?:\/.*)?$/i.exec(text);
   if (!match) throw new Error(`Unreadable key: "${text}"`);
   const shift = match[3] === 'sharp' ? 1 : match[3] === 'flat' ? -1 : 0;
+  // "te" is ti lowered a semitone, so te on c means ti is a semitone above c
+  const te = match[1].toLowerCase() === 'te';
   return {
-    syllable: match[1].toLowerCase(),
-    pitchClass: (LETTERS[match[2].toLowerCase()] + shift + 12) % 12,
+    syllable: te ? 'ti' : match[1].toLowerCase(),
+    pitchClass: (LETTERS[match[2].toLowerCase()] + shift + (te ? 1 : 0) + 12) % 12,
   };
 }
 

@@ -1,3 +1,4 @@
+import { GLYPHS } from './glyphs';
 import { NEUME_GLYPHS, NEUME_TABLE, NeumeGlyph } from './neumeTable';
 
 /**
@@ -7,7 +8,7 @@ import { NEUME_GLYPHS, NEUME_TABLE, NeumeGlyph } from './neumeTable';
 export type Liquescent = '' | '~' | '>' | '<';
 
 /** The groups of two or three notes that are written as one joined figure. */
-export type NeumeShape = 'pes' | 'flexus' | 'torculus' | 'porrectus' | 'scandicus';
+export type NeumeShape = 'pes' | 'flexus' | 'torculus' | 'porrectus' | 'scandicus' | 'repeat';
 
 /** Width of one note head in font units; a glyph is as many heads wide as it has notes side by side. */
 export const HEAD_UNITS = 166;
@@ -23,6 +24,7 @@ const HEADS: Record<NeumeShape, number[]> = {
   torculus: [0, 1, 2],
   porrectus: [0, 1, 2],
   scandicus: [0, 1, 1],
+  repeat: [],
 };
 
 export interface Neume {
@@ -53,6 +55,15 @@ function classify(positions: number[]): { shape: NeumeShape; steps: number[] } |
  * bottom line is 0, each step is 1), or null if there is no single glyph for them.
  */
 export function neumeFor(positions: number[], liquescent: Liquescent = ''): Neume | null {
+  // the same note two or three times on one syllable: separate puncta side by side (gabc `(gg)`)
+  if (positions.length > 1 && positions.length <= 3 && positions.every((p) => p === positions[0])) {
+    const count = positions.length;
+    return {
+      shape: 'repeat',
+      glyph: { char: GLYPHS.Punctum.char.repeat(count), advance: GLYPHS.Punctum.advance * count },
+      heads: positions.map((_, i) => i),
+    };
+  }
   const found = classify(positions);
   if (!found) return null;
   const index = NEUME_TABLE[`${found.shape}:${positions[0]}:${found.steps.join('-')}${liquescent}`];
