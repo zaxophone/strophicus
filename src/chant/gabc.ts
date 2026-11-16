@@ -9,7 +9,7 @@
  * ignored. This reads the part of gabc the app can draw and refuses the rest with
  * an error instead of misreading it:
  *
- *   - pitches a..m on a four-line staff, after a do clef (`c1` to `c4`)
+ *   - pitches a..m on a four-line staff, after a do clef (`c1` to `c4`) or a fa clef (`f1` to `f4`)
  *   - notes in one pair of parentheses with no space between them are one joined
  *     figure on one syllable: `(gh)`; a syllable with no text is written `(g)`
  *   - after a note: `.` dot (punctum mora), `_` line over it (episema), `'` ictus,
@@ -23,7 +23,7 @@
  *   - text: syllables of one word touch each other and a space starts the next word, so
  *     `Pu(d)er(f) na(f)tus(e)` is Pu- er na- tus; `-` after a syllable's text is allowed
  *
- * Not read yet, and refused: other clefs, other divisions (`:`), naturals, separate
+ * Not read yet, and refused: clefs with a flat (`cb3`), other divisions (`:`), naturals, separate
  * neumes on one syllable (a space inside the parentheses), liquescents, quilismas and
  * the other note shapes and modifiers.
  */
@@ -33,7 +33,7 @@ import type { Group, ParsedPhrases } from './chant';
 export interface ParsedGabc extends ParsedPhrases {
   /** Notes where a new staff line starts, from forced line breaks `(z)`. */
   breaks: number[];
-  /** Line (1 = bottom) carrying the do clef. */
+  /** Line (1 = bottom) carrying the clef. */
   clefLine: number;
   /** The text under each syllable, with a trailing `-` where the word goes on, as the book prints it; absent if the snippet has no text. */
   words?: string[];
@@ -68,6 +68,7 @@ export function parseGabc(source: string): ParsedGabc {
   /** Whether a space came before each syllable's text, which starts a new word. */
   const wordStart: boolean[] = [];
   let clefLine: number | null = null;
+  let clef: 'c' | 'f' = 'c';
   let pending: 'tick' | 'bar' | 'major' | 'double' | null = null;
 
   const setPending = (division: string) => {
@@ -91,7 +92,8 @@ export function parseGabc(source: string): ParsedGabc {
     // the clef
     if (/^[cf]b?[1-4]$/.test(music)) {
       if (notes.length > 0 || clefLine !== null) fail('A clef is only read at the start');
-      if (music[0] !== 'c' || music.length !== 2) fail(`Only the do clef (c1 to c4) is read, not "${music}"`);
+      if (music.length !== 2) fail(`Only the do clef (c1 to c4) and the fa clef (f1 to f4) are read, not "${music}"`);
+      clef = music[0] as 'c' | 'f';
       clefLine = Number(music[1]);
       if (lyric.trim() !== '') fail('A clef has no text');
       continue;
@@ -177,7 +179,7 @@ export function parseGabc(source: string): ParsedGabc {
     if (lyrics.some((t) => t === '')) fail('Either every syllable has text or none does');
     words = lyrics.map((t, i) => (i < lyrics.length - 1 && !wordStart[i + 1] ? `${t}-` : t));
   }
-  return { clefLine, notes, bars, doubles, majors, ticks, moras, episemas, ictus, flats, groups, breaks: breaks.filter((b) => b < notes.length), words };
+  return { clef, clefLine, notes, bars, doubles, majors, ticks, moras, episemas, ictus, flats, groups, breaks: breaks.filter((b) => b < notes.length), words };
 }
 
 /** The same snippet without its text: every syllable just its notes, as `(g) (h)`. */

@@ -1,15 +1,22 @@
 import { parseGabc, joinGabc, withoutText } from './gabc';
 
 describe('parseGabc', () => {
-  const plain = { bars: [], doubles: [], majors: [], ticks: [], moras: [], episemas: [], ictus: [], flats: [], groups: [], breaks: [], words: undefined };
+  const plain = { bars: [], doubles: [], majors: [], ticks: [], moras: [], episemas: [], ictus: [], flats: [], groups: [], breaks: [], words: undefined, clef: 'c' as const };
 
   it('reads the clef and one note per syllable', () => {
     expect(parseGabc('(c4) (f) (g) (h)')).toEqual({ ...plain, clefLine: 4, notes: 'fgh' });
   });
 
-  it('needs a clef first, and only reads the do clef', () => {
+  it('reads a fa clef', () => {
+    const p = parseGabc('(f3) (h) (g)');
+    expect(p.clef).toBe('f');
+    expect(p.clefLine).toBe(3);
+    expect(() => parseGabc('(fb3) (h)')).toThrow();
+  });
+
+  it('needs a clef first, and only reads c1-c4 and f1-f4', () => {
     expect(() => parseGabc('(f) (g)')).toThrow(/clef/);
-    expect(() => parseGabc('(f3) (g)')).toThrow(/do clef/);
+    expect(() => parseGabc('(c5) (g)')).toThrow(/clef/);
     expect(() => parseGabc('(cb4) (g)')).toThrow(/do clef/);
     expect(() => parseGabc('(c4) (g) (c3) (h)')).toThrow(/start/);
   });

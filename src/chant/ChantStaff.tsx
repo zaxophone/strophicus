@@ -191,7 +191,7 @@ export function ChantStaff({ width, chant, labels, captions, marks, gestures, wa
     };
 
     elements.push(
-      glyph(key('clef', 0), 'CClef', 4, origin - clefRaise(chant.clefLine) * scl),
+      glyph(key('clef', 0), chant.clef === 'f' ? 'FClef' : 'CClef', 4, origin - clefRaise(chant.clefLine) * scl),
     );
 
     const wavePoints: WavePoint[] = [];

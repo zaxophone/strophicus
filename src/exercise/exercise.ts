@@ -8,6 +8,7 @@ import {
   flattened,
   semitonesAboveDo,
   solfegeName,
+  doLine,
   unitIndexOf,
   units,
 } from '../chant/chant';
@@ -160,11 +161,11 @@ export function exercise(spec: ExerciseSpec): Exercise {
     chant,
     gestures:
       spec.gestures !== undefined ? specGestures(spec, chant) : spec.kind === 'mark' ? ruleGestures(chant) : undefined,
-    labels: letters.map((n, k) => (flat[k] ? 'te' : solfegeName(n, chant.clefLine))),
+    labels: letters.map((n, k) => (flat[k] ? 'te' : solfegeName(n, doLine(chant)))),
     words,
     lines: spec.lines,
     answer: spec.answer,
-    offsets: letters.map((n, k) => semitonesAboveDo(n, chant.clefLine) - (flat[k] ? 1 : 0)),
+    offsets: letters.map((n, k) => semitonesAboveDo(n, doLine(chant)) - (flat[k] ? 1 : 0)),
     beats:
       spec.beats ??
       letters.map((_, i) => (moras.includes(i) ? 2 : episemas.includes(i) || ticks.includes(i + 1) ? LONGER : 1)),

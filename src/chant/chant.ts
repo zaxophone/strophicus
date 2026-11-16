@@ -26,7 +26,9 @@ export interface Group {
 }
 
 export interface Chant {
-  /** Line (1 = bottom) carrying the do clef. */
+  /** Which clef: do (`c`) or fa (`f`). */
+  clef: 'c' | 'f';
+  /** Line (1 = bottom) carrying the clef. */
   clefLine: number;
   /** One gabc pitch letter per note. */
   notes: string;
@@ -54,6 +56,7 @@ export interface Chant {
 
 /** What a gabc snippet says about its notes, as `parseGabc` reads it. */
 export interface ParsedPhrases {
+  clef: 'c' | 'f';
   clefLine: number;
   notes: string;
   bars: number[];
@@ -75,7 +78,7 @@ export interface ParsedPhrases {
 export function makeChant(gabc: string): Chant {
   const { words: _words, ...parsed } = parseGabc(gabc);
   const chant: Chant = parsed;
-  const { clefLine } = chant;
+  const clefLine = doLine(chant);
   for (const k of chant.flats) {
     if (solfegeName(chant.notes[k], clefLine) !== 'ti') {
       throw new Error(`A flat sign goes before ti, not ${solfegeName(chant.notes[k], clefLine)}: "${gabc}"`);
@@ -180,6 +183,14 @@ export function layoutBreaks(
 /** Steps above the bottom staff line; negative below it. */
 export function staffPosition(letter: string): number {
   return letter.charCodeAt(0) - FIRST_LINE;
+}
+
+/**
+ * The line (counted as for a do clef, so it may lie above the staff) where do sits.
+ * A fa clef puts fa on its line, and do is four steps (two lines) above fa.
+ */
+export function doLine(clef: { clef: 'c' | 'f'; clefLine: number }): number {
+  return clef.clef === 'f' ? clef.clefLine + 2 : clef.clefLine;
 }
 
 /** Steps from do, counting each line and space as one degree: re is 1, do' is 7. */

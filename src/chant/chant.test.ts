@@ -9,6 +9,7 @@ import {
   ledgerLines,
   semitonesAboveDo,
   solfegeName,
+  doLine,
   splitSystems,
   staffPosition,
   unitIndexOf,
@@ -157,5 +158,19 @@ describe('flat sign', () => {
 
   it('refuses a flat on anything but ti', () => {
     expect(() => makeChant('(c3) (h) (ix)')).toThrow(/ti/);
+  });
+});
+
+describe('the fa clef', () => {
+  it('puts fa on the clef line, with do two lines above it', () => {
+    const chant = makeChant('(f3) (e) (f) (g) (h) (i) (j) (k) (l)');
+    expect(chant.clef).toBe('f');
+    expect(chant.clefLine).toBe(3);
+    expect(doLine(chant)).toBe(5);
+    expect([...chant.notes].map((n) => solfegeName(n, doLine(chant)))).toEqual(['do', 're', 'mi', 'fa', 'sol', 'la', 'ti', 'do']);
+  });
+
+  it('leaves the do clef alone', () => {
+    expect(doLine(makeChant('(c4) (h)'))).toBe(4);
   });
 });
