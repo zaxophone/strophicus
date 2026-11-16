@@ -9,11 +9,24 @@ import { REGINA_CAELI, REGINA_CAELI_KEY } from './reginaCaeli';
 const workbook = "Words with Wings Children's Workbook";
 const instructor = 'Words with Wings Instructor Edition';
 
+// The hand's line over each Alleluia, as the workbook draws it, one letter per note (see
+// `gestures` in exercise.ts): `-` the line passes above the note, `t` under it (a thesis), `a`
+// curls round it (an arsis; a second arsis after one loops right round). The four-note
+// Alleluias go over, under, over, under: the ictus fall on "le" and "ia" and the line ends on a
+// thesis. Alleluia 4 has an arsis on "Al", and a looped arsis on the first note of "lú".
 const ALLELUIAS = [
-  { n: 1, recording: 83, key: 'te=c', gabc: '(c4) Al(ix)le(h)lú(g)ia.(f)', page: 57 },
-  { n: 2, recording: 84, key: 'sol=a', gabc: '(c4) Al(g)le(h)lú(ix)ia.(j)', page: 57 },
-  { n: 3, recording: 83, key: 'te=c', gabc: '(c4) Al(ix)le(h)lú(g)ia.(f)', page: 57 },
-  { n: 4, recording: 85, key: 'mi=f-sharp', gabc: '(c4) Al(e)le(g)lú(gg)ia.(f)', page: 57 },
+  { n: 1, recording: 83, key: 'te=c', gabc: '(c4) Al(ix)le(h)lú(g)ia.(f)', line: '-t-t', page: 57 },
+  { n: 2, recording: 84, key: 'sol=a', gabc: '(c4) Al(g)le(h)lú(ix)ia.(j)', line: '-t-t', page: 57 },
+  { n: 3, recording: 83, key: 'te=c', gabc: '(c4) Al(ix)le(h)lú(g)ia.(f)', line: '-t-t', page: 57 },
+  { n: 4, recording: 85, key: 'mi=f-sharp', gabc: '(c4) Al(e)le(g)lú(gg)ia.(f)', line: 'a-a-t', page: 57 },
+];
+
+// Regina caeli: the line is drawn only over each Alleluia ("you sing and move whenever you see
+// alleluia"), and nowhere else (`.`).
+const REGINA_LINES = [
+  '........' + '-t-t' + '.......',
+  '...' + '-t-t' + '........' + '-t-t',
+  '.......' + 'a-a-t',
 ];
 
 export const LESSON_17: Lesson = {
@@ -29,6 +42,7 @@ export const LESSON_17: Lesson = {
         title: `Alleluia ${a.n}`,
         key: a.key,
         gabc: a.gabc,
+        gestures: a.line,
         instructions:
           a.n === 1
             ? `
@@ -69,6 +83,7 @@ Press Hear the choir. I will sing it now. You sing the Alleluia.`,
         title: `Regina caeli: line ${i + 1}`,
         key: REGINA_CAELI_KEY,
         gabc,
+        gestures: REGINA_LINES[i],
         instructions: `
 ${
   i === 0

@@ -52,7 +52,7 @@ export interface Exercise {
   /** The melody as written in chant notation. */
   chant: Chant;
   /** Gesture exercises: the arsis or thesis at each ictus (null between them), by the rule the lessons teach. */
-  gestures?: (Gesture | null)[];
+  gestures?: (Gesture | 'none' | null)[];
   /**
    * How long each note lasts, in beats. In plain Solesmes rhythm every note is
    * worth one beat and a dotted note (punctum mora) two; a note with an episema
@@ -112,7 +112,8 @@ export interface ExerciseSpec {
   /**
    * The hand's line drawn over the staff, one letter per note: `a` for an arsis ictus
    * (the line loops round the note), `t` for a thesis ictus (it passes under the note),
-   * `-` for a note between ictus marks (it passes above). As the workbook draws it.
+   * `-` for a note between ictus marks (it passes above), `.` where the line is not drawn
+   * (it ends before that note and a new one begins after it). As the workbook draws it.
    */
   gestures?: string;
   beats?: number[];
@@ -123,18 +124,20 @@ export interface ExerciseSpec {
 }
 
 /** The hand's line of an exercise, from the letters written for it. */
-function specGestures(spec: ExerciseSpec, chant: Chant): (Gesture | null)[] {
+function specGestures(spec: ExerciseSpec, chant: Chant): (Gesture | 'none' | null)[] {
   const letters = [...(spec.gestures ?? '')];
-  if (letters.length !== chant.notes.length || letters.some((g) => !'at-'.includes(g))) {
-    throw new Error(`${spec.id}: gestures need one of a, t or - for each of ${chant.notes.length} notes`);
+  if (letters.length !== chant.notes.length || letters.some((g) => !'at-.'.includes(g))) {
+    throw new Error(`${spec.id}: gestures need one of a, t, - or . for each of ${chant.notes.length} notes`);
   }
-  const gestures = letters.map((g) => (g === 'a' ? ('arsis' as const) : g === 't' ? ('thesis' as const) : null));
+  const gestures = letters.map((g) =>
+    g === 'a' ? ('arsis' as const) : g === 't' ? ('thesis' as const) : g === '.' ? ('none' as const) : null,
+  );
   // a mark exercise asks for an answer at each ictus, and nowhere else
   if (spec.kind === 'mark' && gestures.some((g, i) => (g !== null) !== chant.ictus.includes(i))) {
     throw new Error(`${spec.id}: gestures must be given exactly at the notes with an ictus`);
   }
   // an arsis is followed by at most one more
-  const run = gestures.filter((g) => g !== null).join(',');
+  const run = gestures.map((g) => (g === 'none' ? '|' : g)).filter((g) => g !== null).join(',');
   if (run.includes('arsis,arsis,arsis')) throw new Error(`${spec.id}: no more than two arses in a row`);
   return gestures;
 }

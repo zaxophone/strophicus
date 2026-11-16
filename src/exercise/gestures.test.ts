@@ -1,4 +1,5 @@
 import { makeChant } from '../chant/chant';
+import { exercise } from './exercise';
 import { parseBlock } from './blocks';
 import { ruleGestures } from './gestures';
 import { LESSONS } from './lessons';
@@ -49,4 +50,22 @@ it('puts the arsis and thesis lesson between Lessons 6 and 7', () => {
     expect(e.gestures).toHaveLength(e.chant.notes.length);
     expect(e.gestures!.filter((g) => g !== null)).toHaveLength(e.chant.ictus.length);
   }
+});
+
+describe('the hand\'s line over part of a melody', () => {
+  it('leaves a gap where the line is not drawn', () => {
+    const e = exercise({ id: 'x', title: 'x', gabc: '(c4) a(h) b(g) c(f) d(g) e(h)', gestures: '.-t-.', instructions: 'x' });
+    expect(e.gestures).toEqual(['none', null, 'thesis', null, 'none']);
+  });
+
+  it('draws Lesson 17 over the Alleluias only', () => {
+    const regina = LESSONS.find((l) => l.id === 'wow-17')!.exercises.filter((x) => x.id.startsWith('wow-17-regina-') && x.gabc);
+    expect(regina).toHaveLength(3);
+    for (const e of regina) {
+      expect(e.gestures).toHaveLength(e.chant.notes.length);
+      // every stretch of line ends on a thesis, as the rule of thumb says
+      const runs = e.gestures!.map((g) => (g === 'none' ? '|' : g === null ? '-' : g === 'thesis' ? 't' : 'a')).join('').split('|').filter(Boolean);
+      for (const run of runs) expect(run.replace(/-+$/, '').endsWith('t')).toBe(true);
+    }
+  });
 });

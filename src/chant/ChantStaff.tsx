@@ -45,7 +45,7 @@ interface Props {
    * The line's gesture at each syllable: an arsis or thesis at an ictus, null for a note
    * between ictus marks, or 'pending' for an ictus still to be answered (the line skips it).
    */
-  gestures?: (Gesture | 'pending' | null)[];
+  gestures?: (Gesture | 'pending' | 'none' | null)[];
   /** Draws the hand's line over the staff, as the workbook does: above the notes, under each thesis, round each arsis. */
   wave?: boolean;
   inkColor?: string;
@@ -199,7 +199,8 @@ export function ChantStaff({ width, chant, labels, captions, marks, gestures, wa
       glyph(key('clef', 0), chant.clef === 'f' ? 'FClef' : 'CClef', 4, origin - clefRaise(chant.clefLine) * scl),
     );
 
-    const wavePoints: WavePoint[] = [];
+    // the hand's line, in runs: a note marked 'none' breaks it, so a melody can have several separate lines
+    const waveRuns: WavePoint[][] = [[]];
     let lastGesture: Gesture | null = null;
     let cursor = clefWidth;
     let previousX: number | null = null;
@@ -278,9 +279,13 @@ export function ChantStaff({ width, chant, labels, captions, marks, gestures, wa
         );
       }
 
-      const gesture = gestures?.[syllable];
-      // The line passes above every note, under a thesis and round an arsis; an ictus still waiting for its answer leaves a gap.
-      if (gesture !== 'pending') {
+      const gesture = gestures?.[start];
+      if (gesture === 'none') {
+        // no line over this note: the one before it ended, and the next begins afresh
+        if (waveRuns[waveRuns.length - 1].length > 0) waveRuns.push([]);
+        lastGesture = null;
+      } else if (gesture !== 'pending') {
+        const wavePoints = waveRuns[waveRuns.length - 1];
         // an arsis curls in a C; one straight after another arsis loops all the way round its note
         const arsis = gesture === 'arsis';
         wavePoints.push({ x, y: at(ps[0]), at: gesture === 'thesis' ? 'below' : arsis ? (lastGesture === 'arsis' ? 'loop' : 'c') : 'above' });
@@ -315,10 +320,14 @@ export function ChantStaff({ width, chant, labels, captions, marks, gestures, wa
       }
     });
 
-    if (wave && gestures?.some((g) => g === 'arsis' || g === 'thesis') && wavePoints.length > 0) {
-      elements.push(
-        <Path key={key('wave', 0)} path={wavePath(wavePoints, sp * 0.9, unit * 0.7)} style="stroke" strokeWidth={Math.max(2.2, ruleWidth * 2)} strokeCap="round" color={WAVE} />,
-      );
+    if (wave && gestures?.some((g) => g === 'arsis' || g === 'thesis')) {
+      waveRuns.forEach((run, r) => {
+        if (run.length > 0) {
+          elements.push(
+            <Path key={key('wave', r)} path={wavePath(run, sp * 0.9, unit * 0.7)} style="stroke" strokeWidth={Math.max(2.2, ruleWidth * 2)} strokeCap="round" color={WAVE} />,
+          );
+        }
+      });
     }
     const lastLine = s === systems.length - 1;
     if (lastLine) {

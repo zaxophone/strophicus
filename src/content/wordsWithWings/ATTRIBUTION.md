@@ -70,7 +70,8 @@ unclear-rights note as above, so that is also a size to weigh before publishing.
 New notation these lessons use: the fa clef (`f3`), line breaks (`(z)`), the full bar
 (`:`), the liquescent marks `~` `>` `<`, repeated notes in one syllable (`(gg)`), and
 key tags with "te" (te is the flatted ti). The A/B/C listening puzzles of Lessons 13-15
-are one sing page per phrase, since the app plays one recording per page; the wavy
-movement lines the books draw over the Alleluias of Lesson 17 are not drawn.
+are one sing page per phrase, since the app plays one recording per page. The wavy
+movement lines the books draw over the Alleluias of Lesson 17 are encoded as `gestures`
+(`-` over a note, `t` under it, `a` curling round it, `.` no line), read from the scan.
 `tools/read_staff.py` and `tools/read_page.py` read note heads from a scan as gabc
 letters; every staff of Lessons 11-20 was checked against them.
