@@ -59,14 +59,14 @@ interface Props {
 const SPACE = FULL_SPACE;
 /** Room under the staff for a label and its hint, and for a caption under them. */
 const LABEL_ZONE = 40;
-const CAPTION_ZONE = 16;
+const CAPTION_ZONE = 22;
 /** Room kept under a staff with no labels at all, as in a picture of a symbol. */
 const BARE_ZONE = 6;
 const SYSTEM_GAP = 6;
 /** Narrowest and widest a note's share of the line may be, in pixels. */
 const MIN_UNIT = 22;
 const LABEL_SIZE = 15;
-const CAPTION_SIZE = 12;
+const CAPTION_SIZE = LABEL_SIZE;
 const MAX_UNIT = 40;
 /** How far the clef reaches above and below its line, in staff steps. */
 const CLEF_REACH = 1.8;
