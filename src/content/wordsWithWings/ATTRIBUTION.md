@@ -62,3 +62,15 @@ edition prints beside it.
 before it (as in gabc); it is allowed only on ti, which is then sung as te, and
 holds until the next bar. Recordings 19 and 20 (Lesson 8) are bundled like 1-18,
 with the same unclear-rights note.
+
+**Later lessons (11 to 20).** Lessons 11-20 are encoded the same way, from the instructor
+edition (and the workbook scan where the edition's page edge cuts a staff off).
+Recordings 26-94 are bundled too: the audio folder is now 38 MB, with the same
+unclear-rights note as above, so that is also a size to weigh before publishing.
+New notation these lessons use: the fa clef (`f3`), line breaks (`(z)`), the full bar
+(`:`), the liquescent marks `~` `>` `<`, repeated notes in one syllable (`(gg)`), and
+key tags with "te" (te is the flatted ti). The A/B/C listening puzzles of Lessons 13-15
+are one sing page per phrase, since the app plays one recording per page; the wavy
+movement lines the books draw over the Alleluias of Lesson 17 are not drawn.
+`tools/read_staff.py` and `tools/read_page.py` read note heads from a scan as gabc
+letters; every staff of Lessons 11-20 was checked against them.
