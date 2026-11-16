@@ -1,5 +1,6 @@
 import { exercise, Exercise, Lesson } from '../../exercise/exercise';
 import { withoutText } from '../../chant/gabc';
+import { AL_CLOSE, AL_OPEN, AL_SECOND } from './haecDies';
 
 // Lesson 14, "The Easter Story (1)": the Alleluia Haec dies, learnt in three passages
 // from the Gospel of Easter morning, each sung between Alleluias (workbook pp. 26-28).
@@ -11,12 +12,6 @@ import { withoutText } from '../../chant/gabc';
 const key = 'do=a';
 const workbook = "Words with Wings Children's Workbook";
 const instructor = 'Words with Wings Instructor Edition';
-
-/** The Alleluia sung before each passage. */
-const AL_OPEN = 'Al(h)le(h)lú(iji)ia.(ih;)';
-/** And the two sung after it: a double bar before and after the first. */
-const AL_SECOND = 'al(f)le(e)lú(fe)ia,(d::)';
-const AL_CLOSE = 'Al(h)le(g)lú(hih)ia,(f,) al(f)le(efe)lú(d)ia.(d::)';
 
 interface Passage {
   n: number;
