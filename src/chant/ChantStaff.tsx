@@ -331,10 +331,12 @@ export function ChantStaff({ width, chant, labels, captions, marks, gestures, wa
       // Custos: a guide at the end of the line showing where the next note sits.
       const nextP = positions[syllables[systems[s + 1][0]].start];
       const custos = custosGlyph(nextP);
-      const x = width - sp;
+      // It stands at the very end of the staff, as in printed books, not in a note's column.
+      const custosWidth = GLYPHS[custos].advance * scl;
+      const x = width - 1 - custosWidth / 2;
       ledgerLines(nextP).forEach((q) =>
         elements.push(
-          <Line key={key(`custos-ledger${q}`, 0)} p1={vec(x - noteW * 0.7, at(q))} p2={vec(x + noteW * 1.2, at(q))} color={inkColor} strokeWidth={ruleWidth} />,
+          <Line key={key(`custos-ledger${q}`, 0)} p1={vec(width - 1 - custosWidth - noteW * 0.25, at(q))} p2={vec(width - 1 + noteW * 0.1, at(q))} color={inkColor} strokeWidth={ruleWidth} />,
         ),
       );
       elements.push(glyph(key('custos', 0), custos, centred(custos, x), onStaff(nextP)));
