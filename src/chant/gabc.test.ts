@@ -1,7 +1,7 @@
 import { parseGabc, joinGabc, withoutText } from './gabc';
 
 describe('parseGabc', () => {
-  const plain = { bars: [], doubles: [], majors: [], ticks: [], moras: [], episemas: [], ictus: [], flats: [], groups: [], breaks: [], words: undefined, clef: 'c' as const };
+  const plain = { bars: [], doubles: [], majors: [], ticks: [], moras: [], episemas: [], ictus: [], flats: [], liquescents: [], groups: [], breaks: [], words: undefined, clef: 'c' as const };
 
   it('reads the clef and one note per syllable', () => {
     expect(parseGabc('(c4) (f) (g) (h)')).toEqual({ ...plain, clefLine: 4, notes: 'fgh' });
@@ -88,6 +88,14 @@ describe('parseGabc', () => {
     expect(() => parseGabc('(c4) a(h) x(z) b(h)')).toThrow();
   });
 
+  it('reads a liquescent ending on a group', () => {
+    const p = parseGabc('(c3) a(ghf~) b(f)');
+    expect(p.liquescents).toEqual([{ note: 2, mark: '~' }]);
+    expect(p.groups).toEqual([{ start: 0, length: 3 }]);
+    expect(() => parseGabc('(c3) a(g~)')).toThrow(/last note of a group/);
+    expect(() => parseGabc('(c3) a(g~h)')).toThrow(/last note of a group/);
+  });
+
   it('reads a full bar (:) as a bar drawn across the whole staff', () => {
     const p = parseGabc('(c4) a(h:) b(h)');
     expect(p.bars).toEqual([1]);
@@ -106,7 +114,7 @@ describe('parseGabc', () => {
     expect(() => parseGabc('(c2) (c) (D)')).toThrow(/not read yet/);
     expect(() => parseGabc('(c2) (c) (d:::)')).toThrow(/one division/);
     expect(() => parseGabc('(c2) (c) (iy)')).toThrow(/not read yet/);
-    expect(() => parseGabc('(c2) (c) (d~)')).toThrow(/not read yet/);
+    expect(() => parseGabc('(c2) (c) (d&)')).toThrow(/not read yet/);
     expect(() => parseGabc('(c2) (n)')).toThrow();
     expect(() => parseGabc('(c2) (c')).toThrow(/never closed/);
     expect(() => parseGabc('(c2) (c) text')).toThrow();

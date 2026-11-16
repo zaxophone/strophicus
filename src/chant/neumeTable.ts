@@ -9,101 +9,349 @@ export interface NeumeGlyph {
 /** The glyphs used below. */
 export const NEUME_GLYPHS: NeumeGlyph[] = [
   { char: '\uE11E', advance: 166 }, // PesOneNothing
+  { char: '\uE123', advance: 166 }, // PesOneDeminutus
   { char: '\uE11F', advance: 166 }, // PesTwoNothing
+  { char: '\uE124', advance: 166 }, // PesTwoDeminutus
   { char: '\uE120', advance: 166 }, // PesThreeNothing
+  { char: '\uE125', advance: 166 }, // PesThreeDeminutus
   { char: '\uE121', advance: 166 }, // PesFourNothing
+  { char: '\uE126', advance: 166 }, // PesFourDeminutus
   { char: '\uE122', advance: 166 }, // PesFiveNothing
+  { char: '\uE127', advance: 166 }, // PesFiveDeminutus
   { char: '\uE538', advance: 498 }, // TorculusOneOneNothing
+  { char: '\uE619', advance: 334 }, // TorculusOneOneDeminutus
+  { char: '\uE583', advance: 498 }, // TorculusOneOneDescendens
+  { char: '\uE5CE', advance: 498 }, // TorculusOneOneAscendens
   { char: '\uE263', advance: 332 }, // ScandicusOneOneNothing
+  { char: '\uE27C', advance: 334 }, // ScandicusOneOneDeminutus
   { char: '\uE264', advance: 332 }, // ScandicusOneTwoNothing
+  { char: '\uE27D', advance: 334 }, // ScandicusOneTwoDeminutus
   { char: '\uE265', advance: 332 }, // ScandicusOneThreeNothing
+  { char: '\uE27E', advance: 334 }, // ScandicusOneThreeDeminutus
   { char: '\uE266', advance: 332 }, // ScandicusOneFourNothing
+  { char: '\uE27F', advance: 334 }, // ScandicusOneFourDeminutus
   { char: '\uE267', advance: 332 }, // ScandicusOneFiveNothing
+  { char: '\uE280', advance: 334 }, // ScandicusOneFiveDeminutus
   { char: '\uE53D', advance: 480 }, // TorculusTwoOneNothing
+  { char: '\uE61E', advance: 316 }, // TorculusTwoOneDeminutus
+  { char: '\uE588', advance: 480 }, // TorculusTwoOneDescendens
+  { char: '\uE5D3', advance: 480 }, // TorculusTwoOneAscendens
   { char: '\uE268', advance: 314 }, // ScandicusTwoOneNothing
+  { char: '\uE281', advance: 316 }, // ScandicusTwoOneDeminutus
   { char: '\uE53E', advance: 462 }, // TorculusTwoTwoNothing
+  { char: '\uE61F', advance: 316 }, // TorculusTwoTwoDeminutus
+  { char: '\uE589', advance: 462 }, // TorculusTwoTwoDescendens
+  { char: '\uE5D4', advance: 462 }, // TorculusTwoTwoAscendens
   { char: '\uE269', advance: 316 }, // ScandicusTwoTwoNothing
+  { char: '\uE282', advance: 316 }, // ScandicusTwoTwoDeminutus
   { char: '\uE26A', advance: 316 }, // ScandicusTwoThreeNothing
+  { char: '\uE283', advance: 316 }, // ScandicusTwoThreeDeminutus
   { char: '\uE26B', advance: 316 }, // ScandicusTwoFourNothing
+  { char: '\uE284', advance: 316 }, // ScandicusTwoFourDeminutus
   { char: '\uE26C', advance: 316 }, // ScandicusTwoFiveNothing
+  { char: '\uE285', advance: 316 }, // ScandicusTwoFiveDeminutus
   { char: '\uE542', advance: 480 }, // TorculusThreeOneNothing
+  { char: '\uE623', advance: 316 }, // TorculusThreeOneDeminutus
+  { char: '\uE58D', advance: 480 }, // TorculusThreeOneDescendens
+  { char: '\uE5D8', advance: 480 }, // TorculusThreeOneAscendens
   { char: '\uE26D', advance: 314 }, // ScandicusThreeOneNothing
+  { char: '\uE286', advance: 316 }, // ScandicusThreeOneDeminutus
   { char: '\uE543', advance: 462 }, // TorculusThreeTwoNothing
+  { char: '\uE624', advance: 316 }, // TorculusThreeTwoDeminutus
+  { char: '\uE58E', advance: 462 }, // TorculusThreeTwoDescendens
+  { char: '\uE5D9', advance: 462 }, // TorculusThreeTwoAscendens
   { char: '\uE26E', advance: 316 }, // ScandicusThreeTwoNothing
+  { char: '\uE287', advance: 316 }, // ScandicusThreeTwoDeminutus
   { char: '\uE544', advance: 462 }, // TorculusThreeThreeNothing
+  { char: '\uE625', advance: 316 }, // TorculusThreeThreeDeminutus
+  { char: '\uE58F', advance: 462 }, // TorculusThreeThreeDescendens
+  { char: '\uE5DA', advance: 462 }, // TorculusThreeThreeAscendens
   { char: '\uE26F', advance: 316 }, // ScandicusThreeThreeNothing
+  { char: '\uE288', advance: 316 }, // ScandicusThreeThreeDeminutus
   { char: '\uE270', advance: 316 }, // ScandicusThreeFourNothing
+  { char: '\uE289', advance: 316 }, // ScandicusThreeFourDeminutus
   { char: '\uE271', advance: 316 }, // ScandicusThreeFiveNothing
+  { char: '\uE28A', advance: 316 }, // ScandicusThreeFiveDeminutus
   { char: '\uE547', advance: 480 }, // TorculusFourOneNothing
+  { char: '\uE628', advance: 316 }, // TorculusFourOneDeminutus
+  { char: '\uE592', advance: 480 }, // TorculusFourOneDescendens
+  { char: '\uE5DD', advance: 480 }, // TorculusFourOneAscendens
   { char: '\uE272', advance: 314 }, // ScandicusFourOneNothing
+  { char: '\uE28B', advance: 316 }, // ScandicusFourOneDeminutus
   { char: '\uE548', advance: 462 }, // TorculusFourTwoNothing
+  { char: '\uE629', advance: 316 }, // TorculusFourTwoDeminutus
+  { char: '\uE593', advance: 462 }, // TorculusFourTwoDescendens
+  { char: '\uE5DE', advance: 462 }, // TorculusFourTwoAscendens
   { char: '\uE273', advance: 316 }, // ScandicusFourTwoNothing
+  { char: '\uE28C', advance: 316 }, // ScandicusFourTwoDeminutus
   { char: '\uE549', advance: 462 }, // TorculusFourThreeNothing
+  { char: '\uE62A', advance: 316 }, // TorculusFourThreeDeminutus
+  { char: '\uE594', advance: 462 }, // TorculusFourThreeDescendens
+  { char: '\uE5DF', advance: 462 }, // TorculusFourThreeAscendens
   { char: '\uE274', advance: 316 }, // ScandicusFourThreeNothing
+  { char: '\uE28D', advance: 316 }, // ScandicusFourThreeDeminutus
   { char: '\uE54A', advance: 462 }, // TorculusFourFourNothing
+  { char: '\uE62B', advance: 316 }, // TorculusFourFourDeminutus
+  { char: '\uE595', advance: 462 }, // TorculusFourFourDescendens
+  { char: '\uE5E0', advance: 462 }, // TorculusFourFourAscendens
   { char: '\uE275', advance: 316 }, // ScandicusFourFourNothing
+  { char: '\uE28E', advance: 316 }, // ScandicusFourFourDeminutus
   { char: '\uE276', advance: 316 }, // ScandicusFourFiveNothing
+  { char: '\uE28F', advance: 316 }, // ScandicusFourFiveDeminutus
   { char: '\uE54C', advance: 480 }, // TorculusFiveOneNothing
+  { char: '\uE62D', advance: 316 }, // TorculusFiveOneDeminutus
+  { char: '\uE597', advance: 480 }, // TorculusFiveOneDescendens
+  { char: '\uE5E2', advance: 480 }, // TorculusFiveOneAscendens
   { char: '\uE277', advance: 314 }, // ScandicusFiveOneNothing
+  { char: '\uE290', advance: 316 }, // ScandicusFiveOneDeminutus
   { char: '\uE54D', advance: 462 }, // TorculusFiveTwoNothing
+  { char: '\uE62E', advance: 316 }, // TorculusFiveTwoDeminutus
+  { char: '\uE598', advance: 462 }, // TorculusFiveTwoDescendens
+  { char: '\uE5E3', advance: 462 }, // TorculusFiveTwoAscendens
   { char: '\uE278', advance: 316 }, // ScandicusFiveTwoNothing
+  { char: '\uE291', advance: 316 }, // ScandicusFiveTwoDeminutus
   { char: '\uE54E', advance: 462 }, // TorculusFiveThreeNothing
+  { char: '\uE62F', advance: 316 }, // TorculusFiveThreeDeminutus
+  { char: '\uE599', advance: 462 }, // TorculusFiveThreeDescendens
+  { char: '\uE5E4', advance: 462 }, // TorculusFiveThreeAscendens
   { char: '\uE279', advance: 316 }, // ScandicusFiveThreeNothing
+  { char: '\uE292', advance: 316 }, // ScandicusFiveThreeDeminutus
   { char: '\uE54F', advance: 462 }, // TorculusFiveFourNothing
+  { char: '\uE630', advance: 316 }, // TorculusFiveFourDeminutus
+  { char: '\uE59A', advance: 462 }, // TorculusFiveFourDescendens
+  { char: '\uE5E5', advance: 462 }, // TorculusFiveFourAscendens
   { char: '\uE27A', advance: 316 }, // ScandicusFiveFourNothing
+  { char: '\uE293', advance: 316 }, // ScandicusFiveFourDeminutus
   { char: '\uE550', advance: 462 }, // TorculusFiveFiveNothing
+  { char: '\uE631', advance: 316 }, // TorculusFiveFiveDeminutus
+  { char: '\uE59B', advance: 462 }, // TorculusFiveFiveDescendens
+  { char: '\uE5E6', advance: 462 }, // TorculusFiveFiveAscendens
   { char: '\uE27B', advance: 316 }, // ScandicusFiveFiveNothing
+  { char: '\uE294', advance: 316 }, // ScandicusFiveFiveDeminutus
   { char: '\uE1D2', advance: 332 }, // FlexusOpenqueueOneNothing
+  { char: '\uE202', advance: 168 }, // FlexusOpenqueueOneDeminutus
+  { char: '\uE24C', advance: 332 }, // FlexusOpenqueueOneDescendens
+  { char: '\uE21C', advance: 332 }, // FlexusOpenqueueOneAscendens
   { char: '\uE75E', advance: 503 }, // PorrectusOneOneNothing
+  { char: '\uE803', advance: 503 }, // PorrectusOneOneDeminutus
+  { char: '\uE7CC', advance: 669 }, // PorrectusOneOneDescendens
+  { char: '\uE795', advance: 669 }, // PorrectusOneOneAscendens
   { char: '\uE539', advance: 480 }, // TorculusOneTwoNothing
+  { char: '\uE61A', advance: 334 }, // TorculusOneTwoDeminutus
+  { char: '\uE584', advance: 480 }, // TorculusOneTwoDescendens
+  { char: '\uE5CF', advance: 480 }, // TorculusOneTwoAscendens
   { char: '\uE75F', advance: 447 }, // PorrectusOneTwoNothing
+  { char: '\uE804', advance: 447 }, // PorrectusOneTwoDeminutus
+  { char: '\uE7CD', advance: 651 }, // PorrectusOneTwoDescendens
+  { char: '\uE796', advance: 651 }, // PorrectusOneTwoAscendens
   { char: '\uE760', advance: 447 }, // PorrectusOneThreeNothing
+  { char: '\uE805', advance: 447 }, // PorrectusOneThreeDeminutus
+  { char: '\uE7CE', advance: 651 }, // PorrectusOneThreeDescendens
+  { char: '\uE797', advance: 651 }, // PorrectusOneThreeAscendens
   { char: '\uE761', advance: 447 }, // PorrectusOneFourNothing
+  { char: '\uE806', advance: 447 }, // PorrectusOneFourDeminutus
+  { char: '\uE7CF', advance: 651 }, // PorrectusOneFourDescendens
+  { char: '\uE798', advance: 651 }, // PorrectusOneFourAscendens
   { char: '\uE762', advance: 447 }, // PorrectusOneFiveNothing
+  { char: '\uE807', advance: 447 }, // PorrectusOneFiveDeminutus
+  { char: '\uE7D0', advance: 651 }, // PorrectusOneFiveDescendens
+  { char: '\uE799', advance: 651 }, // PorrectusOneFiveAscendens
   { char: '\uE53F', advance: 462 }, // TorculusTwoThreeNothing
+  { char: '\uE620', advance: 316 }, // TorculusTwoThreeDeminutus
+  { char: '\uE58A', advance: 462 }, // TorculusTwoThreeDescendens
+  { char: '\uE5D5', advance: 462 }, // TorculusTwoThreeAscendens
   { char: '\uE545', advance: 462 }, // TorculusThreeFourNothing
+  { char: '\uE626', advance: 316 }, // TorculusThreeFourDeminutus
+  { char: '\uE590', advance: 462 }, // TorculusThreeFourDescendens
+  { char: '\uE5DB', advance: 462 }, // TorculusThreeFourAscendens
   { char: '\uE54B', advance: 462 }, // TorculusFourFiveNothing
+  { char: '\uE62C', advance: 316 }, // TorculusFourFiveDeminutus
+  { char: '\uE596', advance: 462 }, // TorculusFourFiveDescendens
+  { char: '\uE5E1', advance: 462 }, // TorculusFourFiveAscendens
   { char: '\uE1C9', advance: 314 }, // FlexusTwoNothing
+  { char: '\uE1F9', advance: 168 }, // FlexusTwoDeminutus
+  { char: '\uE243', advance: 314 }, // FlexusTwoDescendens
+  { char: '\uE213', advance: 314 }, // FlexusTwoAscendens
   { char: '\uE53A', advance: 480 }, // TorculusOneThreeNothing
+  { char: '\uE61B', advance: 334 }, // TorculusOneThreeDeminutus
+  { char: '\uE585', advance: 480 }, // TorculusOneThreeDescendens
+  { char: '\uE5D0', advance: 480 }, // TorculusOneThreeAscendens
   { char: '\uE763', advance: 628 }, // PorrectusTwoOneNothing
+  { char: '\uE808', advance: 628 }, // PorrectusTwoOneDeminutus
+  { char: '\uE7D1', advance: 794 }, // PorrectusTwoOneDescendens
+  { char: '\uE79A', advance: 794 }, // PorrectusTwoOneAscendens
   { char: '\uE764', advance: 547 }, // PorrectusTwoTwoNothing
+  { char: '\uE809', advance: 547 }, // PorrectusTwoTwoDeminutus
+  { char: '\uE7D2', advance: 776 }, // PorrectusTwoTwoDescendens
+  { char: '\uE79B', advance: 776 }, // PorrectusTwoTwoAscendens
   { char: '\uE765', advance: 547 }, // PorrectusTwoThreeNothing
+  { char: '\uE80A', advance: 547 }, // PorrectusTwoThreeDeminutus
+  { char: '\uE7D3', advance: 776 }, // PorrectusTwoThreeDescendens
+  { char: '\uE79C', advance: 776 }, // PorrectusTwoThreeAscendens
   { char: '\uE540', advance: 462 }, // TorculusTwoFourNothing
+  { char: '\uE621', advance: 316 }, // TorculusTwoFourDeminutus
+  { char: '\uE58B', advance: 462 }, // TorculusTwoFourDescendens
+  { char: '\uE5D6', advance: 462 }, // TorculusTwoFourAscendens
   { char: '\uE766', advance: 547 }, // PorrectusTwoFourNothing
+  { char: '\uE80B', advance: 547 }, // PorrectusTwoFourDeminutus
+  { char: '\uE7D4', advance: 776 }, // PorrectusTwoFourDescendens
+  { char: '\uE79D', advance: 776 }, // PorrectusTwoFourAscendens
   { char: '\uE767', advance: 547 }, // PorrectusTwoFiveNothing
+  { char: '\uE80C', advance: 547 }, // PorrectusTwoFiveDeminutus
+  { char: '\uE7D5', advance: 776 }, // PorrectusTwoFiveDescendens
+  { char: '\uE79E', advance: 776 }, // PorrectusTwoFiveAscendens
   { char: '\uE546', advance: 462 }, // TorculusThreeFiveNothing
+  { char: '\uE627', advance: 316 }, // TorculusThreeFiveDeminutus
+  { char: '\uE591', advance: 462 }, // TorculusThreeFiveDescendens
+  { char: '\uE5DC', advance: 462 }, // TorculusThreeFiveAscendens
   { char: '\uE1CE', advance: 314 }, // FlexusLongqueueTwoNothing
+  { char: '\uE1FE', advance: 168 }, // FlexusLongqueueTwoDeminutus
+  { char: '\uE248', advance: 314 }, // FlexusLongqueueTwoDescendens
+  { char: '\uE218', advance: 314 }, // FlexusLongqueueTwoAscendens
   { char: '\uE1CA', advance: 314 }, // FlexusThreeNothing
+  { char: '\uE1FA', advance: 168 }, // FlexusThreeDeminutus
+  { char: '\uE244', advance: 314 }, // FlexusThreeDescendens
+  { char: '\uE214', advance: 314 }, // FlexusThreeAscendens
   { char: '\uE53B', advance: 480 }, // TorculusOneFourNothing
+  { char: '\uE61C', advance: 334 }, // TorculusOneFourDeminutus
+  { char: '\uE586', advance: 480 }, // TorculusOneFourDescendens
+  { char: '\uE5D1', advance: 480 }, // TorculusOneFourAscendens
+  { char: '\uE821', advance: 628 }, // PorrectusLongqueueTwoOneDeminutus
+  { char: '\uE822', advance: 547 }, // PorrectusLongqueueTwoTwoDeminutus
+  { char: '\uE823', advance: 547 }, // PorrectusLongqueueTwoThreeDeminutus
+  { char: '\uE824', advance: 547 }, // PorrectusLongqueueTwoFourDeminutus
   { char: '\uE541', advance: 462 }, // TorculusTwoFiveNothing
+  { char: '\uE622', advance: 316 }, // TorculusTwoFiveDeminutus
+  { char: '\uE58C', advance: 462 }, // TorculusTwoFiveDescendens
+  { char: '\uE5D7', advance: 462 }, // TorculusTwoFiveAscendens
+  { char: '\uE825', advance: 547 }, // PorrectusLongqueueTwoFiveDeminutus
   { char: '\uE768', advance: 678 }, // PorrectusThreeOneNothing
+  { char: '\uE826', advance: 678 }, // PorrectusLongqueueThreeOneDeminutus
+  { char: '\uE7D6', advance: 794 }, // PorrectusThreeOneDescendens
+  { char: '\uE79F', advance: 794 }, // PorrectusThreeOneAscendens
   { char: '\uE769', advance: 628 }, // PorrectusThreeTwoNothing
+  { char: '\uE827', advance: 628 }, // PorrectusLongqueueThreeTwoDeminutus
+  { char: '\uE7D7', advance: 776 }, // PorrectusThreeTwoDescendens
+  { char: '\uE7A0', advance: 776 }, // PorrectusThreeTwoAscendens
   { char: '\uE76A', advance: 628 }, // PorrectusThreeThreeNothing
+  { char: '\uE828', advance: 628 }, // PorrectusLongqueueThreeThreeDeminutus
+  { char: '\uE7D8', advance: 776 }, // PorrectusThreeThreeDescendens
+  { char: '\uE7A1', advance: 776 }, // PorrectusThreeThreeAscendens
   { char: '\uE76B', advance: 628 }, // PorrectusThreeFourNothing
+  { char: '\uE829', advance: 628 }, // PorrectusLongqueueThreeFourDeminutus
+  { char: '\uE7D9', advance: 776 }, // PorrectusThreeFourDescendens
+  { char: '\uE7A2', advance: 776 }, // PorrectusThreeFourAscendens
   { char: '\uE76C', advance: 628 }, // PorrectusThreeFiveNothing
+  { char: '\uE82A', advance: 628 }, // PorrectusLongqueueThreeFiveDeminutus
+  { char: '\uE7DA', advance: 776 }, // PorrectusThreeFiveDescendens
+  { char: '\uE7A3', advance: 776 }, // PorrectusThreeFiveAscendens
   { char: '\uE1CF', advance: 314 }, // FlexusLongqueueThreeNothing
+  { char: '\uE1FF', advance: 168 }, // FlexusLongqueueThreeDeminutus
+  { char: '\uE249', advance: 314 }, // FlexusLongqueueThreeDescendens
+  { char: '\uE219', advance: 314 }, // FlexusLongqueueThreeAscendens
   { char: '\uE1CB', advance: 314 }, // FlexusFourNothing
+  { char: '\uE1FB', advance: 168 }, // FlexusFourDeminutus
+  { char: '\uE245', advance: 314 }, // FlexusFourDescendens
+  { char: '\uE215', advance: 314 }, // FlexusFourAscendens
   { char: '\uE53C', advance: 480 }, // TorculusOneFiveNothing
+  { char: '\uE61D', advance: 334 }, // TorculusOneFiveDeminutus
+  { char: '\uE587', advance: 480 }, // TorculusOneFiveDescendens
+  { char: '\uE5D2', advance: 480 }, // TorculusOneFiveAscendens
+  { char: '\uE80D', advance: 678 }, // PorrectusThreeOneDeminutus
+  { char: '\uE80E', advance: 628 }, // PorrectusThreeTwoDeminutus
+  { char: '\uE80F', advance: 628 }, // PorrectusThreeThreeDeminutus
+  { char: '\uE810', advance: 628 }, // PorrectusThreeFourDeminutus
+  { char: '\uE811', advance: 628 }, // PorrectusThreeFiveDeminutus
   { char: '\uE76D', advance: 721 }, // PorrectusFourOneNothing
+  { char: '\uE812', advance: 721 }, // PorrectusFourOneDeminutus
+  { char: '\uE7DB', advance: 794 }, // PorrectusFourOneDescendens
+  { char: '\uE7A4', advance: 794 }, // PorrectusFourOneAscendens
   { char: '\uE76E', advance: 704 }, // PorrectusFourTwoNothing
+  { char: '\uE813', advance: 704 }, // PorrectusFourTwoDeminutus
+  { char: '\uE7DC', advance: 776 }, // PorrectusFourTwoDescendens
+  { char: '\uE7A5', advance: 776 }, // PorrectusFourTwoAscendens
   { char: '\uE76F', advance: 704 }, // PorrectusFourThreeNothing
+  { char: '\uE814', advance: 704 }, // PorrectusFourThreeDeminutus
+  { char: '\uE7DD', advance: 776 }, // PorrectusFourThreeDescendens
+  { char: '\uE7A6', advance: 776 }, // PorrectusFourThreeAscendens
   { char: '\uE770', advance: 704 }, // PorrectusFourFourNothing
+  { char: '\uE815', advance: 704 }, // PorrectusFourFourDeminutus
+  { char: '\uE7DE', advance: 776 }, // PorrectusFourFourDescendens
+  { char: '\uE7A7', advance: 776 }, // PorrectusFourFourAscendens
   { char: '\uE771', advance: 704 }, // PorrectusFourFiveNothing
+  { char: '\uE816', advance: 704 }, // PorrectusFourFiveDeminutus
+  { char: '\uE7DF', advance: 776 }, // PorrectusFourFiveDescendens
+  { char: '\uE7A8', advance: 776 }, // PorrectusFourFiveAscendens
   { char: '\uE1CD', advance: 332 }, // FlexusLongqueueOneNothing
+  { char: '\uE1FD', advance: 168 }, // FlexusLongqueueOneDeminutus
+  { char: '\uE247', advance: 332 }, // FlexusLongqueueOneDescendens
+  { char: '\uE217', advance: 332 }, // FlexusLongqueueOneAscendens
   { char: '\uE1D0', advance: 314 }, // FlexusLongqueueFourNothing
+  { char: '\uE200', advance: 168 }, // FlexusLongqueueFourDeminutus
+  { char: '\uE24A', advance: 314 }, // FlexusLongqueueFourDescendens
+  { char: '\uE21A', advance: 314 }, // FlexusLongqueueFourAscendens
   { char: '\uE1CC', advance: 314 }, // FlexusFiveNothing
+  { char: '\uE1FC', advance: 168 }, // FlexusFiveDeminutus
+  { char: '\uE246', advance: 314 }, // FlexusFiveDescendens
+  { char: '\uE216', advance: 314 }, // FlexusFiveAscendens
   { char: '\uE777', advance: 503 }, // PorrectusLongqueueOneOneNothing
+  { char: '\uE81C', advance: 503 }, // PorrectusLongqueueOneOneDeminutus
+  { char: '\uE7E5', advance: 669 }, // PorrectusLongqueueOneOneDescendens
+  { char: '\uE7AE', advance: 669 }, // PorrectusLongqueueOneOneAscendens
   { char: '\uE778', advance: 447 }, // PorrectusLongqueueOneTwoNothing
+  { char: '\uE81D', advance: 447 }, // PorrectusLongqueueOneTwoDeminutus
+  { char: '\uE7E6', advance: 651 }, // PorrectusLongqueueOneTwoDescendens
+  { char: '\uE7AF', advance: 651 }, // PorrectusLongqueueOneTwoAscendens
   { char: '\uE779', advance: 447 }, // PorrectusLongqueueOneThreeNothing
+  { char: '\uE81E', advance: 447 }, // PorrectusLongqueueOneThreeDeminutus
+  { char: '\uE7E7', advance: 651 }, // PorrectusLongqueueOneThreeDescendens
+  { char: '\uE7B0', advance: 651 }, // PorrectusLongqueueOneThreeAscendens
   { char: '\uE77A', advance: 447 }, // PorrectusLongqueueOneFourNothing
+  { char: '\uE81F', advance: 447 }, // PorrectusLongqueueOneFourDeminutus
+  { char: '\uE7E8', advance: 651 }, // PorrectusLongqueueOneFourDescendens
+  { char: '\uE7B1', advance: 651 }, // PorrectusLongqueueOneFourAscendens
   { char: '\uE77B', advance: 447 }, // PorrectusLongqueueOneFiveNothing
+  { char: '\uE820', advance: 447 }, // PorrectusLongqueueOneFiveDeminutus
+  { char: '\uE7E9', advance: 651 }, // PorrectusLongqueueOneFiveDescendens
+  { char: '\uE7B2', advance: 651 }, // PorrectusLongqueueOneFiveAscendens
+  { char: '\uE82B', advance: 721 }, // PorrectusLongqueueFourOneDeminutus
+  { char: '\uE82C', advance: 704 }, // PorrectusLongqueueFourTwoDeminutus
+  { char: '\uE82D', advance: 704 }, // PorrectusLongqueueFourThreeDeminutus
+  { char: '\uE82E', advance: 704 }, // PorrectusLongqueueFourFourDeminutus
+  { char: '\uE82F', advance: 704 }, // PorrectusLongqueueFourFiveDeminutus
   { char: '\uE772', advance: 933 }, // PorrectusFiveOneNothing
+  { char: '\uE830', advance: 933 }, // PorrectusLongqueueFiveOneDeminutus
+  { char: '\uE7E0', advance: 1097 }, // PorrectusFiveOneDescendens
+  { char: '\uE7A9', advance: 1097 }, // PorrectusFiveOneAscendens
   { char: '\uE773', advance: 849 }, // PorrectusFiveTwoNothing
+  { char: '\uE831', advance: 849 }, // PorrectusLongqueueFiveTwoDeminutus
+  { char: '\uE7E1', advance: 1079 }, // PorrectusFiveTwoDescendens
+  { char: '\uE7AA', advance: 1079 }, // PorrectusFiveTwoAscendens
   { char: '\uE774', advance: 849 }, // PorrectusFiveThreeNothing
+  { char: '\uE832', advance: 849 }, // PorrectusLongqueueFiveThreeDeminutus
+  { char: '\uE7E2', advance: 1079 }, // PorrectusFiveThreeDescendens
+  { char: '\uE7AB', advance: 1079 }, // PorrectusFiveThreeAscendens
   { char: '\uE775', advance: 849 }, // PorrectusFiveFourNothing
+  { char: '\uE833', advance: 849 }, // PorrectusLongqueueFiveFourDeminutus
+  { char: '\uE7E3', advance: 1079 }, // PorrectusFiveFourDescendens
+  { char: '\uE7AC', advance: 1079 }, // PorrectusFiveFourAscendens
   { char: '\uE776', advance: 849 }, // PorrectusFiveFiveNothing
+  { char: '\uE834', advance: 849 }, // PorrectusLongqueueFiveFiveDeminutus
+  { char: '\uE7E4', advance: 1079 }, // PorrectusFiveFiveDescendens
+  { char: '\uE7AD', advance: 1079 }, // PorrectusFiveFiveAscendens
   { char: '\uE1C8', advance: 332 }, // FlexusOneNothing
+  { char: '\uE1F8', advance: 168 }, // FlexusOneDeminutus
+  { char: '\uE242', advance: 332 }, // FlexusOneDescendens
+  { char: '\uE212', advance: 332 }, // FlexusOneAscendens
   { char: '\uE1D1', advance: 314 }, // FlexusLongqueueFiveNothing
+  { char: '\uE201', advance: 168 }, // FlexusLongqueueFiveDeminutus
+  { char: '\uE24B', advance: 314 }, // FlexusLongqueueFiveDescendens
+  { char: '\uE21B', advance: 314 }, // FlexusLongqueueFiveAscendens
+  { char: '\uE817', advance: 933 }, // PorrectusFiveOneDeminutus
+  { char: '\uE818', advance: 849 }, // PorrectusFiveTwoDeminutus
+  { char: '\uE819', advance: 849 }, // PorrectusFiveThreeDeminutus
+  { char: '\uE81A', advance: 849 }, // PorrectusFiveFourDeminutus
+  { char: '\uE81B', advance: 849 }, // PorrectusFiveFiveDeminutus
 ];
 
 /**
@@ -113,181 +361,618 @@ export const NEUME_GLYPHS: NeumeGlyph[] = [
  * a number of steps (always positive; the shape says which way it goes).
  */
 export const NEUME_TABLE: Record<string, number> = {
-  'pes:-3:1': 0, 'pes:-3:2': 1, 'pes:-3:3': 2, 'pes:-3:4': 3, 'pes:-3:5': 4, 'torculus:-3:1-1': 5,
-  'scandicus:-3:1-1': 6, 'scandicus:-3:1-2': 7, 'scandicus:-3:1-3': 8, 'scandicus:-3:1-4': 9,
-  'scandicus:-3:1-5': 10, 'torculus:-3:2-1': 11, 'scandicus:-3:2-1': 12, 'torculus:-3:2-2': 13,
-  'scandicus:-3:2-2': 14, 'scandicus:-3:2-3': 15, 'scandicus:-3:2-4': 16, 'scandicus:-3:2-5': 17,
-  'torculus:-3:3-1': 18, 'scandicus:-3:3-1': 19, 'torculus:-3:3-2': 20, 'scandicus:-3:3-2': 21,
-  'torculus:-3:3-3': 22, 'scandicus:-3:3-3': 23, 'scandicus:-3:3-4': 24, 'scandicus:-3:3-5': 25,
-  'torculus:-3:4-1': 26, 'scandicus:-3:4-1': 27, 'torculus:-3:4-2': 28, 'scandicus:-3:4-2': 29,
-  'torculus:-3:4-3': 30, 'scandicus:-3:4-3': 31, 'torculus:-3:4-4': 32, 'scandicus:-3:4-4': 33,
-  'scandicus:-3:4-5': 34, 'torculus:-3:5-1': 35, 'scandicus:-3:5-1': 36, 'torculus:-3:5-2': 37,
-  'scandicus:-3:5-2': 38, 'torculus:-3:5-3': 39, 'scandicus:-3:5-3': 40, 'torculus:-3:5-4': 41,
-  'scandicus:-3:5-4': 42, 'torculus:-3:5-5': 43, 'scandicus:-3:5-5': 44, 'pes:-2:1': 0,
-  'flexus:-2:1': 45, 'pes:-2:2': 1, 'pes:-2:3': 2, 'pes:-2:4': 3, 'pes:-2:5': 4,
-  'torculus:-2:1-1': 5, 'porrectus:-2:1-1': 46, 'scandicus:-2:1-1': 6, 'torculus:-2:1-2': 47,
-  'porrectus:-2:1-2': 48, 'scandicus:-2:1-2': 7, 'porrectus:-2:1-3': 49, 'scandicus:-2:1-3': 8,
-  'porrectus:-2:1-4': 50, 'scandicus:-2:1-4': 9, 'porrectus:-2:1-5': 51, 'scandicus:-2:1-5': 10,
-  'torculus:-2:2-1': 11, 'scandicus:-2:2-1': 12, 'torculus:-2:2-2': 13, 'scandicus:-2:2-2': 14,
-  'torculus:-2:2-3': 52, 'scandicus:-2:2-3': 15, 'scandicus:-2:2-4': 16, 'scandicus:-2:2-5': 17,
-  'torculus:-2:3-1': 18, 'scandicus:-2:3-1': 19, 'torculus:-2:3-2': 20, 'scandicus:-2:3-2': 21,
-  'torculus:-2:3-3': 22, 'scandicus:-2:3-3': 23, 'torculus:-2:3-4': 53, 'scandicus:-2:3-4': 24,
-  'scandicus:-2:3-5': 25, 'torculus:-2:4-1': 26, 'scandicus:-2:4-1': 27, 'torculus:-2:4-2': 28,
-  'scandicus:-2:4-2': 29, 'torculus:-2:4-3': 30, 'scandicus:-2:4-3': 31, 'torculus:-2:4-4': 32,
-  'scandicus:-2:4-4': 33, 'torculus:-2:4-5': 54, 'scandicus:-2:4-5': 34, 'torculus:-2:5-1': 35,
-  'scandicus:-2:5-1': 36, 'torculus:-2:5-2': 37, 'scandicus:-2:5-2': 38, 'torculus:-2:5-3': 39,
-  'scandicus:-2:5-3': 40, 'torculus:-2:5-4': 41, 'scandicus:-2:5-4': 42, 'torculus:-2:5-5': 43,
-  'scandicus:-2:5-5': 44, 'pes:-1:1': 0, 'flexus:-1:1': 45, 'pes:-1:2': 1, 'flexus:-1:2': 55,
-  'pes:-1:3': 2, 'pes:-1:4': 3, 'pes:-1:5': 4, 'torculus:-1:1-1': 5, 'porrectus:-1:1-1': 46,
-  'scandicus:-1:1-1': 6, 'torculus:-1:1-2': 47, 'porrectus:-1:1-2': 48, 'scandicus:-1:1-2': 7,
-  'torculus:-1:1-3': 56, 'porrectus:-1:1-3': 49, 'scandicus:-1:1-3': 8, 'porrectus:-1:1-4': 50,
-  'scandicus:-1:1-4': 9, 'porrectus:-1:1-5': 51, 'scandicus:-1:1-5': 10, 'torculus:-1:2-1': 11,
-  'porrectus:-1:2-1': 57, 'scandicus:-1:2-1': 12, 'torculus:-1:2-2': 13, 'porrectus:-1:2-2': 58,
-  'scandicus:-1:2-2': 14, 'torculus:-1:2-3': 52, 'porrectus:-1:2-3': 59, 'scandicus:-1:2-3': 15,
-  'torculus:-1:2-4': 60, 'porrectus:-1:2-4': 61, 'scandicus:-1:2-4': 16, 'porrectus:-1:2-5': 62,
-  'scandicus:-1:2-5': 17, 'torculus:-1:3-1': 18, 'scandicus:-1:3-1': 19, 'torculus:-1:3-2': 20,
-  'scandicus:-1:3-2': 21, 'torculus:-1:3-3': 22, 'scandicus:-1:3-3': 23, 'torculus:-1:3-4': 53,
-  'scandicus:-1:3-4': 24, 'torculus:-1:3-5': 63, 'scandicus:-1:3-5': 25, 'torculus:-1:4-1': 26,
-  'scandicus:-1:4-1': 27, 'torculus:-1:4-2': 28, 'scandicus:-1:4-2': 29, 'torculus:-1:4-3': 30,
-  'scandicus:-1:4-3': 31, 'torculus:-1:4-4': 32, 'scandicus:-1:4-4': 33, 'torculus:-1:4-5': 54,
-  'scandicus:-1:4-5': 34, 'torculus:-1:5-1': 35, 'scandicus:-1:5-1': 36, 'torculus:-1:5-2': 37,
-  'scandicus:-1:5-2': 38, 'torculus:-1:5-3': 39, 'scandicus:-1:5-3': 40, 'torculus:-1:5-4': 41,
-  'scandicus:-1:5-4': 42, 'torculus:-1:5-5': 43, 'scandicus:-1:5-5': 44, 'pes:0:1': 0,
-  'flexus:0:1': 45, 'pes:0:2': 1, 'flexus:0:2': 64, 'pes:0:3': 2, 'flexus:0:3': 65, 'pes:0:4': 3,
-  'pes:0:5': 4, 'torculus:0:1-1': 5, 'porrectus:0:1-1': 46, 'scandicus:0:1-1': 6,
-  'torculus:0:1-2': 47, 'porrectus:0:1-2': 48, 'scandicus:0:1-2': 7, 'torculus:0:1-3': 56,
-  'porrectus:0:1-3': 49, 'scandicus:0:1-3': 8, 'torculus:0:1-4': 66, 'porrectus:0:1-4': 50,
-  'scandicus:0:1-4': 9, 'porrectus:0:1-5': 51, 'scandicus:0:1-5': 10, 'torculus:0:2-1': 11,
-  'porrectus:0:2-1': 57, 'scandicus:0:2-1': 12, 'torculus:0:2-2': 13, 'porrectus:0:2-2': 58,
-  'scandicus:0:2-2': 14, 'torculus:0:2-3': 52, 'porrectus:0:2-3': 59, 'scandicus:0:2-3': 15,
-  'torculus:0:2-4': 60, 'porrectus:0:2-4': 61, 'scandicus:0:2-4': 16, 'torculus:0:2-5': 67,
-  'porrectus:0:2-5': 62, 'scandicus:0:2-5': 17, 'torculus:0:3-1': 18, 'porrectus:0:3-1': 68,
-  'scandicus:0:3-1': 19, 'torculus:0:3-2': 20, 'porrectus:0:3-2': 69, 'scandicus:0:3-2': 21,
-  'torculus:0:3-3': 22, 'porrectus:0:3-3': 70, 'scandicus:0:3-3': 23, 'torculus:0:3-4': 53,
-  'porrectus:0:3-4': 71, 'scandicus:0:3-4': 24, 'torculus:0:3-5': 63, 'porrectus:0:3-5': 72,
-  'scandicus:0:3-5': 25, 'torculus:0:4-1': 26, 'scandicus:0:4-1': 27, 'torculus:0:4-2': 28,
-  'scandicus:0:4-2': 29, 'torculus:0:4-3': 30, 'scandicus:0:4-3': 31, 'torculus:0:4-4': 32,
-  'scandicus:0:4-4': 33, 'torculus:0:4-5': 54, 'scandicus:0:4-5': 34, 'torculus:0:5-1': 35,
-  'scandicus:0:5-1': 36, 'torculus:0:5-2': 37, 'scandicus:0:5-2': 38, 'torculus:0:5-3': 39,
-  'scandicus:0:5-3': 40, 'torculus:0:5-4': 41, 'scandicus:0:5-4': 42, 'torculus:0:5-5': 43,
-  'pes:1:1': 0, 'flexus:1:1': 45, 'pes:1:2': 1, 'flexus:1:2': 55, 'pes:1:3': 2, 'flexus:1:3': 73,
-  'pes:1:4': 3, 'flexus:1:4': 74, 'pes:1:5': 4, 'torculus:1:1-1': 5, 'porrectus:1:1-1': 46,
-  'scandicus:1:1-1': 6, 'torculus:1:1-2': 47, 'porrectus:1:1-2': 48, 'scandicus:1:1-2': 7,
-  'torculus:1:1-3': 56, 'porrectus:1:1-3': 49, 'scandicus:1:1-3': 8, 'torculus:1:1-4': 66,
-  'porrectus:1:1-4': 50, 'scandicus:1:1-4': 9, 'torculus:1:1-5': 75, 'porrectus:1:1-5': 51,
-  'scandicus:1:1-5': 10, 'torculus:1:2-1': 11, 'porrectus:1:2-1': 57, 'scandicus:1:2-1': 12,
-  'torculus:1:2-2': 13, 'porrectus:1:2-2': 58, 'scandicus:1:2-2': 14, 'torculus:1:2-3': 52,
-  'porrectus:1:2-3': 59, 'scandicus:1:2-3': 15, 'torculus:1:2-4': 60, 'porrectus:1:2-4': 61,
-  'scandicus:1:2-4': 16, 'torculus:1:2-5': 67, 'porrectus:1:2-5': 62, 'scandicus:1:2-5': 17,
-  'torculus:1:3-1': 18, 'porrectus:1:3-1': 68, 'scandicus:1:3-1': 19, 'torculus:1:3-2': 20,
-  'porrectus:1:3-2': 69, 'scandicus:1:3-2': 21, 'torculus:1:3-3': 22, 'porrectus:1:3-3': 70,
-  'scandicus:1:3-3': 23, 'torculus:1:3-4': 53, 'porrectus:1:3-4': 71, 'scandicus:1:3-4': 24,
-  'torculus:1:3-5': 63, 'porrectus:1:3-5': 72, 'scandicus:1:3-5': 25, 'torculus:1:4-1': 26,
-  'porrectus:1:4-1': 76, 'scandicus:1:4-1': 27, 'torculus:1:4-2': 28, 'porrectus:1:4-2': 77,
-  'scandicus:1:4-2': 29, 'torculus:1:4-3': 30, 'porrectus:1:4-3': 78, 'scandicus:1:4-3': 31,
-  'torculus:1:4-4': 32, 'porrectus:1:4-4': 79, 'scandicus:1:4-4': 33, 'torculus:1:4-5': 54,
-  'porrectus:1:4-5': 80, 'torculus:1:5-1': 35, 'scandicus:1:5-1': 36, 'torculus:1:5-2': 37,
-  'scandicus:1:5-2': 38, 'torculus:1:5-3': 39, 'scandicus:1:5-3': 40, 'torculus:1:5-4': 41,
-  'torculus:1:5-5': 43, 'pes:2:1': 0, 'flexus:2:1': 81, 'pes:2:2': 1, 'flexus:2:2': 64, 'pes:2:3': 2,
-  'flexus:2:3': 65, 'pes:2:4': 3, 'flexus:2:4': 82, 'pes:2:5': 4, 'flexus:2:5': 83,
-  'torculus:2:1-1': 5, 'porrectus:2:1-1': 84, 'scandicus:2:1-1': 6, 'torculus:2:1-2': 47,
-  'porrectus:2:1-2': 85, 'scandicus:2:1-2': 7, 'torculus:2:1-3': 56, 'porrectus:2:1-3': 86,
-  'scandicus:2:1-3': 8, 'torculus:2:1-4': 66, 'porrectus:2:1-4': 87, 'scandicus:2:1-4': 9,
-  'torculus:2:1-5': 75, 'porrectus:2:1-5': 88, 'scandicus:2:1-5': 10, 'torculus:2:2-1': 11,
-  'porrectus:2:2-1': 57, 'scandicus:2:2-1': 12, 'torculus:2:2-2': 13, 'porrectus:2:2-2': 58,
-  'scandicus:2:2-2': 14, 'torculus:2:2-3': 52, 'porrectus:2:2-3': 59, 'scandicus:2:2-3': 15,
-  'torculus:2:2-4': 60, 'porrectus:2:2-4': 61, 'scandicus:2:2-4': 16, 'torculus:2:2-5': 67,
-  'porrectus:2:2-5': 62, 'scandicus:2:2-5': 17, 'torculus:2:3-1': 18, 'porrectus:2:3-1': 68,
-  'scandicus:2:3-1': 19, 'torculus:2:3-2': 20, 'porrectus:2:3-2': 69, 'scandicus:2:3-2': 21,
-  'torculus:2:3-3': 22, 'porrectus:2:3-3': 70, 'scandicus:2:3-3': 23, 'torculus:2:3-4': 53,
-  'porrectus:2:3-4': 71, 'scandicus:2:3-4': 24, 'torculus:2:3-5': 63, 'porrectus:2:3-5': 72,
-  'torculus:2:4-1': 26, 'porrectus:2:4-1': 76, 'scandicus:2:4-1': 27, 'torculus:2:4-2': 28,
-  'porrectus:2:4-2': 77, 'scandicus:2:4-2': 29, 'torculus:2:4-3': 30, 'porrectus:2:4-3': 78,
-  'scandicus:2:4-3': 31, 'torculus:2:4-4': 32, 'porrectus:2:4-4': 79, 'torculus:2:4-5': 54,
-  'porrectus:2:4-5': 80, 'torculus:2:5-1': 35, 'porrectus:2:5-1': 89, 'scandicus:2:5-1': 36,
-  'torculus:2:5-2': 37, 'porrectus:2:5-2': 90, 'scandicus:2:5-2': 38, 'torculus:2:5-3': 39,
-  'porrectus:2:5-3': 91, 'torculus:2:5-4': 41, 'porrectus:2:5-4': 92, 'torculus:2:5-5': 43,
-  'porrectus:2:5-5': 93, 'pes:3:1': 0, 'flexus:3:1': 94, 'pes:3:2': 1, 'flexus:3:2': 55,
-  'pes:3:3': 2, 'flexus:3:3': 73, 'pes:3:4': 3, 'flexus:3:4': 74, 'pes:3:5': 4, 'flexus:3:5': 95,
-  'torculus:3:1-1': 5, 'porrectus:3:1-1': 46, 'scandicus:3:1-1': 6, 'torculus:3:1-2': 47,
-  'porrectus:3:1-2': 48, 'scandicus:3:1-2': 7, 'torculus:3:1-3': 56, 'porrectus:3:1-3': 49,
-  'scandicus:3:1-3': 8, 'torculus:3:1-4': 66, 'porrectus:3:1-4': 50, 'scandicus:3:1-4': 9,
-  'torculus:3:1-5': 75, 'porrectus:3:1-5': 51, 'scandicus:3:1-5': 10, 'torculus:3:2-1': 11,
-  'porrectus:3:2-1': 57, 'scandicus:3:2-1': 12, 'torculus:3:2-2': 13, 'porrectus:3:2-2': 58,
-  'scandicus:3:2-2': 14, 'torculus:3:2-3': 52, 'porrectus:3:2-3': 59, 'scandicus:3:2-3': 15,
-  'torculus:3:2-4': 60, 'porrectus:3:2-4': 61, 'scandicus:3:2-4': 16, 'torculus:3:2-5': 67,
-  'porrectus:3:2-5': 62, 'torculus:3:3-1': 18, 'porrectus:3:3-1': 68, 'scandicus:3:3-1': 19,
-  'torculus:3:3-2': 20, 'porrectus:3:3-2': 69, 'scandicus:3:3-2': 21, 'torculus:3:3-3': 22,
-  'porrectus:3:3-3': 70, 'scandicus:3:3-3': 23, 'torculus:3:3-4': 53, 'porrectus:3:3-4': 71,
-  'torculus:3:3-5': 63, 'porrectus:3:3-5': 72, 'torculus:3:4-1': 26, 'porrectus:3:4-1': 76,
-  'scandicus:3:4-1': 27, 'torculus:3:4-2': 28, 'porrectus:3:4-2': 77, 'scandicus:3:4-2': 29,
-  'torculus:3:4-3': 30, 'porrectus:3:4-3': 78, 'torculus:3:4-4': 32, 'porrectus:3:4-4': 79,
-  'torculus:3:4-5': 54, 'porrectus:3:4-5': 80, 'torculus:3:5-1': 35, 'porrectus:3:5-1': 89,
-  'scandicus:3:5-1': 36, 'torculus:3:5-2': 37, 'porrectus:3:5-2': 90, 'torculus:3:5-3': 39,
-  'porrectus:3:5-3': 91, 'torculus:3:5-4': 41, 'porrectus:3:5-4': 92, 'torculus:3:5-5': 43,
-  'porrectus:3:5-5': 93, 'pes:4:1': 0, 'flexus:4:1': 81, 'pes:4:2': 1, 'flexus:4:2': 64,
-  'pes:4:3': 2, 'flexus:4:3': 65, 'pes:4:4': 3, 'flexus:4:4': 82, 'pes:4:5': 4, 'flexus:4:5': 83,
-  'torculus:4:1-1': 5, 'porrectus:4:1-1': 84, 'scandicus:4:1-1': 6, 'torculus:4:1-2': 47,
-  'porrectus:4:1-2': 85, 'scandicus:4:1-2': 7, 'torculus:4:1-3': 56, 'porrectus:4:1-3': 86,
-  'scandicus:4:1-3': 8, 'torculus:4:1-4': 66, 'porrectus:4:1-4': 87, 'scandicus:4:1-4': 9,
-  'torculus:4:1-5': 75, 'porrectus:4:1-5': 88, 'torculus:4:2-1': 11, 'porrectus:4:2-1': 57,
-  'scandicus:4:2-1': 12, 'torculus:4:2-2': 13, 'porrectus:4:2-2': 58, 'scandicus:4:2-2': 14,
-  'torculus:4:2-3': 52, 'porrectus:4:2-3': 59, 'scandicus:4:2-3': 15, 'torculus:4:2-4': 60,
-  'porrectus:4:2-4': 61, 'torculus:4:2-5': 67, 'porrectus:4:2-5': 62, 'torculus:4:3-1': 18,
-  'porrectus:4:3-1': 68, 'scandicus:4:3-1': 19, 'torculus:4:3-2': 20, 'porrectus:4:3-2': 69,
-  'scandicus:4:3-2': 21, 'torculus:4:3-3': 22, 'porrectus:4:3-3': 70, 'torculus:4:3-4': 53,
-  'porrectus:4:3-4': 71, 'torculus:4:3-5': 63, 'porrectus:4:3-5': 72, 'torculus:4:4-1': 26,
-  'porrectus:4:4-1': 76, 'scandicus:4:4-1': 27, 'torculus:4:4-2': 28, 'porrectus:4:4-2': 77,
-  'torculus:4:4-3': 30, 'porrectus:4:4-3': 78, 'torculus:4:4-4': 32, 'porrectus:4:4-4': 79,
-  'torculus:4:4-5': 54, 'porrectus:4:4-5': 80, 'torculus:4:5-1': 35, 'porrectus:4:5-1': 89,
-  'torculus:4:5-2': 37, 'porrectus:4:5-2': 90, 'torculus:4:5-3': 39, 'porrectus:4:5-3': 91,
-  'torculus:4:5-4': 41, 'porrectus:4:5-4': 92, 'torculus:4:5-5': 43, 'porrectus:4:5-5': 93,
-  'pes:5:1': 0, 'flexus:5:1': 94, 'pes:5:2': 1, 'flexus:5:2': 55, 'pes:5:3': 2, 'flexus:5:3': 73,
-  'pes:5:4': 3, 'flexus:5:4': 74, 'flexus:5:5': 95, 'torculus:5:1-1': 5, 'porrectus:5:1-1': 46,
-  'scandicus:5:1-1': 6, 'torculus:5:1-2': 47, 'porrectus:5:1-2': 48, 'scandicus:5:1-2': 7,
-  'torculus:5:1-3': 56, 'porrectus:5:1-3': 49, 'scandicus:5:1-3': 8, 'torculus:5:1-4': 66,
-  'porrectus:5:1-4': 50, 'torculus:5:1-5': 75, 'porrectus:5:1-5': 51, 'torculus:5:2-1': 11,
-  'porrectus:5:2-1': 57, 'scandicus:5:2-1': 12, 'torculus:5:2-2': 13, 'porrectus:5:2-2': 58,
-  'scandicus:5:2-2': 14, 'torculus:5:2-3': 52, 'porrectus:5:2-3': 59, 'torculus:5:2-4': 60,
-  'porrectus:5:2-4': 61, 'torculus:5:2-5': 67, 'porrectus:5:2-5': 62, 'torculus:5:3-1': 18,
-  'porrectus:5:3-1': 68, 'scandicus:5:3-1': 19, 'torculus:5:3-2': 20, 'porrectus:5:3-2': 69,
-  'torculus:5:3-3': 22, 'porrectus:5:3-3': 70, 'torculus:5:3-4': 53, 'porrectus:5:3-4': 71,
-  'torculus:5:3-5': 63, 'porrectus:5:3-5': 72, 'torculus:5:4-1': 26, 'porrectus:5:4-1': 76,
-  'torculus:5:4-2': 28, 'porrectus:5:4-2': 77, 'torculus:5:4-3': 30, 'porrectus:5:4-3': 78,
-  'torculus:5:4-4': 32, 'porrectus:5:4-4': 79, 'torculus:5:4-5': 54, 'porrectus:5:4-5': 80,
-  'porrectus:5:5-1': 89, 'porrectus:5:5-2': 90, 'porrectus:5:5-3': 91, 'porrectus:5:5-4': 92,
-  'porrectus:5:5-5': 93, 'pes:6:1': 0, 'flexus:6:1': 81, 'pes:6:2': 1, 'flexus:6:2': 64,
-  'pes:6:3': 2, 'flexus:6:3': 65, 'flexus:6:4': 82, 'flexus:6:5': 83, 'torculus:6:1-1': 5,
-  'porrectus:6:1-1': 84, 'scandicus:6:1-1': 6, 'torculus:6:1-2': 47, 'porrectus:6:1-2': 85,
-  'scandicus:6:1-2': 7, 'torculus:6:1-3': 56, 'porrectus:6:1-3': 86, 'torculus:6:1-4': 66,
-  'porrectus:6:1-4': 87, 'torculus:6:1-5': 75, 'torculus:6:2-1': 11, 'porrectus:6:2-1': 57,
-  'scandicus:6:2-1': 12, 'torculus:6:2-2': 13, 'porrectus:6:2-2': 58, 'torculus:6:2-3': 52,
-  'porrectus:6:2-3': 59, 'torculus:6:2-4': 60, 'porrectus:6:2-4': 61, 'torculus:6:2-5': 67,
-  'porrectus:6:2-5': 62, 'torculus:6:3-1': 18, 'porrectus:6:3-1': 68, 'torculus:6:3-2': 20,
-  'porrectus:6:3-2': 69, 'torculus:6:3-3': 22, 'porrectus:6:3-3': 70, 'torculus:6:3-4': 53,
-  'porrectus:6:3-4': 71, 'torculus:6:3-5': 63, 'porrectus:6:3-5': 72, 'porrectus:6:4-1': 76,
-  'porrectus:6:4-2': 77, 'porrectus:6:4-3': 78, 'porrectus:6:4-4': 79, 'porrectus:6:4-5': 80,
-  'porrectus:6:5-1': 89, 'porrectus:6:5-2': 90, 'porrectus:6:5-3': 91, 'porrectus:6:5-4': 92,
-  'porrectus:6:5-5': 93, 'pes:7:1': 0, 'flexus:7:1': 94, 'pes:7:2': 1, 'flexus:7:2': 55,
-  'flexus:7:3': 73, 'flexus:7:4': 74, 'flexus:7:5': 95, 'torculus:7:1-1': 5, 'porrectus:7:1-1': 46,
-  'scandicus:7:1-1': 6, 'torculus:7:1-2': 47, 'porrectus:7:1-2': 48, 'torculus:7:1-3': 56,
-  'porrectus:7:1-3': 49, 'torculus:7:1-4': 66, 'torculus:7:1-5': 75, 'torculus:7:2-1': 11,
-  'porrectus:7:2-1': 57, 'torculus:7:2-2': 13, 'porrectus:7:2-2': 58, 'torculus:7:2-3': 52,
-  'porrectus:7:2-3': 59, 'torculus:7:2-4': 60, 'porrectus:7:2-4': 61, 'torculus:7:2-5': 67,
-  'porrectus:7:3-1': 68, 'porrectus:7:3-2': 69, 'porrectus:7:3-3': 70, 'porrectus:7:3-4': 71,
-  'porrectus:7:3-5': 72, 'porrectus:7:4-1': 76, 'porrectus:7:4-2': 77, 'porrectus:7:4-3': 78,
-  'porrectus:7:4-4': 79, 'porrectus:7:4-5': 80, 'porrectus:7:5-1': 89, 'porrectus:7:5-2': 90,
-  'porrectus:7:5-3': 91, 'porrectus:7:5-4': 92, 'porrectus:7:5-5': 93, 'pes:8:1': 0,
-  'flexus:8:1': 81, 'flexus:8:2': 64, 'flexus:8:3': 65, 'flexus:8:4': 82, 'flexus:8:5': 83,
-  'torculus:8:1-1': 5, 'porrectus:8:1-1': 84, 'torculus:8:1-2': 47, 'porrectus:8:1-2': 85,
-  'torculus:8:1-3': 56, 'torculus:8:1-4': 66, 'torculus:8:1-5': 75, 'porrectus:8:2-1': 57,
-  'porrectus:8:2-2': 58, 'porrectus:8:2-3': 59, 'porrectus:8:3-1': 68, 'porrectus:8:3-2': 69,
-  'porrectus:8:3-3': 70, 'porrectus:8:3-4': 71, 'porrectus:8:4-1': 76, 'porrectus:8:4-2': 77,
-  'porrectus:8:4-3': 78, 'porrectus:8:4-4': 79, 'porrectus:8:4-5': 80, 'porrectus:8:5-1': 89,
-  'porrectus:8:5-2': 90, 'porrectus:8:5-3': 91, 'porrectus:8:5-4': 92, 'porrectus:8:5-5': 93,
-  'flexus:9:1': 94, 'flexus:9:2': 55, 'flexus:9:3': 73, 'flexus:9:4': 74, 'flexus:9:5': 95,
-  'porrectus:9:1-1': 46, 'porrectus:9:2-1': 57, 'porrectus:9:2-2': 58, 'porrectus:9:3-1': 68,
-  'porrectus:9:3-2': 69, 'porrectus:9:3-3': 70, 'porrectus:9:4-1': 76, 'porrectus:9:4-2': 77,
-  'porrectus:9:4-3': 78, 'porrectus:9:4-4': 79, 'porrectus:9:5-1': 89, 'porrectus:9:5-2': 90,
-  'porrectus:9:5-3': 91, 'porrectus:9:5-4': 92, 'porrectus:9:5-5': 93,
+  'pes:-3:1': 0, 'pes:-3:1~': 1, 'pes:-3:2': 2, 'pes:-3:2~': 3, 'pes:-3:3': 4, 'pes:-3:3~': 5,
+  'pes:-3:4': 6, 'pes:-3:4~': 7, 'pes:-3:5': 8, 'pes:-3:5~': 9, 'torculus:-3:1-1': 10,
+  'torculus:-3:1-1~': 11, 'torculus:-3:1-1>': 12, 'torculus:-3:1-1<': 13, 'scandicus:-3:1-1': 14,
+  'scandicus:-3:1-1~': 15, 'scandicus:-3:1-2': 16, 'scandicus:-3:1-2~': 17, 'scandicus:-3:1-3': 18,
+  'scandicus:-3:1-3~': 19, 'scandicus:-3:1-4': 20, 'scandicus:-3:1-4~': 21, 'scandicus:-3:1-5': 22,
+  'scandicus:-3:1-5~': 23, 'torculus:-3:2-1': 24, 'torculus:-3:2-1~': 25, 'torculus:-3:2-1>': 26,
+  'torculus:-3:2-1<': 27, 'scandicus:-3:2-1': 28, 'scandicus:-3:2-1~': 29, 'torculus:-3:2-2': 30,
+  'torculus:-3:2-2~': 31, 'torculus:-3:2-2>': 32, 'torculus:-3:2-2<': 33, 'scandicus:-3:2-2': 34,
+  'scandicus:-3:2-2~': 35, 'scandicus:-3:2-3': 36, 'scandicus:-3:2-3~': 37, 'scandicus:-3:2-4': 38,
+  'scandicus:-3:2-4~': 39, 'scandicus:-3:2-5': 40, 'scandicus:-3:2-5~': 41, 'torculus:-3:3-1': 42,
+  'torculus:-3:3-1~': 43, 'torculus:-3:3-1>': 44, 'torculus:-3:3-1<': 45, 'scandicus:-3:3-1': 46,
+  'scandicus:-3:3-1~': 47, 'torculus:-3:3-2': 48, 'torculus:-3:3-2~': 49, 'torculus:-3:3-2>': 50,
+  'torculus:-3:3-2<': 51, 'scandicus:-3:3-2': 52, 'scandicus:-3:3-2~': 53, 'torculus:-3:3-3': 54,
+  'torculus:-3:3-3~': 55, 'torculus:-3:3-3>': 56, 'torculus:-3:3-3<': 57, 'scandicus:-3:3-3': 58,
+  'scandicus:-3:3-3~': 59, 'scandicus:-3:3-4': 60, 'scandicus:-3:3-4~': 61, 'scandicus:-3:3-5': 62,
+  'scandicus:-3:3-5~': 63, 'torculus:-3:4-1': 64, 'torculus:-3:4-1~': 65, 'torculus:-3:4-1>': 66,
+  'torculus:-3:4-1<': 67, 'scandicus:-3:4-1': 68, 'scandicus:-3:4-1~': 69, 'torculus:-3:4-2': 70,
+  'torculus:-3:4-2~': 71, 'torculus:-3:4-2>': 72, 'torculus:-3:4-2<': 73, 'scandicus:-3:4-2': 74,
+  'scandicus:-3:4-2~': 75, 'torculus:-3:4-3': 76, 'torculus:-3:4-3~': 77, 'torculus:-3:4-3>': 78,
+  'torculus:-3:4-3<': 79, 'scandicus:-3:4-3': 80, 'scandicus:-3:4-3~': 81, 'torculus:-3:4-4': 82,
+  'torculus:-3:4-4~': 83, 'torculus:-3:4-4>': 84, 'torculus:-3:4-4<': 85, 'scandicus:-3:4-4': 86,
+  'scandicus:-3:4-4~': 87, 'scandicus:-3:4-5': 88, 'scandicus:-3:4-5~': 89, 'torculus:-3:5-1': 90,
+  'torculus:-3:5-1~': 91, 'torculus:-3:5-1>': 92, 'torculus:-3:5-1<': 93, 'scandicus:-3:5-1': 94,
+  'scandicus:-3:5-1~': 95, 'torculus:-3:5-2': 96, 'torculus:-3:5-2~': 97, 'torculus:-3:5-2>': 98,
+  'torculus:-3:5-2<': 99, 'scandicus:-3:5-2': 100, 'scandicus:-3:5-2~': 101, 'torculus:-3:5-3': 102,
+  'torculus:-3:5-3~': 103, 'torculus:-3:5-3>': 104, 'torculus:-3:5-3<': 105, 'scandicus:-3:5-3': 106,
+  'scandicus:-3:5-3~': 107, 'torculus:-3:5-4': 108, 'torculus:-3:5-4~': 109, 'torculus:-3:5-4>': 110,
+  'torculus:-3:5-4<': 111, 'scandicus:-3:5-4': 112, 'scandicus:-3:5-4~': 113, 'torculus:-3:5-5': 114,
+  'torculus:-3:5-5~': 115, 'torculus:-3:5-5>': 116, 'torculus:-3:5-5<': 117, 'scandicus:-3:5-5': 118,
+  'scandicus:-3:5-5~': 119, 'pes:-2:1': 0, 'pes:-2:1~': 1, 'flexus:-2:1': 120, 'flexus:-2:1~': 121,
+  'flexus:-2:1>': 122, 'flexus:-2:1<': 123, 'pes:-2:2': 2, 'pes:-2:2~': 3, 'pes:-2:3': 4,
+  'pes:-2:3~': 5, 'pes:-2:4': 6, 'pes:-2:4~': 7, 'pes:-2:5': 8, 'pes:-2:5~': 9,
+  'torculus:-2:1-1': 10, 'torculus:-2:1-1~': 11, 'torculus:-2:1-1>': 12, 'torculus:-2:1-1<': 13,
+  'porrectus:-2:1-1': 124, 'porrectus:-2:1-1~': 125, 'porrectus:-2:1-1>': 126,
+  'porrectus:-2:1-1<': 127, 'scandicus:-2:1-1': 14, 'scandicus:-2:1-1~': 15, 'torculus:-2:1-2': 128,
+  'torculus:-2:1-2~': 129, 'torculus:-2:1-2>': 130, 'torculus:-2:1-2<': 131, 'porrectus:-2:1-2': 132,
+  'porrectus:-2:1-2~': 133, 'porrectus:-2:1-2>': 134, 'porrectus:-2:1-2<': 135,
+  'scandicus:-2:1-2': 16, 'scandicus:-2:1-2~': 17, 'porrectus:-2:1-3': 136, 'porrectus:-2:1-3~': 137,
+  'porrectus:-2:1-3>': 138, 'porrectus:-2:1-3<': 139, 'scandicus:-2:1-3': 18,
+  'scandicus:-2:1-3~': 19, 'porrectus:-2:1-4': 140, 'porrectus:-2:1-4~': 141,
+  'porrectus:-2:1-4>': 142, 'porrectus:-2:1-4<': 143, 'scandicus:-2:1-4': 20,
+  'scandicus:-2:1-4~': 21, 'porrectus:-2:1-5': 144, 'porrectus:-2:1-5~': 145,
+  'porrectus:-2:1-5>': 146, 'porrectus:-2:1-5<': 147, 'scandicus:-2:1-5': 22,
+  'scandicus:-2:1-5~': 23, 'torculus:-2:2-1': 24, 'torculus:-2:2-1~': 25, 'torculus:-2:2-1>': 26,
+  'torculus:-2:2-1<': 27, 'scandicus:-2:2-1': 28, 'scandicus:-2:2-1~': 29, 'torculus:-2:2-2': 30,
+  'torculus:-2:2-2~': 31, 'torculus:-2:2-2>': 32, 'torculus:-2:2-2<': 33, 'scandicus:-2:2-2': 34,
+  'scandicus:-2:2-2~': 35, 'torculus:-2:2-3': 148, 'torculus:-2:2-3~': 149, 'torculus:-2:2-3>': 150,
+  'torculus:-2:2-3<': 151, 'scandicus:-2:2-3': 36, 'scandicus:-2:2-3~': 37, 'scandicus:-2:2-4': 38,
+  'scandicus:-2:2-4~': 39, 'scandicus:-2:2-5': 40, 'scandicus:-2:2-5~': 41, 'torculus:-2:3-1': 42,
+  'torculus:-2:3-1~': 43, 'torculus:-2:3-1>': 44, 'torculus:-2:3-1<': 45, 'scandicus:-2:3-1': 46,
+  'scandicus:-2:3-1~': 47, 'torculus:-2:3-2': 48, 'torculus:-2:3-2~': 49, 'torculus:-2:3-2>': 50,
+  'torculus:-2:3-2<': 51, 'scandicus:-2:3-2': 52, 'scandicus:-2:3-2~': 53, 'torculus:-2:3-3': 54,
+  'torculus:-2:3-3~': 55, 'torculus:-2:3-3>': 56, 'torculus:-2:3-3<': 57, 'scandicus:-2:3-3': 58,
+  'scandicus:-2:3-3~': 59, 'torculus:-2:3-4': 152, 'torculus:-2:3-4~': 153, 'torculus:-2:3-4>': 154,
+  'torculus:-2:3-4<': 155, 'scandicus:-2:3-4': 60, 'scandicus:-2:3-4~': 61, 'scandicus:-2:3-5': 62,
+  'scandicus:-2:3-5~': 63, 'torculus:-2:4-1': 64, 'torculus:-2:4-1~': 65, 'torculus:-2:4-1>': 66,
+  'torculus:-2:4-1<': 67, 'scandicus:-2:4-1': 68, 'scandicus:-2:4-1~': 69, 'torculus:-2:4-2': 70,
+  'torculus:-2:4-2~': 71, 'torculus:-2:4-2>': 72, 'torculus:-2:4-2<': 73, 'scandicus:-2:4-2': 74,
+  'scandicus:-2:4-2~': 75, 'torculus:-2:4-3': 76, 'torculus:-2:4-3~': 77, 'torculus:-2:4-3>': 78,
+  'torculus:-2:4-3<': 79, 'scandicus:-2:4-3': 80, 'scandicus:-2:4-3~': 81, 'torculus:-2:4-4': 82,
+  'torculus:-2:4-4~': 83, 'torculus:-2:4-4>': 84, 'torculus:-2:4-4<': 85, 'scandicus:-2:4-4': 86,
+  'scandicus:-2:4-4~': 87, 'torculus:-2:4-5': 156, 'torculus:-2:4-5~': 157, 'torculus:-2:4-5>': 158,
+  'torculus:-2:4-5<': 159, 'scandicus:-2:4-5': 88, 'scandicus:-2:4-5~': 89, 'torculus:-2:5-1': 90,
+  'torculus:-2:5-1~': 91, 'torculus:-2:5-1>': 92, 'torculus:-2:5-1<': 93, 'scandicus:-2:5-1': 94,
+  'scandicus:-2:5-1~': 95, 'torculus:-2:5-2': 96, 'torculus:-2:5-2~': 97, 'torculus:-2:5-2>': 98,
+  'torculus:-2:5-2<': 99, 'scandicus:-2:5-2': 100, 'scandicus:-2:5-2~': 101, 'torculus:-2:5-3': 102,
+  'torculus:-2:5-3~': 103, 'torculus:-2:5-3>': 104, 'torculus:-2:5-3<': 105, 'scandicus:-2:5-3': 106,
+  'scandicus:-2:5-3~': 107, 'torculus:-2:5-4': 108, 'torculus:-2:5-4~': 109, 'torculus:-2:5-4>': 110,
+  'torculus:-2:5-4<': 111, 'scandicus:-2:5-4': 112, 'scandicus:-2:5-4~': 113, 'torculus:-2:5-5': 114,
+  'torculus:-2:5-5~': 115, 'torculus:-2:5-5>': 116, 'torculus:-2:5-5<': 117, 'scandicus:-2:5-5': 118,
+  'scandicus:-2:5-5~': 119, 'pes:-1:1': 0, 'pes:-1:1~': 1, 'flexus:-1:1': 120, 'flexus:-1:1~': 121,
+  'flexus:-1:1>': 122, 'flexus:-1:1<': 123, 'pes:-1:2': 2, 'pes:-1:2~': 3, 'flexus:-1:2': 160,
+  'flexus:-1:2~': 161, 'flexus:-1:2>': 162, 'flexus:-1:2<': 163, 'pes:-1:3': 4, 'pes:-1:3~': 5,
+  'pes:-1:4': 6, 'pes:-1:4~': 7, 'pes:-1:5': 8, 'pes:-1:5~': 9, 'torculus:-1:1-1': 10,
+  'torculus:-1:1-1~': 11, 'torculus:-1:1-1>': 12, 'torculus:-1:1-1<': 13, 'porrectus:-1:1-1': 124,
+  'porrectus:-1:1-1~': 125, 'porrectus:-1:1-1>': 126, 'porrectus:-1:1-1<': 127,
+  'scandicus:-1:1-1': 14, 'scandicus:-1:1-1~': 15, 'torculus:-1:1-2': 128, 'torculus:-1:1-2~': 129,
+  'torculus:-1:1-2>': 130, 'torculus:-1:1-2<': 131, 'porrectus:-1:1-2': 132,
+  'porrectus:-1:1-2~': 133, 'porrectus:-1:1-2>': 134, 'porrectus:-1:1-2<': 135,
+  'scandicus:-1:1-2': 16, 'scandicus:-1:1-2~': 17, 'torculus:-1:1-3': 164, 'torculus:-1:1-3~': 165,
+  'torculus:-1:1-3>': 166, 'torculus:-1:1-3<': 167, 'porrectus:-1:1-3': 136,
+  'porrectus:-1:1-3~': 137, 'porrectus:-1:1-3>': 138, 'porrectus:-1:1-3<': 139,
+  'scandicus:-1:1-3': 18, 'scandicus:-1:1-3~': 19, 'porrectus:-1:1-4': 140, 'porrectus:-1:1-4~': 141,
+  'porrectus:-1:1-4>': 142, 'porrectus:-1:1-4<': 143, 'scandicus:-1:1-4': 20,
+  'scandicus:-1:1-4~': 21, 'porrectus:-1:1-5': 144, 'porrectus:-1:1-5~': 145,
+  'porrectus:-1:1-5>': 146, 'porrectus:-1:1-5<': 147, 'scandicus:-1:1-5': 22,
+  'scandicus:-1:1-5~': 23, 'torculus:-1:2-1': 24, 'torculus:-1:2-1~': 25, 'torculus:-1:2-1>': 26,
+  'torculus:-1:2-1<': 27, 'porrectus:-1:2-1': 168, 'porrectus:-1:2-1~': 169,
+  'porrectus:-1:2-1>': 170, 'porrectus:-1:2-1<': 171, 'scandicus:-1:2-1': 28,
+  'scandicus:-1:2-1~': 29, 'torculus:-1:2-2': 30, 'torculus:-1:2-2~': 31, 'torculus:-1:2-2>': 32,
+  'torculus:-1:2-2<': 33, 'porrectus:-1:2-2': 172, 'porrectus:-1:2-2~': 173,
+  'porrectus:-1:2-2>': 174, 'porrectus:-1:2-2<': 175, 'scandicus:-1:2-2': 34,
+  'scandicus:-1:2-2~': 35, 'torculus:-1:2-3': 148, 'torculus:-1:2-3~': 149, 'torculus:-1:2-3>': 150,
+  'torculus:-1:2-3<': 151, 'porrectus:-1:2-3': 176, 'porrectus:-1:2-3~': 177,
+  'porrectus:-1:2-3>': 178, 'porrectus:-1:2-3<': 179, 'scandicus:-1:2-3': 36,
+  'scandicus:-1:2-3~': 37, 'torculus:-1:2-4': 180, 'torculus:-1:2-4~': 181, 'torculus:-1:2-4>': 182,
+  'torculus:-1:2-4<': 183, 'porrectus:-1:2-4': 184, 'porrectus:-1:2-4~': 185,
+  'porrectus:-1:2-4>': 186, 'porrectus:-1:2-4<': 187, 'scandicus:-1:2-4': 38,
+  'scandicus:-1:2-4~': 39, 'porrectus:-1:2-5': 188, 'porrectus:-1:2-5~': 189,
+  'porrectus:-1:2-5>': 190, 'porrectus:-1:2-5<': 191, 'scandicus:-1:2-5': 40,
+  'scandicus:-1:2-5~': 41, 'torculus:-1:3-1': 42, 'torculus:-1:3-1~': 43, 'torculus:-1:3-1>': 44,
+  'torculus:-1:3-1<': 45, 'scandicus:-1:3-1': 46, 'scandicus:-1:3-1~': 47, 'torculus:-1:3-2': 48,
+  'torculus:-1:3-2~': 49, 'torculus:-1:3-2>': 50, 'torculus:-1:3-2<': 51, 'scandicus:-1:3-2': 52,
+  'scandicus:-1:3-2~': 53, 'torculus:-1:3-3': 54, 'torculus:-1:3-3~': 55, 'torculus:-1:3-3>': 56,
+  'torculus:-1:3-3<': 57, 'scandicus:-1:3-3': 58, 'scandicus:-1:3-3~': 59, 'torculus:-1:3-4': 152,
+  'torculus:-1:3-4~': 153, 'torculus:-1:3-4>': 154, 'torculus:-1:3-4<': 155, 'scandicus:-1:3-4': 60,
+  'scandicus:-1:3-4~': 61, 'torculus:-1:3-5': 192, 'torculus:-1:3-5~': 193, 'torculus:-1:3-5>': 194,
+  'torculus:-1:3-5<': 195, 'scandicus:-1:3-5': 62, 'scandicus:-1:3-5~': 63, 'torculus:-1:4-1': 64,
+  'torculus:-1:4-1~': 65, 'torculus:-1:4-1>': 66, 'torculus:-1:4-1<': 67, 'scandicus:-1:4-1': 68,
+  'scandicus:-1:4-1~': 69, 'torculus:-1:4-2': 70, 'torculus:-1:4-2~': 71, 'torculus:-1:4-2>': 72,
+  'torculus:-1:4-2<': 73, 'scandicus:-1:4-2': 74, 'scandicus:-1:4-2~': 75, 'torculus:-1:4-3': 76,
+  'torculus:-1:4-3~': 77, 'torculus:-1:4-3>': 78, 'torculus:-1:4-3<': 79, 'scandicus:-1:4-3': 80,
+  'scandicus:-1:4-3~': 81, 'torculus:-1:4-4': 82, 'torculus:-1:4-4~': 83, 'torculus:-1:4-4>': 84,
+  'torculus:-1:4-4<': 85, 'scandicus:-1:4-4': 86, 'scandicus:-1:4-4~': 87, 'torculus:-1:4-5': 156,
+  'torculus:-1:4-5~': 157, 'torculus:-1:4-5>': 158, 'torculus:-1:4-5<': 159, 'scandicus:-1:4-5': 88,
+  'scandicus:-1:4-5~': 89, 'torculus:-1:5-1': 90, 'torculus:-1:5-1~': 91, 'torculus:-1:5-1>': 92,
+  'torculus:-1:5-1<': 93, 'scandicus:-1:5-1': 94, 'scandicus:-1:5-1~': 95, 'torculus:-1:5-2': 96,
+  'torculus:-1:5-2~': 97, 'torculus:-1:5-2>': 98, 'torculus:-1:5-2<': 99, 'scandicus:-1:5-2': 100,
+  'scandicus:-1:5-2~': 101, 'torculus:-1:5-3': 102, 'torculus:-1:5-3~': 103, 'torculus:-1:5-3>': 104,
+  'torculus:-1:5-3<': 105, 'scandicus:-1:5-3': 106, 'scandicus:-1:5-3~': 107, 'torculus:-1:5-4': 108,
+  'torculus:-1:5-4~': 109, 'torculus:-1:5-4>': 110, 'torculus:-1:5-4<': 111, 'scandicus:-1:5-4': 112,
+  'scandicus:-1:5-4~': 113, 'torculus:-1:5-5': 114, 'torculus:-1:5-5~': 115, 'torculus:-1:5-5>': 116,
+  'torculus:-1:5-5<': 117, 'scandicus:-1:5-5': 118, 'scandicus:-1:5-5~': 119, 'pes:0:1': 0,
+  'pes:0:1~': 1, 'flexus:0:1': 120, 'flexus:0:1~': 121, 'flexus:0:1>': 122, 'flexus:0:1<': 123,
+  'pes:0:2': 2, 'pes:0:2~': 3, 'flexus:0:2': 196, 'flexus:0:2~': 197, 'flexus:0:2>': 198,
+  'flexus:0:2<': 199, 'pes:0:3': 4, 'pes:0:3~': 5, 'flexus:0:3': 200, 'flexus:0:3~': 201,
+  'flexus:0:3>': 202, 'flexus:0:3<': 203, 'pes:0:4': 6, 'pes:0:4~': 7, 'pes:0:5': 8, 'pes:0:5~': 9,
+  'torculus:0:1-1': 10, 'torculus:0:1-1~': 11, 'torculus:0:1-1>': 12, 'torculus:0:1-1<': 13,
+  'porrectus:0:1-1': 124, 'porrectus:0:1-1~': 125, 'porrectus:0:1-1>': 126, 'porrectus:0:1-1<': 127,
+  'scandicus:0:1-1': 14, 'scandicus:0:1-1~': 15, 'torculus:0:1-2': 128, 'torculus:0:1-2~': 129,
+  'torculus:0:1-2>': 130, 'torculus:0:1-2<': 131, 'porrectus:0:1-2': 132, 'porrectus:0:1-2~': 133,
+  'porrectus:0:1-2>': 134, 'porrectus:0:1-2<': 135, 'scandicus:0:1-2': 16, 'scandicus:0:1-2~': 17,
+  'torculus:0:1-3': 164, 'torculus:0:1-3~': 165, 'torculus:0:1-3>': 166, 'torculus:0:1-3<': 167,
+  'porrectus:0:1-3': 136, 'porrectus:0:1-3~': 137, 'porrectus:0:1-3>': 138, 'porrectus:0:1-3<': 139,
+  'scandicus:0:1-3': 18, 'scandicus:0:1-3~': 19, 'torculus:0:1-4': 204, 'torculus:0:1-4~': 205,
+  'torculus:0:1-4>': 206, 'torculus:0:1-4<': 207, 'porrectus:0:1-4': 140, 'porrectus:0:1-4~': 141,
+  'porrectus:0:1-4>': 142, 'porrectus:0:1-4<': 143, 'scandicus:0:1-4': 20, 'scandicus:0:1-4~': 21,
+  'porrectus:0:1-5': 144, 'porrectus:0:1-5~': 145, 'porrectus:0:1-5>': 146, 'porrectus:0:1-5<': 147,
+  'scandicus:0:1-5': 22, 'scandicus:0:1-5~': 23, 'torculus:0:2-1': 24, 'torculus:0:2-1~': 25,
+  'torculus:0:2-1>': 26, 'torculus:0:2-1<': 27, 'porrectus:0:2-1': 168, 'porrectus:0:2-1~': 208,
+  'porrectus:0:2-1>': 170, 'porrectus:0:2-1<': 171, 'scandicus:0:2-1': 28, 'scandicus:0:2-1~': 29,
+  'torculus:0:2-2': 30, 'torculus:0:2-2~': 31, 'torculus:0:2-2>': 32, 'torculus:0:2-2<': 33,
+  'porrectus:0:2-2': 172, 'porrectus:0:2-2~': 209, 'porrectus:0:2-2>': 174, 'porrectus:0:2-2<': 175,
+  'scandicus:0:2-2': 34, 'scandicus:0:2-2~': 35, 'torculus:0:2-3': 148, 'torculus:0:2-3~': 149,
+  'torculus:0:2-3>': 150, 'torculus:0:2-3<': 151, 'porrectus:0:2-3': 176, 'porrectus:0:2-3~': 210,
+  'porrectus:0:2-3>': 178, 'porrectus:0:2-3<': 179, 'scandicus:0:2-3': 36, 'scandicus:0:2-3~': 37,
+  'torculus:0:2-4': 180, 'torculus:0:2-4~': 181, 'torculus:0:2-4>': 182, 'torculus:0:2-4<': 183,
+  'porrectus:0:2-4': 184, 'porrectus:0:2-4~': 211, 'porrectus:0:2-4>': 186, 'porrectus:0:2-4<': 187,
+  'scandicus:0:2-4': 38, 'scandicus:0:2-4~': 39, 'torculus:0:2-5': 212, 'torculus:0:2-5~': 213,
+  'torculus:0:2-5>': 214, 'torculus:0:2-5<': 215, 'porrectus:0:2-5': 188, 'porrectus:0:2-5~': 216,
+  'porrectus:0:2-5>': 190, 'porrectus:0:2-5<': 191, 'scandicus:0:2-5': 40, 'scandicus:0:2-5~': 41,
+  'torculus:0:3-1': 42, 'torculus:0:3-1~': 43, 'torculus:0:3-1>': 44, 'torculus:0:3-1<': 45,
+  'porrectus:0:3-1': 217, 'porrectus:0:3-1~': 218, 'porrectus:0:3-1>': 219, 'porrectus:0:3-1<': 220,
+  'scandicus:0:3-1': 46, 'scandicus:0:3-1~': 47, 'torculus:0:3-2': 48, 'torculus:0:3-2~': 49,
+  'torculus:0:3-2>': 50, 'torculus:0:3-2<': 51, 'porrectus:0:3-2': 221, 'porrectus:0:3-2~': 222,
+  'porrectus:0:3-2>': 223, 'porrectus:0:3-2<': 224, 'scandicus:0:3-2': 52, 'scandicus:0:3-2~': 53,
+  'torculus:0:3-3': 54, 'torculus:0:3-3~': 55, 'torculus:0:3-3>': 56, 'torculus:0:3-3<': 57,
+  'porrectus:0:3-3': 225, 'porrectus:0:3-3~': 226, 'porrectus:0:3-3>': 227, 'porrectus:0:3-3<': 228,
+  'scandicus:0:3-3': 58, 'scandicus:0:3-3~': 59, 'torculus:0:3-4': 152, 'torculus:0:3-4~': 153,
+  'torculus:0:3-4>': 154, 'torculus:0:3-4<': 155, 'porrectus:0:3-4': 229, 'porrectus:0:3-4~': 230,
+  'porrectus:0:3-4>': 231, 'porrectus:0:3-4<': 232, 'scandicus:0:3-4': 60, 'scandicus:0:3-4~': 61,
+  'torculus:0:3-5': 192, 'torculus:0:3-5~': 193, 'torculus:0:3-5>': 194, 'torculus:0:3-5<': 195,
+  'porrectus:0:3-5': 233, 'porrectus:0:3-5~': 234, 'porrectus:0:3-5>': 235, 'porrectus:0:3-5<': 236,
+  'scandicus:0:3-5': 62, 'scandicus:0:3-5~': 63, 'torculus:0:4-1': 64, 'torculus:0:4-1~': 65,
+  'torculus:0:4-1>': 66, 'torculus:0:4-1<': 67, 'scandicus:0:4-1': 68, 'scandicus:0:4-1~': 69,
+  'torculus:0:4-2': 70, 'torculus:0:4-2~': 71, 'torculus:0:4-2>': 72, 'torculus:0:4-2<': 73,
+  'scandicus:0:4-2': 74, 'scandicus:0:4-2~': 75, 'torculus:0:4-3': 76, 'torculus:0:4-3~': 77,
+  'torculus:0:4-3>': 78, 'torculus:0:4-3<': 79, 'scandicus:0:4-3': 80, 'scandicus:0:4-3~': 81,
+  'torculus:0:4-4': 82, 'torculus:0:4-4~': 83, 'torculus:0:4-4>': 84, 'torculus:0:4-4<': 85,
+  'scandicus:0:4-4': 86, 'scandicus:0:4-4~': 87, 'torculus:0:4-5': 156, 'torculus:0:4-5~': 157,
+  'torculus:0:4-5>': 158, 'torculus:0:4-5<': 159, 'scandicus:0:4-5': 88, 'scandicus:0:4-5~': 89,
+  'torculus:0:5-1': 90, 'torculus:0:5-1~': 91, 'torculus:0:5-1>': 92, 'torculus:0:5-1<': 93,
+  'scandicus:0:5-1': 94, 'scandicus:0:5-1~': 95, 'torculus:0:5-2': 96, 'torculus:0:5-2~': 97,
+  'torculus:0:5-2>': 98, 'torculus:0:5-2<': 99, 'scandicus:0:5-2': 100, 'scandicus:0:5-2~': 101,
+  'torculus:0:5-3': 102, 'torculus:0:5-3~': 103, 'torculus:0:5-3>': 104, 'torculus:0:5-3<': 105,
+  'scandicus:0:5-3': 106, 'scandicus:0:5-3~': 107, 'torculus:0:5-4': 108, 'torculus:0:5-4~': 109,
+  'torculus:0:5-4>': 110, 'torculus:0:5-4<': 111, 'scandicus:0:5-4': 112, 'scandicus:0:5-4~': 113,
+  'torculus:0:5-5': 114, 'torculus:0:5-5~': 115, 'torculus:0:5-5>': 116, 'torculus:0:5-5<': 117,
+  'pes:1:1': 0, 'pes:1:1~': 1, 'flexus:1:1': 120, 'flexus:1:1~': 121, 'flexus:1:1>': 122,
+  'flexus:1:1<': 123, 'pes:1:2': 2, 'pes:1:2~': 3, 'flexus:1:2': 160, 'flexus:1:2~': 161,
+  'flexus:1:2>': 162, 'flexus:1:2<': 163, 'pes:1:3': 4, 'pes:1:3~': 5, 'flexus:1:3': 237,
+  'flexus:1:3~': 238, 'flexus:1:3>': 239, 'flexus:1:3<': 240, 'pes:1:4': 6, 'pes:1:4~': 7,
+  'flexus:1:4': 241, 'flexus:1:4~': 242, 'flexus:1:4>': 243, 'flexus:1:4<': 244, 'pes:1:5': 8,
+  'pes:1:5~': 9, 'torculus:1:1-1': 10, 'torculus:1:1-1~': 11, 'torculus:1:1-1>': 12,
+  'torculus:1:1-1<': 13, 'porrectus:1:1-1': 124, 'porrectus:1:1-1~': 125, 'porrectus:1:1-1>': 126,
+  'porrectus:1:1-1<': 127, 'scandicus:1:1-1': 14, 'scandicus:1:1-1~': 15, 'torculus:1:1-2': 128,
+  'torculus:1:1-2~': 129, 'torculus:1:1-2>': 130, 'torculus:1:1-2<': 131, 'porrectus:1:1-2': 132,
+  'porrectus:1:1-2~': 133, 'porrectus:1:1-2>': 134, 'porrectus:1:1-2<': 135, 'scandicus:1:1-2': 16,
+  'scandicus:1:1-2~': 17, 'torculus:1:1-3': 164, 'torculus:1:1-3~': 165, 'torculus:1:1-3>': 166,
+  'torculus:1:1-3<': 167, 'porrectus:1:1-3': 136, 'porrectus:1:1-3~': 137, 'porrectus:1:1-3>': 138,
+  'porrectus:1:1-3<': 139, 'scandicus:1:1-3': 18, 'scandicus:1:1-3~': 19, 'torculus:1:1-4': 204,
+  'torculus:1:1-4~': 205, 'torculus:1:1-4>': 206, 'torculus:1:1-4<': 207, 'porrectus:1:1-4': 140,
+  'porrectus:1:1-4~': 141, 'porrectus:1:1-4>': 142, 'porrectus:1:1-4<': 143, 'scandicus:1:1-4': 20,
+  'scandicus:1:1-4~': 21, 'torculus:1:1-5': 245, 'torculus:1:1-5~': 246, 'torculus:1:1-5>': 247,
+  'torculus:1:1-5<': 248, 'porrectus:1:1-5': 144, 'porrectus:1:1-5~': 145, 'porrectus:1:1-5>': 146,
+  'porrectus:1:1-5<': 147, 'scandicus:1:1-5': 22, 'scandicus:1:1-5~': 23, 'torculus:1:2-1': 24,
+  'torculus:1:2-1~': 25, 'torculus:1:2-1>': 26, 'torculus:1:2-1<': 27, 'porrectus:1:2-1': 168,
+  'porrectus:1:2-1~': 169, 'porrectus:1:2-1>': 170, 'porrectus:1:2-1<': 171, 'scandicus:1:2-1': 28,
+  'scandicus:1:2-1~': 29, 'torculus:1:2-2': 30, 'torculus:1:2-2~': 31, 'torculus:1:2-2>': 32,
+  'torculus:1:2-2<': 33, 'porrectus:1:2-2': 172, 'porrectus:1:2-2~': 173, 'porrectus:1:2-2>': 174,
+  'porrectus:1:2-2<': 175, 'scandicus:1:2-2': 34, 'scandicus:1:2-2~': 35, 'torculus:1:2-3': 148,
+  'torculus:1:2-3~': 149, 'torculus:1:2-3>': 150, 'torculus:1:2-3<': 151, 'porrectus:1:2-3': 176,
+  'porrectus:1:2-3~': 177, 'porrectus:1:2-3>': 178, 'porrectus:1:2-3<': 179, 'scandicus:1:2-3': 36,
+  'scandicus:1:2-3~': 37, 'torculus:1:2-4': 180, 'torculus:1:2-4~': 181, 'torculus:1:2-4>': 182,
+  'torculus:1:2-4<': 183, 'porrectus:1:2-4': 184, 'porrectus:1:2-4~': 185, 'porrectus:1:2-4>': 186,
+  'porrectus:1:2-4<': 187, 'scandicus:1:2-4': 38, 'scandicus:1:2-4~': 39, 'torculus:1:2-5': 212,
+  'torculus:1:2-5~': 213, 'torculus:1:2-5>': 214, 'torculus:1:2-5<': 215, 'porrectus:1:2-5': 188,
+  'porrectus:1:2-5~': 189, 'porrectus:1:2-5>': 190, 'porrectus:1:2-5<': 191, 'scandicus:1:2-5': 40,
+  'scandicus:1:2-5~': 41, 'torculus:1:3-1': 42, 'torculus:1:3-1~': 43, 'torculus:1:3-1>': 44,
+  'torculus:1:3-1<': 45, 'porrectus:1:3-1': 217, 'porrectus:1:3-1~': 249, 'porrectus:1:3-1>': 219,
+  'porrectus:1:3-1<': 220, 'scandicus:1:3-1': 46, 'scandicus:1:3-1~': 47, 'torculus:1:3-2': 48,
+  'torculus:1:3-2~': 49, 'torculus:1:3-2>': 50, 'torculus:1:3-2<': 51, 'porrectus:1:3-2': 221,
+  'porrectus:1:3-2~': 250, 'porrectus:1:3-2>': 223, 'porrectus:1:3-2<': 224, 'scandicus:1:3-2': 52,
+  'scandicus:1:3-2~': 53, 'torculus:1:3-3': 54, 'torculus:1:3-3~': 55, 'torculus:1:3-3>': 56,
+  'torculus:1:3-3<': 57, 'porrectus:1:3-3': 225, 'porrectus:1:3-3~': 251, 'porrectus:1:3-3>': 227,
+  'porrectus:1:3-3<': 228, 'scandicus:1:3-3': 58, 'scandicus:1:3-3~': 59, 'torculus:1:3-4': 152,
+  'torculus:1:3-4~': 153, 'torculus:1:3-4>': 154, 'torculus:1:3-4<': 155, 'porrectus:1:3-4': 229,
+  'porrectus:1:3-4~': 252, 'porrectus:1:3-4>': 231, 'porrectus:1:3-4<': 232, 'scandicus:1:3-4': 60,
+  'scandicus:1:3-4~': 61, 'torculus:1:3-5': 192, 'torculus:1:3-5~': 193, 'torculus:1:3-5>': 194,
+  'torculus:1:3-5<': 195, 'porrectus:1:3-5': 233, 'porrectus:1:3-5~': 253, 'porrectus:1:3-5>': 235,
+  'porrectus:1:3-5<': 236, 'scandicus:1:3-5': 62, 'scandicus:1:3-5~': 63, 'torculus:1:4-1': 64,
+  'torculus:1:4-1~': 65, 'torculus:1:4-1>': 66, 'torculus:1:4-1<': 67, 'porrectus:1:4-1': 254,
+  'porrectus:1:4-1~': 255, 'porrectus:1:4-1>': 256, 'porrectus:1:4-1<': 257, 'scandicus:1:4-1': 68,
+  'scandicus:1:4-1~': 69, 'torculus:1:4-2': 70, 'torculus:1:4-2~': 71, 'torculus:1:4-2>': 72,
+  'torculus:1:4-2<': 73, 'porrectus:1:4-2': 258, 'porrectus:1:4-2~': 259, 'porrectus:1:4-2>': 260,
+  'porrectus:1:4-2<': 261, 'scandicus:1:4-2': 74, 'scandicus:1:4-2~': 75, 'torculus:1:4-3': 76,
+  'torculus:1:4-3~': 77, 'torculus:1:4-3>': 78, 'torculus:1:4-3<': 79, 'porrectus:1:4-3': 262,
+  'porrectus:1:4-3~': 263, 'porrectus:1:4-3>': 264, 'porrectus:1:4-3<': 265, 'scandicus:1:4-3': 80,
+  'scandicus:1:4-3~': 81, 'torculus:1:4-4': 82, 'torculus:1:4-4~': 83, 'torculus:1:4-4>': 84,
+  'torculus:1:4-4<': 85, 'porrectus:1:4-4': 266, 'porrectus:1:4-4~': 267, 'porrectus:1:4-4>': 268,
+  'porrectus:1:4-4<': 269, 'scandicus:1:4-4': 86, 'scandicus:1:4-4~': 87, 'torculus:1:4-5': 156,
+  'torculus:1:4-5~': 157, 'torculus:1:4-5>': 158, 'torculus:1:4-5<': 159, 'porrectus:1:4-5': 270,
+  'porrectus:1:4-5~': 271, 'porrectus:1:4-5>': 272, 'porrectus:1:4-5<': 273, 'torculus:1:5-1': 90,
+  'torculus:1:5-1~': 91, 'torculus:1:5-1>': 92, 'torculus:1:5-1<': 93, 'scandicus:1:5-1': 94,
+  'scandicus:1:5-1~': 95, 'torculus:1:5-2': 96, 'torculus:1:5-2~': 97, 'torculus:1:5-2>': 98,
+  'torculus:1:5-2<': 99, 'scandicus:1:5-2': 100, 'scandicus:1:5-2~': 101, 'torculus:1:5-3': 102,
+  'torculus:1:5-3~': 103, 'torculus:1:5-3>': 104, 'torculus:1:5-3<': 105, 'scandicus:1:5-3': 106,
+  'scandicus:1:5-3~': 107, 'torculus:1:5-4': 108, 'torculus:1:5-4~': 109, 'torculus:1:5-4>': 110,
+  'torculus:1:5-4<': 111, 'torculus:1:5-5': 114, 'torculus:1:5-5~': 115, 'torculus:1:5-5>': 116,
+  'torculus:1:5-5<': 117, 'pes:2:1': 0, 'pes:2:1~': 1, 'flexus:2:1': 274, 'flexus:2:1~': 275,
+  'flexus:2:1>': 276, 'flexus:2:1<': 277, 'pes:2:2': 2, 'pes:2:2~': 3, 'flexus:2:2': 196,
+  'flexus:2:2~': 197, 'flexus:2:2>': 198, 'flexus:2:2<': 199, 'pes:2:3': 4, 'pes:2:3~': 5,
+  'flexus:2:3': 200, 'flexus:2:3~': 201, 'flexus:2:3>': 202, 'flexus:2:3<': 203, 'pes:2:4': 6,
+  'pes:2:4~': 7, 'flexus:2:4': 278, 'flexus:2:4~': 279, 'flexus:2:4>': 280, 'flexus:2:4<': 281,
+  'pes:2:5': 8, 'pes:2:5~': 9, 'flexus:2:5': 282, 'flexus:2:5~': 283, 'flexus:2:5>': 284,
+  'flexus:2:5<': 285, 'torculus:2:1-1': 10, 'torculus:2:1-1~': 11, 'torculus:2:1-1>': 12,
+  'torculus:2:1-1<': 13, 'porrectus:2:1-1': 286, 'porrectus:2:1-1~': 287, 'porrectus:2:1-1>': 288,
+  'porrectus:2:1-1<': 289, 'scandicus:2:1-1': 14, 'scandicus:2:1-1~': 15, 'torculus:2:1-2': 128,
+  'torculus:2:1-2~': 129, 'torculus:2:1-2>': 130, 'torculus:2:1-2<': 131, 'porrectus:2:1-2': 290,
+  'porrectus:2:1-2~': 291, 'porrectus:2:1-2>': 292, 'porrectus:2:1-2<': 293, 'scandicus:2:1-2': 16,
+  'scandicus:2:1-2~': 17, 'torculus:2:1-3': 164, 'torculus:2:1-3~': 165, 'torculus:2:1-3>': 166,
+  'torculus:2:1-3<': 167, 'porrectus:2:1-3': 294, 'porrectus:2:1-3~': 295, 'porrectus:2:1-3>': 296,
+  'porrectus:2:1-3<': 297, 'scandicus:2:1-3': 18, 'scandicus:2:1-3~': 19, 'torculus:2:1-4': 204,
+  'torculus:2:1-4~': 205, 'torculus:2:1-4>': 206, 'torculus:2:1-4<': 207, 'porrectus:2:1-4': 298,
+  'porrectus:2:1-4~': 299, 'porrectus:2:1-4>': 300, 'porrectus:2:1-4<': 301, 'scandicus:2:1-4': 20,
+  'scandicus:2:1-4~': 21, 'torculus:2:1-5': 245, 'torculus:2:1-5~': 246, 'torculus:2:1-5>': 247,
+  'torculus:2:1-5<': 248, 'porrectus:2:1-5': 302, 'porrectus:2:1-5~': 303, 'porrectus:2:1-5>': 304,
+  'porrectus:2:1-5<': 305, 'scandicus:2:1-5': 22, 'scandicus:2:1-5~': 23, 'torculus:2:2-1': 24,
+  'torculus:2:2-1~': 25, 'torculus:2:2-1>': 26, 'torculus:2:2-1<': 27, 'porrectus:2:2-1': 168,
+  'porrectus:2:2-1~': 208, 'porrectus:2:2-1>': 170, 'porrectus:2:2-1<': 171, 'scandicus:2:2-1': 28,
+  'scandicus:2:2-1~': 29, 'torculus:2:2-2': 30, 'torculus:2:2-2~': 31, 'torculus:2:2-2>': 32,
+  'torculus:2:2-2<': 33, 'porrectus:2:2-2': 172, 'porrectus:2:2-2~': 209, 'porrectus:2:2-2>': 174,
+  'porrectus:2:2-2<': 175, 'scandicus:2:2-2': 34, 'scandicus:2:2-2~': 35, 'torculus:2:2-3': 148,
+  'torculus:2:2-3~': 149, 'torculus:2:2-3>': 150, 'torculus:2:2-3<': 151, 'porrectus:2:2-3': 176,
+  'porrectus:2:2-3~': 210, 'porrectus:2:2-3>': 178, 'porrectus:2:2-3<': 179, 'scandicus:2:2-3': 36,
+  'scandicus:2:2-3~': 37, 'torculus:2:2-4': 180, 'torculus:2:2-4~': 181, 'torculus:2:2-4>': 182,
+  'torculus:2:2-4<': 183, 'porrectus:2:2-4': 184, 'porrectus:2:2-4~': 211, 'porrectus:2:2-4>': 186,
+  'porrectus:2:2-4<': 187, 'scandicus:2:2-4': 38, 'scandicus:2:2-4~': 39, 'torculus:2:2-5': 212,
+  'torculus:2:2-5~': 213, 'torculus:2:2-5>': 214, 'torculus:2:2-5<': 215, 'porrectus:2:2-5': 188,
+  'porrectus:2:2-5~': 216, 'porrectus:2:2-5>': 190, 'porrectus:2:2-5<': 191, 'scandicus:2:2-5': 40,
+  'scandicus:2:2-5~': 41, 'torculus:2:3-1': 42, 'torculus:2:3-1~': 43, 'torculus:2:3-1>': 44,
+  'torculus:2:3-1<': 45, 'porrectus:2:3-1': 217, 'porrectus:2:3-1~': 218, 'porrectus:2:3-1>': 219,
+  'porrectus:2:3-1<': 220, 'scandicus:2:3-1': 46, 'scandicus:2:3-1~': 47, 'torculus:2:3-2': 48,
+  'torculus:2:3-2~': 49, 'torculus:2:3-2>': 50, 'torculus:2:3-2<': 51, 'porrectus:2:3-2': 221,
+  'porrectus:2:3-2~': 222, 'porrectus:2:3-2>': 223, 'porrectus:2:3-2<': 224, 'scandicus:2:3-2': 52,
+  'scandicus:2:3-2~': 53, 'torculus:2:3-3': 54, 'torculus:2:3-3~': 55, 'torculus:2:3-3>': 56,
+  'torculus:2:3-3<': 57, 'porrectus:2:3-3': 225, 'porrectus:2:3-3~': 226, 'porrectus:2:3-3>': 227,
+  'porrectus:2:3-3<': 228, 'scandicus:2:3-3': 58, 'scandicus:2:3-3~': 59, 'torculus:2:3-4': 152,
+  'torculus:2:3-4~': 153, 'torculus:2:3-4>': 154, 'torculus:2:3-4<': 155, 'porrectus:2:3-4': 229,
+  'porrectus:2:3-4~': 230, 'porrectus:2:3-4>': 231, 'porrectus:2:3-4<': 232, 'scandicus:2:3-4': 60,
+  'scandicus:2:3-4~': 61, 'torculus:2:3-5': 192, 'torculus:2:3-5~': 193, 'torculus:2:3-5>': 194,
+  'torculus:2:3-5<': 195, 'porrectus:2:3-5': 233, 'porrectus:2:3-5~': 234, 'porrectus:2:3-5>': 235,
+  'porrectus:2:3-5<': 236, 'torculus:2:4-1': 64, 'torculus:2:4-1~': 65, 'torculus:2:4-1>': 66,
+  'torculus:2:4-1<': 67, 'porrectus:2:4-1': 254, 'porrectus:2:4-1~': 306, 'porrectus:2:4-1>': 256,
+  'porrectus:2:4-1<': 257, 'scandicus:2:4-1': 68, 'scandicus:2:4-1~': 69, 'torculus:2:4-2': 70,
+  'torculus:2:4-2~': 71, 'torculus:2:4-2>': 72, 'torculus:2:4-2<': 73, 'porrectus:2:4-2': 258,
+  'porrectus:2:4-2~': 307, 'porrectus:2:4-2>': 260, 'porrectus:2:4-2<': 261, 'scandicus:2:4-2': 74,
+  'scandicus:2:4-2~': 75, 'torculus:2:4-3': 76, 'torculus:2:4-3~': 77, 'torculus:2:4-3>': 78,
+  'torculus:2:4-3<': 79, 'porrectus:2:4-3': 262, 'porrectus:2:4-3~': 308, 'porrectus:2:4-3>': 264,
+  'porrectus:2:4-3<': 265, 'scandicus:2:4-3': 80, 'scandicus:2:4-3~': 81, 'torculus:2:4-4': 82,
+  'torculus:2:4-4~': 83, 'torculus:2:4-4>': 84, 'torculus:2:4-4<': 85, 'porrectus:2:4-4': 266,
+  'porrectus:2:4-4~': 309, 'porrectus:2:4-4>': 268, 'porrectus:2:4-4<': 269, 'torculus:2:4-5': 156,
+  'torculus:2:4-5~': 157, 'torculus:2:4-5>': 158, 'torculus:2:4-5<': 159, 'porrectus:2:4-5': 270,
+  'porrectus:2:4-5~': 310, 'porrectus:2:4-5>': 272, 'porrectus:2:4-5<': 273, 'torculus:2:5-1': 90,
+  'torculus:2:5-1~': 91, 'torculus:2:5-1>': 92, 'torculus:2:5-1<': 93, 'porrectus:2:5-1': 311,
+  'porrectus:2:5-1~': 312, 'porrectus:2:5-1>': 313, 'porrectus:2:5-1<': 314, 'scandicus:2:5-1': 94,
+  'scandicus:2:5-1~': 95, 'torculus:2:5-2': 96, 'torculus:2:5-2~': 97, 'torculus:2:5-2>': 98,
+  'torculus:2:5-2<': 99, 'porrectus:2:5-2': 315, 'porrectus:2:5-2~': 316, 'porrectus:2:5-2>': 317,
+  'porrectus:2:5-2<': 318, 'scandicus:2:5-2': 100, 'scandicus:2:5-2~': 101, 'torculus:2:5-3': 102,
+  'torculus:2:5-3~': 103, 'torculus:2:5-3>': 104, 'torculus:2:5-3<': 105, 'porrectus:2:5-3': 319,
+  'porrectus:2:5-3~': 320, 'porrectus:2:5-3>': 321, 'porrectus:2:5-3<': 322, 'torculus:2:5-4': 108,
+  'torculus:2:5-4~': 109, 'torculus:2:5-4>': 110, 'torculus:2:5-4<': 111, 'porrectus:2:5-4': 323,
+  'porrectus:2:5-4~': 324, 'porrectus:2:5-4>': 325, 'porrectus:2:5-4<': 326, 'torculus:2:5-5': 114,
+  'torculus:2:5-5~': 115, 'torculus:2:5-5>': 116, 'torculus:2:5-5<': 117, 'porrectus:2:5-5': 327,
+  'porrectus:2:5-5~': 328, 'porrectus:2:5-5>': 329, 'porrectus:2:5-5<': 330, 'pes:3:1': 0,
+  'pes:3:1~': 1, 'flexus:3:1': 331, 'flexus:3:1~': 332, 'flexus:3:1>': 333, 'flexus:3:1<': 334,
+  'pes:3:2': 2, 'pes:3:2~': 3, 'flexus:3:2': 160, 'flexus:3:2~': 161, 'flexus:3:2>': 162,
+  'flexus:3:2<': 163, 'pes:3:3': 4, 'pes:3:3~': 5, 'flexus:3:3': 237, 'flexus:3:3~': 238,
+  'flexus:3:3>': 239, 'flexus:3:3<': 240, 'pes:3:4': 6, 'pes:3:4~': 7, 'flexus:3:4': 241,
+  'flexus:3:4~': 242, 'flexus:3:4>': 243, 'flexus:3:4<': 244, 'pes:3:5': 8, 'pes:3:5~': 9,
+  'flexus:3:5': 335, 'flexus:3:5~': 336, 'flexus:3:5>': 337, 'flexus:3:5<': 338,
+  'torculus:3:1-1': 10, 'torculus:3:1-1~': 11, 'torculus:3:1-1>': 12, 'torculus:3:1-1<': 13,
+  'porrectus:3:1-1': 124, 'porrectus:3:1-1~': 125, 'porrectus:3:1-1>': 126, 'porrectus:3:1-1<': 127,
+  'scandicus:3:1-1': 14, 'scandicus:3:1-1~': 15, 'torculus:3:1-2': 128, 'torculus:3:1-2~': 129,
+  'torculus:3:1-2>': 130, 'torculus:3:1-2<': 131, 'porrectus:3:1-2': 132, 'porrectus:3:1-2~': 133,
+  'porrectus:3:1-2>': 134, 'porrectus:3:1-2<': 135, 'scandicus:3:1-2': 16, 'scandicus:3:1-2~': 17,
+  'torculus:3:1-3': 164, 'torculus:3:1-3~': 165, 'torculus:3:1-3>': 166, 'torculus:3:1-3<': 167,
+  'porrectus:3:1-3': 136, 'porrectus:3:1-3~': 137, 'porrectus:3:1-3>': 138, 'porrectus:3:1-3<': 139,
+  'scandicus:3:1-3': 18, 'scandicus:3:1-3~': 19, 'torculus:3:1-4': 204, 'torculus:3:1-4~': 205,
+  'torculus:3:1-4>': 206, 'torculus:3:1-4<': 207, 'porrectus:3:1-4': 140, 'porrectus:3:1-4~': 141,
+  'porrectus:3:1-4>': 142, 'porrectus:3:1-4<': 143, 'scandicus:3:1-4': 20, 'scandicus:3:1-4~': 21,
+  'torculus:3:1-5': 245, 'torculus:3:1-5~': 246, 'torculus:3:1-5>': 247, 'torculus:3:1-5<': 248,
+  'porrectus:3:1-5': 144, 'porrectus:3:1-5~': 145, 'porrectus:3:1-5>': 146, 'porrectus:3:1-5<': 147,
+  'scandicus:3:1-5': 22, 'scandicus:3:1-5~': 23, 'torculus:3:2-1': 24, 'torculus:3:2-1~': 25,
+  'torculus:3:2-1>': 26, 'torculus:3:2-1<': 27, 'porrectus:3:2-1': 168, 'porrectus:3:2-1~': 169,
+  'porrectus:3:2-1>': 170, 'porrectus:3:2-1<': 171, 'scandicus:3:2-1': 28, 'scandicus:3:2-1~': 29,
+  'torculus:3:2-2': 30, 'torculus:3:2-2~': 31, 'torculus:3:2-2>': 32, 'torculus:3:2-2<': 33,
+  'porrectus:3:2-2': 172, 'porrectus:3:2-2~': 173, 'porrectus:3:2-2>': 174, 'porrectus:3:2-2<': 175,
+  'scandicus:3:2-2': 34, 'scandicus:3:2-2~': 35, 'torculus:3:2-3': 148, 'torculus:3:2-3~': 149,
+  'torculus:3:2-3>': 150, 'torculus:3:2-3<': 151, 'porrectus:3:2-3': 176, 'porrectus:3:2-3~': 177,
+  'porrectus:3:2-3>': 178, 'porrectus:3:2-3<': 179, 'scandicus:3:2-3': 36, 'scandicus:3:2-3~': 37,
+  'torculus:3:2-4': 180, 'torculus:3:2-4~': 181, 'torculus:3:2-4>': 182, 'torculus:3:2-4<': 183,
+  'porrectus:3:2-4': 184, 'porrectus:3:2-4~': 185, 'porrectus:3:2-4>': 186, 'porrectus:3:2-4<': 187,
+  'scandicus:3:2-4': 38, 'scandicus:3:2-4~': 39, 'torculus:3:2-5': 212, 'torculus:3:2-5~': 213,
+  'torculus:3:2-5>': 214, 'torculus:3:2-5<': 215, 'porrectus:3:2-5': 188, 'porrectus:3:2-5~': 189,
+  'porrectus:3:2-5>': 190, 'porrectus:3:2-5<': 191, 'torculus:3:3-1': 42, 'torculus:3:3-1~': 43,
+  'torculus:3:3-1>': 44, 'torculus:3:3-1<': 45, 'porrectus:3:3-1': 217, 'porrectus:3:3-1~': 249,
+  'porrectus:3:3-1>': 219, 'porrectus:3:3-1<': 220, 'scandicus:3:3-1': 46, 'scandicus:3:3-1~': 47,
+  'torculus:3:3-2': 48, 'torculus:3:3-2~': 49, 'torculus:3:3-2>': 50, 'torculus:3:3-2<': 51,
+  'porrectus:3:3-2': 221, 'porrectus:3:3-2~': 250, 'porrectus:3:3-2>': 223, 'porrectus:3:3-2<': 224,
+  'scandicus:3:3-2': 52, 'scandicus:3:3-2~': 53, 'torculus:3:3-3': 54, 'torculus:3:3-3~': 55,
+  'torculus:3:3-3>': 56, 'torculus:3:3-3<': 57, 'porrectus:3:3-3': 225, 'porrectus:3:3-3~': 251,
+  'porrectus:3:3-3>': 227, 'porrectus:3:3-3<': 228, 'scandicus:3:3-3': 58, 'scandicus:3:3-3~': 59,
+  'torculus:3:3-4': 152, 'torculus:3:3-4~': 153, 'torculus:3:3-4>': 154, 'torculus:3:3-4<': 155,
+  'porrectus:3:3-4': 229, 'porrectus:3:3-4~': 252, 'porrectus:3:3-4>': 231, 'porrectus:3:3-4<': 232,
+  'torculus:3:3-5': 192, 'torculus:3:3-5~': 193, 'torculus:3:3-5>': 194, 'torculus:3:3-5<': 195,
+  'porrectus:3:3-5': 233, 'porrectus:3:3-5~': 253, 'porrectus:3:3-5>': 235, 'porrectus:3:3-5<': 236,
+  'torculus:3:4-1': 64, 'torculus:3:4-1~': 65, 'torculus:3:4-1>': 66, 'torculus:3:4-1<': 67,
+  'porrectus:3:4-1': 254, 'porrectus:3:4-1~': 255, 'porrectus:3:4-1>': 256, 'porrectus:3:4-1<': 257,
+  'scandicus:3:4-1': 68, 'scandicus:3:4-1~': 69, 'torculus:3:4-2': 70, 'torculus:3:4-2~': 71,
+  'torculus:3:4-2>': 72, 'torculus:3:4-2<': 73, 'porrectus:3:4-2': 258, 'porrectus:3:4-2~': 259,
+  'porrectus:3:4-2>': 260, 'porrectus:3:4-2<': 261, 'scandicus:3:4-2': 74, 'scandicus:3:4-2~': 75,
+  'torculus:3:4-3': 76, 'torculus:3:4-3~': 77, 'torculus:3:4-3>': 78, 'torculus:3:4-3<': 79,
+  'porrectus:3:4-3': 262, 'porrectus:3:4-3~': 263, 'porrectus:3:4-3>': 264, 'porrectus:3:4-3<': 265,
+  'torculus:3:4-4': 82, 'torculus:3:4-4~': 83, 'torculus:3:4-4>': 84, 'torculus:3:4-4<': 85,
+  'porrectus:3:4-4': 266, 'porrectus:3:4-4~': 267, 'porrectus:3:4-4>': 268, 'porrectus:3:4-4<': 269,
+  'torculus:3:4-5': 156, 'torculus:3:4-5~': 157, 'torculus:3:4-5>': 158, 'torculus:3:4-5<': 159,
+  'porrectus:3:4-5': 270, 'porrectus:3:4-5~': 271, 'porrectus:3:4-5>': 272, 'porrectus:3:4-5<': 273,
+  'torculus:3:5-1': 90, 'torculus:3:5-1~': 91, 'torculus:3:5-1>': 92, 'torculus:3:5-1<': 93,
+  'porrectus:3:5-1': 311, 'porrectus:3:5-1~': 339, 'porrectus:3:5-1>': 313, 'porrectus:3:5-1<': 314,
+  'scandicus:3:5-1': 94, 'scandicus:3:5-1~': 95, 'torculus:3:5-2': 96, 'torculus:3:5-2~': 97,
+  'torculus:3:5-2>': 98, 'torculus:3:5-2<': 99, 'porrectus:3:5-2': 315, 'porrectus:3:5-2~': 340,
+  'porrectus:3:5-2>': 317, 'porrectus:3:5-2<': 318, 'torculus:3:5-3': 102, 'torculus:3:5-3~': 103,
+  'torculus:3:5-3>': 104, 'torculus:3:5-3<': 105, 'porrectus:3:5-3': 319, 'porrectus:3:5-3~': 341,
+  'porrectus:3:5-3>': 321, 'porrectus:3:5-3<': 322, 'torculus:3:5-4': 108, 'torculus:3:5-4~': 109,
+  'torculus:3:5-4>': 110, 'torculus:3:5-4<': 111, 'porrectus:3:5-4': 323, 'porrectus:3:5-4~': 342,
+  'porrectus:3:5-4>': 325, 'porrectus:3:5-4<': 326, 'torculus:3:5-5': 114, 'torculus:3:5-5~': 115,
+  'torculus:3:5-5>': 116, 'torculus:3:5-5<': 117, 'porrectus:3:5-5': 327, 'porrectus:3:5-5~': 343,
+  'porrectus:3:5-5>': 329, 'porrectus:3:5-5<': 330, 'pes:4:1': 0, 'pes:4:1~': 1, 'flexus:4:1': 274,
+  'flexus:4:1~': 275, 'flexus:4:1>': 276, 'flexus:4:1<': 277, 'pes:4:2': 2, 'pes:4:2~': 3,
+  'flexus:4:2': 196, 'flexus:4:2~': 197, 'flexus:4:2>': 198, 'flexus:4:2<': 199, 'pes:4:3': 4,
+  'pes:4:3~': 5, 'flexus:4:3': 200, 'flexus:4:3~': 201, 'flexus:4:3>': 202, 'flexus:4:3<': 203,
+  'pes:4:4': 6, 'pes:4:4~': 7, 'flexus:4:4': 278, 'flexus:4:4~': 279, 'flexus:4:4>': 280,
+  'flexus:4:4<': 281, 'pes:4:5': 8, 'pes:4:5~': 9, 'flexus:4:5': 282, 'flexus:4:5~': 283,
+  'flexus:4:5>': 284, 'flexus:4:5<': 285, 'torculus:4:1-1': 10, 'torculus:4:1-1~': 11,
+  'torculus:4:1-1>': 12, 'torculus:4:1-1<': 13, 'porrectus:4:1-1': 286, 'porrectus:4:1-1~': 287,
+  'porrectus:4:1-1>': 288, 'porrectus:4:1-1<': 289, 'scandicus:4:1-1': 14, 'scandicus:4:1-1~': 15,
+  'torculus:4:1-2': 128, 'torculus:4:1-2~': 129, 'torculus:4:1-2>': 130, 'torculus:4:1-2<': 131,
+  'porrectus:4:1-2': 290, 'porrectus:4:1-2~': 291, 'porrectus:4:1-2>': 292, 'porrectus:4:1-2<': 293,
+  'scandicus:4:1-2': 16, 'scandicus:4:1-2~': 17, 'torculus:4:1-3': 164, 'torculus:4:1-3~': 165,
+  'torculus:4:1-3>': 166, 'torculus:4:1-3<': 167, 'porrectus:4:1-3': 294, 'porrectus:4:1-3~': 295,
+  'porrectus:4:1-3>': 296, 'porrectus:4:1-3<': 297, 'scandicus:4:1-3': 18, 'scandicus:4:1-3~': 19,
+  'torculus:4:1-4': 204, 'torculus:4:1-4~': 205, 'torculus:4:1-4>': 206, 'torculus:4:1-4<': 207,
+  'porrectus:4:1-4': 298, 'porrectus:4:1-4~': 299, 'porrectus:4:1-4>': 300, 'porrectus:4:1-4<': 301,
+  'scandicus:4:1-4': 20, 'scandicus:4:1-4~': 21, 'torculus:4:1-5': 245, 'torculus:4:1-5~': 246,
+  'torculus:4:1-5>': 247, 'torculus:4:1-5<': 248, 'porrectus:4:1-5': 302, 'porrectus:4:1-5~': 303,
+  'porrectus:4:1-5>': 304, 'porrectus:4:1-5<': 305, 'torculus:4:2-1': 24, 'torculus:4:2-1~': 25,
+  'torculus:4:2-1>': 26, 'torculus:4:2-1<': 27, 'porrectus:4:2-1': 168, 'porrectus:4:2-1~': 208,
+  'porrectus:4:2-1>': 170, 'porrectus:4:2-1<': 171, 'scandicus:4:2-1': 28, 'scandicus:4:2-1~': 29,
+  'torculus:4:2-2': 30, 'torculus:4:2-2~': 31, 'torculus:4:2-2>': 32, 'torculus:4:2-2<': 33,
+  'porrectus:4:2-2': 172, 'porrectus:4:2-2~': 209, 'porrectus:4:2-2>': 174, 'porrectus:4:2-2<': 175,
+  'scandicus:4:2-2': 34, 'scandicus:4:2-2~': 35, 'torculus:4:2-3': 148, 'torculus:4:2-3~': 149,
+  'torculus:4:2-3>': 150, 'torculus:4:2-3<': 151, 'porrectus:4:2-3': 176, 'porrectus:4:2-3~': 210,
+  'porrectus:4:2-3>': 178, 'porrectus:4:2-3<': 179, 'scandicus:4:2-3': 36, 'scandicus:4:2-3~': 37,
+  'torculus:4:2-4': 180, 'torculus:4:2-4~': 181, 'torculus:4:2-4>': 182, 'torculus:4:2-4<': 183,
+  'porrectus:4:2-4': 184, 'porrectus:4:2-4~': 211, 'porrectus:4:2-4>': 186, 'porrectus:4:2-4<': 187,
+  'torculus:4:2-5': 212, 'torculus:4:2-5~': 213, 'torculus:4:2-5>': 214, 'torculus:4:2-5<': 215,
+  'porrectus:4:2-5': 188, 'porrectus:4:2-5~': 216, 'porrectus:4:2-5>': 190, 'porrectus:4:2-5<': 191,
+  'torculus:4:3-1': 42, 'torculus:4:3-1~': 43, 'torculus:4:3-1>': 44, 'torculus:4:3-1<': 45,
+  'porrectus:4:3-1': 217, 'porrectus:4:3-1~': 218, 'porrectus:4:3-1>': 219, 'porrectus:4:3-1<': 220,
+  'scandicus:4:3-1': 46, 'scandicus:4:3-1~': 47, 'torculus:4:3-2': 48, 'torculus:4:3-2~': 49,
+  'torculus:4:3-2>': 50, 'torculus:4:3-2<': 51, 'porrectus:4:3-2': 221, 'porrectus:4:3-2~': 222,
+  'porrectus:4:3-2>': 223, 'porrectus:4:3-2<': 224, 'scandicus:4:3-2': 52, 'scandicus:4:3-2~': 53,
+  'torculus:4:3-3': 54, 'torculus:4:3-3~': 55, 'torculus:4:3-3>': 56, 'torculus:4:3-3<': 57,
+  'porrectus:4:3-3': 225, 'porrectus:4:3-3~': 226, 'porrectus:4:3-3>': 227, 'porrectus:4:3-3<': 228,
+  'torculus:4:3-4': 152, 'torculus:4:3-4~': 153, 'torculus:4:3-4>': 154, 'torculus:4:3-4<': 155,
+  'porrectus:4:3-4': 229, 'porrectus:4:3-4~': 230, 'porrectus:4:3-4>': 231, 'porrectus:4:3-4<': 232,
+  'torculus:4:3-5': 192, 'torculus:4:3-5~': 193, 'torculus:4:3-5>': 194, 'torculus:4:3-5<': 195,
+  'porrectus:4:3-5': 233, 'porrectus:4:3-5~': 234, 'porrectus:4:3-5>': 235, 'porrectus:4:3-5<': 236,
+  'torculus:4:4-1': 64, 'torculus:4:4-1~': 65, 'torculus:4:4-1>': 66, 'torculus:4:4-1<': 67,
+  'porrectus:4:4-1': 254, 'porrectus:4:4-1~': 306, 'porrectus:4:4-1>': 256, 'porrectus:4:4-1<': 257,
+  'scandicus:4:4-1': 68, 'scandicus:4:4-1~': 69, 'torculus:4:4-2': 70, 'torculus:4:4-2~': 71,
+  'torculus:4:4-2>': 72, 'torculus:4:4-2<': 73, 'porrectus:4:4-2': 258, 'porrectus:4:4-2~': 307,
+  'porrectus:4:4-2>': 260, 'porrectus:4:4-2<': 261, 'torculus:4:4-3': 76, 'torculus:4:4-3~': 77,
+  'torculus:4:4-3>': 78, 'torculus:4:4-3<': 79, 'porrectus:4:4-3': 262, 'porrectus:4:4-3~': 308,
+  'porrectus:4:4-3>': 264, 'porrectus:4:4-3<': 265, 'torculus:4:4-4': 82, 'torculus:4:4-4~': 83,
+  'torculus:4:4-4>': 84, 'torculus:4:4-4<': 85, 'porrectus:4:4-4': 266, 'porrectus:4:4-4~': 309,
+  'porrectus:4:4-4>': 268, 'porrectus:4:4-4<': 269, 'torculus:4:4-5': 156, 'torculus:4:4-5~': 157,
+  'torculus:4:4-5>': 158, 'torculus:4:4-5<': 159, 'porrectus:4:4-5': 270, 'porrectus:4:4-5~': 310,
+  'porrectus:4:4-5>': 272, 'porrectus:4:4-5<': 273, 'torculus:4:5-1': 90, 'torculus:4:5-1~': 91,
+  'torculus:4:5-1>': 92, 'torculus:4:5-1<': 93, 'porrectus:4:5-1': 311, 'porrectus:4:5-1~': 312,
+  'porrectus:4:5-1>': 313, 'porrectus:4:5-1<': 314, 'torculus:4:5-2': 96, 'torculus:4:5-2~': 97,
+  'torculus:4:5-2>': 98, 'torculus:4:5-2<': 99, 'porrectus:4:5-2': 315, 'porrectus:4:5-2~': 316,
+  'porrectus:4:5-2>': 317, 'porrectus:4:5-2<': 318, 'torculus:4:5-3': 102, 'torculus:4:5-3~': 103,
+  'torculus:4:5-3>': 104, 'torculus:4:5-3<': 105, 'porrectus:4:5-3': 319, 'porrectus:4:5-3~': 320,
+  'porrectus:4:5-3>': 321, 'porrectus:4:5-3<': 322, 'torculus:4:5-4': 108, 'torculus:4:5-4~': 109,
+  'torculus:4:5-4>': 110, 'torculus:4:5-4<': 111, 'porrectus:4:5-4': 323, 'porrectus:4:5-4~': 324,
+  'porrectus:4:5-4>': 325, 'porrectus:4:5-4<': 326, 'torculus:4:5-5': 114, 'torculus:4:5-5~': 115,
+  'torculus:4:5-5>': 116, 'torculus:4:5-5<': 117, 'porrectus:4:5-5': 327, 'porrectus:4:5-5~': 328,
+  'porrectus:4:5-5>': 329, 'porrectus:4:5-5<': 330, 'pes:5:1': 0, 'pes:5:1~': 1, 'flexus:5:1': 331,
+  'flexus:5:1~': 332, 'flexus:5:1>': 333, 'flexus:5:1<': 334, 'pes:5:2': 2, 'pes:5:2~': 3,
+  'flexus:5:2': 160, 'flexus:5:2~': 161, 'flexus:5:2>': 162, 'flexus:5:2<': 163, 'pes:5:3': 4,
+  'pes:5:3~': 5, 'flexus:5:3': 237, 'flexus:5:3~': 238, 'flexus:5:3>': 239, 'flexus:5:3<': 240,
+  'pes:5:4': 6, 'pes:5:4~': 7, 'flexus:5:4': 241, 'flexus:5:4~': 242, 'flexus:5:4>': 243,
+  'flexus:5:4<': 244, 'flexus:5:5': 335, 'flexus:5:5~': 336, 'flexus:5:5>': 337, 'flexus:5:5<': 338,
+  'torculus:5:1-1': 10, 'torculus:5:1-1~': 11, 'torculus:5:1-1>': 12, 'torculus:5:1-1<': 13,
+  'porrectus:5:1-1': 124, 'porrectus:5:1-1~': 125, 'porrectus:5:1-1>': 126, 'porrectus:5:1-1<': 127,
+  'scandicus:5:1-1': 14, 'scandicus:5:1-1~': 15, 'torculus:5:1-2': 128, 'torculus:5:1-2~': 129,
+  'torculus:5:1-2>': 130, 'torculus:5:1-2<': 131, 'porrectus:5:1-2': 132, 'porrectus:5:1-2~': 133,
+  'porrectus:5:1-2>': 134, 'porrectus:5:1-2<': 135, 'scandicus:5:1-2': 16, 'scandicus:5:1-2~': 17,
+  'torculus:5:1-3': 164, 'torculus:5:1-3~': 165, 'torculus:5:1-3>': 166, 'torculus:5:1-3<': 167,
+  'porrectus:5:1-3': 136, 'porrectus:5:1-3~': 137, 'porrectus:5:1-3>': 138, 'porrectus:5:1-3<': 139,
+  'scandicus:5:1-3': 18, 'scandicus:5:1-3~': 19, 'torculus:5:1-4': 204, 'torculus:5:1-4~': 205,
+  'torculus:5:1-4>': 206, 'torculus:5:1-4<': 207, 'porrectus:5:1-4': 140, 'porrectus:5:1-4~': 141,
+  'porrectus:5:1-4>': 142, 'porrectus:5:1-4<': 143, 'torculus:5:1-5': 245, 'torculus:5:1-5~': 246,
+  'torculus:5:1-5>': 247, 'torculus:5:1-5<': 248, 'porrectus:5:1-5': 144, 'porrectus:5:1-5~': 145,
+  'porrectus:5:1-5>': 146, 'porrectus:5:1-5<': 147, 'torculus:5:2-1': 24, 'torculus:5:2-1~': 25,
+  'torculus:5:2-1>': 26, 'torculus:5:2-1<': 27, 'porrectus:5:2-1': 168, 'porrectus:5:2-1~': 169,
+  'porrectus:5:2-1>': 170, 'porrectus:5:2-1<': 171, 'scandicus:5:2-1': 28, 'scandicus:5:2-1~': 29,
+  'torculus:5:2-2': 30, 'torculus:5:2-2~': 31, 'torculus:5:2-2>': 32, 'torculus:5:2-2<': 33,
+  'porrectus:5:2-2': 172, 'porrectus:5:2-2~': 173, 'porrectus:5:2-2>': 174, 'porrectus:5:2-2<': 175,
+  'scandicus:5:2-2': 34, 'scandicus:5:2-2~': 35, 'torculus:5:2-3': 148, 'torculus:5:2-3~': 149,
+  'torculus:5:2-3>': 150, 'torculus:5:2-3<': 151, 'porrectus:5:2-3': 176, 'porrectus:5:2-3~': 177,
+  'porrectus:5:2-3>': 178, 'porrectus:5:2-3<': 179, 'torculus:5:2-4': 180, 'torculus:5:2-4~': 181,
+  'torculus:5:2-4>': 182, 'torculus:5:2-4<': 183, 'porrectus:5:2-4': 184, 'porrectus:5:2-4~': 185,
+  'porrectus:5:2-4>': 186, 'porrectus:5:2-4<': 187, 'torculus:5:2-5': 212, 'torculus:5:2-5~': 213,
+  'torculus:5:2-5>': 214, 'torculus:5:2-5<': 215, 'porrectus:5:2-5': 188, 'porrectus:5:2-5~': 189,
+  'porrectus:5:2-5>': 190, 'porrectus:5:2-5<': 191, 'torculus:5:3-1': 42, 'torculus:5:3-1~': 43,
+  'torculus:5:3-1>': 44, 'torculus:5:3-1<': 45, 'porrectus:5:3-1': 217, 'porrectus:5:3-1~': 249,
+  'porrectus:5:3-1>': 219, 'porrectus:5:3-1<': 220, 'scandicus:5:3-1': 46, 'scandicus:5:3-1~': 47,
+  'torculus:5:3-2': 48, 'torculus:5:3-2~': 49, 'torculus:5:3-2>': 50, 'torculus:5:3-2<': 51,
+  'porrectus:5:3-2': 221, 'porrectus:5:3-2~': 250, 'porrectus:5:3-2>': 223, 'porrectus:5:3-2<': 224,
+  'torculus:5:3-3': 54, 'torculus:5:3-3~': 55, 'torculus:5:3-3>': 56, 'torculus:5:3-3<': 57,
+  'porrectus:5:3-3': 225, 'porrectus:5:3-3~': 251, 'porrectus:5:3-3>': 227, 'porrectus:5:3-3<': 228,
+  'torculus:5:3-4': 152, 'torculus:5:3-4~': 153, 'torculus:5:3-4>': 154, 'torculus:5:3-4<': 155,
+  'porrectus:5:3-4': 229, 'porrectus:5:3-4~': 252, 'porrectus:5:3-4>': 231, 'porrectus:5:3-4<': 232,
+  'torculus:5:3-5': 192, 'torculus:5:3-5~': 193, 'torculus:5:3-5>': 194, 'torculus:5:3-5<': 195,
+  'porrectus:5:3-5': 233, 'porrectus:5:3-5~': 253, 'porrectus:5:3-5>': 235, 'porrectus:5:3-5<': 236,
+  'torculus:5:4-1': 64, 'torculus:5:4-1~': 65, 'torculus:5:4-1>': 66, 'torculus:5:4-1<': 67,
+  'porrectus:5:4-1': 254, 'porrectus:5:4-1~': 255, 'porrectus:5:4-1>': 256, 'porrectus:5:4-1<': 257,
+  'torculus:5:4-2': 70, 'torculus:5:4-2~': 71, 'torculus:5:4-2>': 72, 'torculus:5:4-2<': 73,
+  'porrectus:5:4-2': 258, 'porrectus:5:4-2~': 259, 'porrectus:5:4-2>': 260, 'porrectus:5:4-2<': 261,
+  'torculus:5:4-3': 76, 'torculus:5:4-3~': 77, 'torculus:5:4-3>': 78, 'torculus:5:4-3<': 79,
+  'porrectus:5:4-3': 262, 'porrectus:5:4-3~': 263, 'porrectus:5:4-3>': 264, 'porrectus:5:4-3<': 265,
+  'torculus:5:4-4': 82, 'torculus:5:4-4~': 83, 'torculus:5:4-4>': 84, 'torculus:5:4-4<': 85,
+  'porrectus:5:4-4': 266, 'porrectus:5:4-4~': 267, 'porrectus:5:4-4>': 268, 'porrectus:5:4-4<': 269,
+  'torculus:5:4-5': 156, 'torculus:5:4-5~': 157, 'torculus:5:4-5>': 158, 'torculus:5:4-5<': 159,
+  'porrectus:5:4-5': 270, 'porrectus:5:4-5~': 271, 'porrectus:5:4-5>': 272, 'porrectus:5:4-5<': 273,
+  'porrectus:5:5-1': 311, 'porrectus:5:5-1~': 339, 'porrectus:5:5-1>': 313, 'porrectus:5:5-1<': 314,
+  'porrectus:5:5-2': 315, 'porrectus:5:5-2~': 340, 'porrectus:5:5-2>': 317, 'porrectus:5:5-2<': 318,
+  'porrectus:5:5-3': 319, 'porrectus:5:5-3~': 341, 'porrectus:5:5-3>': 321, 'porrectus:5:5-3<': 322,
+  'porrectus:5:5-4': 323, 'porrectus:5:5-4~': 342, 'porrectus:5:5-4>': 325, 'porrectus:5:5-4<': 326,
+  'porrectus:5:5-5': 327, 'porrectus:5:5-5~': 343, 'porrectus:5:5-5>': 329, 'porrectus:5:5-5<': 330,
+  'pes:6:1': 0, 'pes:6:1~': 1, 'flexus:6:1': 274, 'flexus:6:1~': 275, 'flexus:6:1>': 276,
+  'flexus:6:1<': 277, 'pes:6:2': 2, 'pes:6:2~': 3, 'flexus:6:2': 196, 'flexus:6:2~': 197,
+  'flexus:6:2>': 198, 'flexus:6:2<': 199, 'pes:6:3': 4, 'pes:6:3~': 5, 'flexus:6:3': 200,
+  'flexus:6:3~': 201, 'flexus:6:3>': 202, 'flexus:6:3<': 203, 'flexus:6:4': 278, 'flexus:6:4~': 279,
+  'flexus:6:4>': 280, 'flexus:6:4<': 281, 'flexus:6:5': 282, 'flexus:6:5~': 283, 'flexus:6:5>': 284,
+  'flexus:6:5<': 285, 'torculus:6:1-1': 10, 'torculus:6:1-1~': 11, 'torculus:6:1-1>': 12,
+  'torculus:6:1-1<': 13, 'porrectus:6:1-1': 286, 'porrectus:6:1-1~': 287, 'porrectus:6:1-1>': 288,
+  'porrectus:6:1-1<': 289, 'scandicus:6:1-1': 14, 'scandicus:6:1-1~': 15, 'torculus:6:1-2': 128,
+  'torculus:6:1-2~': 129, 'torculus:6:1-2>': 130, 'torculus:6:1-2<': 131, 'porrectus:6:1-2': 290,
+  'porrectus:6:1-2~': 291, 'porrectus:6:1-2>': 292, 'porrectus:6:1-2<': 293, 'scandicus:6:1-2': 16,
+  'scandicus:6:1-2~': 17, 'torculus:6:1-3': 164, 'torculus:6:1-3~': 165, 'torculus:6:1-3>': 166,
+  'torculus:6:1-3<': 167, 'porrectus:6:1-3': 294, 'porrectus:6:1-3~': 295, 'porrectus:6:1-3>': 296,
+  'porrectus:6:1-3<': 297, 'torculus:6:1-4': 204, 'torculus:6:1-4~': 205, 'torculus:6:1-4>': 206,
+  'torculus:6:1-4<': 207, 'porrectus:6:1-4': 298, 'porrectus:6:1-4~': 299, 'porrectus:6:1-4>': 300,
+  'porrectus:6:1-4<': 301, 'torculus:6:1-5': 245, 'torculus:6:1-5~': 246, 'torculus:6:1-5>': 247,
+  'torculus:6:1-5<': 248, 'torculus:6:2-1': 24, 'torculus:6:2-1~': 25, 'torculus:6:2-1>': 26,
+  'torculus:6:2-1<': 27, 'porrectus:6:2-1': 168, 'porrectus:6:2-1~': 208, 'porrectus:6:2-1>': 170,
+  'porrectus:6:2-1<': 171, 'scandicus:6:2-1': 28, 'scandicus:6:2-1~': 29, 'torculus:6:2-2': 30,
+  'torculus:6:2-2~': 31, 'torculus:6:2-2>': 32, 'torculus:6:2-2<': 33, 'porrectus:6:2-2': 172,
+  'porrectus:6:2-2~': 209, 'porrectus:6:2-2>': 174, 'porrectus:6:2-2<': 175, 'torculus:6:2-3': 148,
+  'torculus:6:2-3~': 149, 'torculus:6:2-3>': 150, 'torculus:6:2-3<': 151, 'porrectus:6:2-3': 176,
+  'porrectus:6:2-3~': 210, 'porrectus:6:2-3>': 178, 'porrectus:6:2-3<': 179, 'torculus:6:2-4': 180,
+  'torculus:6:2-4~': 181, 'torculus:6:2-4>': 182, 'torculus:6:2-4<': 183, 'porrectus:6:2-4': 184,
+  'porrectus:6:2-4~': 211, 'porrectus:6:2-4>': 186, 'porrectus:6:2-4<': 187, 'torculus:6:2-5': 212,
+  'torculus:6:2-5~': 213, 'torculus:6:2-5>': 214, 'torculus:6:2-5<': 215, 'porrectus:6:2-5': 188,
+  'porrectus:6:2-5~': 216, 'porrectus:6:2-5>': 190, 'porrectus:6:2-5<': 191, 'torculus:6:3-1': 42,
+  'torculus:6:3-1~': 43, 'torculus:6:3-1>': 44, 'torculus:6:3-1<': 45, 'porrectus:6:3-1': 217,
+  'porrectus:6:3-1~': 218, 'porrectus:6:3-1>': 219, 'porrectus:6:3-1<': 220, 'torculus:6:3-2': 48,
+  'torculus:6:3-2~': 49, 'torculus:6:3-2>': 50, 'torculus:6:3-2<': 51, 'porrectus:6:3-2': 221,
+  'porrectus:6:3-2~': 222, 'porrectus:6:3-2>': 223, 'porrectus:6:3-2<': 224, 'torculus:6:3-3': 54,
+  'torculus:6:3-3~': 55, 'torculus:6:3-3>': 56, 'torculus:6:3-3<': 57, 'porrectus:6:3-3': 225,
+  'porrectus:6:3-3~': 226, 'porrectus:6:3-3>': 227, 'porrectus:6:3-3<': 228, 'torculus:6:3-4': 152,
+  'torculus:6:3-4~': 153, 'torculus:6:3-4>': 154, 'torculus:6:3-4<': 155, 'porrectus:6:3-4': 229,
+  'porrectus:6:3-4~': 230, 'porrectus:6:3-4>': 231, 'porrectus:6:3-4<': 232, 'torculus:6:3-5': 192,
+  'torculus:6:3-5~': 193, 'torculus:6:3-5>': 194, 'torculus:6:3-5<': 195, 'porrectus:6:3-5': 233,
+  'porrectus:6:3-5~': 234, 'porrectus:6:3-5>': 235, 'porrectus:6:3-5<': 236, 'porrectus:6:4-1': 254,
+  'porrectus:6:4-1~': 306, 'porrectus:6:4-1>': 256, 'porrectus:6:4-1<': 257, 'porrectus:6:4-2': 258,
+  'porrectus:6:4-2~': 307, 'porrectus:6:4-2>': 260, 'porrectus:6:4-2<': 261, 'porrectus:6:4-3': 262,
+  'porrectus:6:4-3~': 308, 'porrectus:6:4-3>': 264, 'porrectus:6:4-3<': 265, 'porrectus:6:4-4': 266,
+  'porrectus:6:4-4~': 309, 'porrectus:6:4-4>': 268, 'porrectus:6:4-4<': 269, 'porrectus:6:4-5': 270,
+  'porrectus:6:4-5~': 310, 'porrectus:6:4-5>': 272, 'porrectus:6:4-5<': 273, 'porrectus:6:5-1': 311,
+  'porrectus:6:5-1~': 312, 'porrectus:6:5-1>': 313, 'porrectus:6:5-1<': 314, 'porrectus:6:5-2': 315,
+  'porrectus:6:5-2~': 316, 'porrectus:6:5-2>': 317, 'porrectus:6:5-2<': 318, 'porrectus:6:5-3': 319,
+  'porrectus:6:5-3~': 320, 'porrectus:6:5-3>': 321, 'porrectus:6:5-3<': 322, 'porrectus:6:5-4': 323,
+  'porrectus:6:5-4~': 324, 'porrectus:6:5-4>': 325, 'porrectus:6:5-4<': 326, 'porrectus:6:5-5': 327,
+  'porrectus:6:5-5~': 328, 'porrectus:6:5-5>': 329, 'porrectus:6:5-5<': 330, 'pes:7:1': 0,
+  'pes:7:1~': 1, 'flexus:7:1': 331, 'flexus:7:1~': 332, 'flexus:7:1>': 333, 'flexus:7:1<': 334,
+  'pes:7:2': 2, 'pes:7:2~': 3, 'flexus:7:2': 160, 'flexus:7:2~': 161, 'flexus:7:2>': 162,
+  'flexus:7:2<': 163, 'flexus:7:3': 237, 'flexus:7:3~': 238, 'flexus:7:3>': 239, 'flexus:7:3<': 240,
+  'flexus:7:4': 241, 'flexus:7:4~': 242, 'flexus:7:4>': 243, 'flexus:7:4<': 244, 'flexus:7:5': 335,
+  'flexus:7:5~': 336, 'flexus:7:5>': 337, 'flexus:7:5<': 338, 'torculus:7:1-1': 10,
+  'torculus:7:1-1~': 11, 'torculus:7:1-1>': 12, 'torculus:7:1-1<': 13, 'porrectus:7:1-1': 124,
+  'porrectus:7:1-1~': 125, 'porrectus:7:1-1>': 126, 'porrectus:7:1-1<': 127, 'scandicus:7:1-1': 14,
+  'scandicus:7:1-1~': 15, 'torculus:7:1-2': 128, 'torculus:7:1-2~': 129, 'torculus:7:1-2>': 130,
+  'torculus:7:1-2<': 131, 'porrectus:7:1-2': 132, 'porrectus:7:1-2~': 133, 'porrectus:7:1-2>': 134,
+  'porrectus:7:1-2<': 135, 'torculus:7:1-3': 164, 'torculus:7:1-3~': 165, 'torculus:7:1-3>': 166,
+  'torculus:7:1-3<': 167, 'porrectus:7:1-3': 136, 'porrectus:7:1-3~': 137, 'porrectus:7:1-3>': 138,
+  'porrectus:7:1-3<': 139, 'torculus:7:1-4': 204, 'torculus:7:1-4~': 205, 'torculus:7:1-4>': 206,
+  'torculus:7:1-4<': 207, 'torculus:7:1-5': 245, 'torculus:7:1-5~': 246, 'torculus:7:1-5>': 247,
+  'torculus:7:1-5<': 248, 'torculus:7:2-1': 24, 'torculus:7:2-1~': 25, 'torculus:7:2-1>': 26,
+  'torculus:7:2-1<': 27, 'porrectus:7:2-1': 168, 'porrectus:7:2-1~': 169, 'porrectus:7:2-1>': 170,
+  'porrectus:7:2-1<': 171, 'torculus:7:2-2': 30, 'torculus:7:2-2~': 31, 'torculus:7:2-2>': 32,
+  'torculus:7:2-2<': 33, 'porrectus:7:2-2': 172, 'porrectus:7:2-2~': 173, 'porrectus:7:2-2>': 174,
+  'porrectus:7:2-2<': 175, 'torculus:7:2-3': 148, 'torculus:7:2-3~': 149, 'torculus:7:2-3>': 150,
+  'torculus:7:2-3<': 151, 'porrectus:7:2-3': 176, 'porrectus:7:2-3~': 177, 'porrectus:7:2-3>': 178,
+  'porrectus:7:2-3<': 179, 'torculus:7:2-4': 180, 'torculus:7:2-4~': 181, 'torculus:7:2-4>': 182,
+  'torculus:7:2-4<': 183, 'porrectus:7:2-4': 184, 'porrectus:7:2-4~': 185, 'porrectus:7:2-4>': 186,
+  'porrectus:7:2-4<': 187, 'torculus:7:2-5': 212, 'torculus:7:2-5~': 213, 'torculus:7:2-5>': 214,
+  'torculus:7:2-5<': 215, 'porrectus:7:3-1': 217, 'porrectus:7:3-1~': 249, 'porrectus:7:3-1>': 219,
+  'porrectus:7:3-1<': 220, 'porrectus:7:3-2': 221, 'porrectus:7:3-2~': 250, 'porrectus:7:3-2>': 223,
+  'porrectus:7:3-2<': 224, 'porrectus:7:3-3': 225, 'porrectus:7:3-3~': 251, 'porrectus:7:3-3>': 227,
+  'porrectus:7:3-3<': 228, 'porrectus:7:3-4': 229, 'porrectus:7:3-4~': 252, 'porrectus:7:3-4>': 231,
+  'porrectus:7:3-4<': 232, 'porrectus:7:3-5': 233, 'porrectus:7:3-5~': 253, 'porrectus:7:3-5>': 235,
+  'porrectus:7:3-5<': 236, 'porrectus:7:4-1': 254, 'porrectus:7:4-1~': 255, 'porrectus:7:4-1>': 256,
+  'porrectus:7:4-1<': 257, 'porrectus:7:4-2': 258, 'porrectus:7:4-2~': 259, 'porrectus:7:4-2>': 260,
+  'porrectus:7:4-2<': 261, 'porrectus:7:4-3': 262, 'porrectus:7:4-3~': 263, 'porrectus:7:4-3>': 264,
+  'porrectus:7:4-3<': 265, 'porrectus:7:4-4': 266, 'porrectus:7:4-4~': 267, 'porrectus:7:4-4>': 268,
+  'porrectus:7:4-4<': 269, 'porrectus:7:4-5': 270, 'porrectus:7:4-5~': 271, 'porrectus:7:4-5>': 272,
+  'porrectus:7:4-5<': 273, 'porrectus:7:5-1': 311, 'porrectus:7:5-1~': 339, 'porrectus:7:5-1>': 313,
+  'porrectus:7:5-1<': 314, 'porrectus:7:5-2': 315, 'porrectus:7:5-2~': 340, 'porrectus:7:5-2>': 317,
+  'porrectus:7:5-2<': 318, 'porrectus:7:5-3': 319, 'porrectus:7:5-3~': 341, 'porrectus:7:5-3>': 321,
+  'porrectus:7:5-3<': 322, 'porrectus:7:5-4': 323, 'porrectus:7:5-4~': 342, 'porrectus:7:5-4>': 325,
+  'porrectus:7:5-4<': 326, 'porrectus:7:5-5': 327, 'porrectus:7:5-5~': 343, 'porrectus:7:5-5>': 329,
+  'porrectus:7:5-5<': 330, 'pes:8:1': 0, 'pes:8:1~': 1, 'flexus:8:1': 274, 'flexus:8:1~': 275,
+  'flexus:8:1>': 276, 'flexus:8:1<': 277, 'flexus:8:2': 196, 'flexus:8:2~': 197, 'flexus:8:2>': 198,
+  'flexus:8:2<': 199, 'flexus:8:3': 200, 'flexus:8:3~': 201, 'flexus:8:3>': 202, 'flexus:8:3<': 203,
+  'flexus:8:4': 278, 'flexus:8:4~': 279, 'flexus:8:4>': 280, 'flexus:8:4<': 281, 'flexus:8:5': 282,
+  'flexus:8:5~': 283, 'flexus:8:5>': 284, 'flexus:8:5<': 285, 'torculus:8:1-1': 10,
+  'torculus:8:1-1~': 11, 'torculus:8:1-1>': 12, 'torculus:8:1-1<': 13, 'porrectus:8:1-1': 286,
+  'porrectus:8:1-1~': 287, 'porrectus:8:1-1>': 288, 'porrectus:8:1-1<': 289, 'torculus:8:1-2': 128,
+  'torculus:8:1-2~': 129, 'torculus:8:1-2>': 130, 'torculus:8:1-2<': 131, 'porrectus:8:1-2': 290,
+  'porrectus:8:1-2~': 291, 'porrectus:8:1-2>': 292, 'porrectus:8:1-2<': 293, 'torculus:8:1-3': 164,
+  'torculus:8:1-3~': 165, 'torculus:8:1-3>': 166, 'torculus:8:1-3<': 167, 'torculus:8:1-4': 204,
+  'torculus:8:1-4~': 205, 'torculus:8:1-4>': 206, 'torculus:8:1-4<': 207, 'torculus:8:1-5': 245,
+  'torculus:8:1-5~': 246, 'torculus:8:1-5>': 247, 'torculus:8:1-5<': 248, 'porrectus:8:2-1': 168,
+  'porrectus:8:2-1~': 208, 'porrectus:8:2-1>': 170, 'porrectus:8:2-1<': 171, 'porrectus:8:2-2': 172,
+  'porrectus:8:2-2~': 209, 'porrectus:8:2-2>': 174, 'porrectus:8:2-2<': 175, 'porrectus:8:2-3': 176,
+  'porrectus:8:2-3~': 210, 'porrectus:8:2-3>': 178, 'porrectus:8:2-3<': 179, 'porrectus:8:3-1': 217,
+  'porrectus:8:3-1~': 218, 'porrectus:8:3-1>': 219, 'porrectus:8:3-1<': 220, 'porrectus:8:3-2': 221,
+  'porrectus:8:3-2~': 222, 'porrectus:8:3-2>': 223, 'porrectus:8:3-2<': 224, 'porrectus:8:3-3': 225,
+  'porrectus:8:3-3~': 226, 'porrectus:8:3-3>': 227, 'porrectus:8:3-3<': 228, 'porrectus:8:3-4': 229,
+  'porrectus:8:3-4~': 230, 'porrectus:8:3-4>': 231, 'porrectus:8:3-4<': 232, 'porrectus:8:4-1': 254,
+  'porrectus:8:4-1~': 306, 'porrectus:8:4-1>': 256, 'porrectus:8:4-1<': 257, 'porrectus:8:4-2': 258,
+  'porrectus:8:4-2~': 307, 'porrectus:8:4-2>': 260, 'porrectus:8:4-2<': 261, 'porrectus:8:4-3': 262,
+  'porrectus:8:4-3~': 308, 'porrectus:8:4-3>': 264, 'porrectus:8:4-3<': 265, 'porrectus:8:4-4': 266,
+  'porrectus:8:4-4~': 309, 'porrectus:8:4-4>': 268, 'porrectus:8:4-4<': 269, 'porrectus:8:4-5': 270,
+  'porrectus:8:4-5~': 310, 'porrectus:8:4-5>': 272, 'porrectus:8:4-5<': 273, 'porrectus:8:5-1': 311,
+  'porrectus:8:5-1~': 312, 'porrectus:8:5-1>': 313, 'porrectus:8:5-1<': 314, 'porrectus:8:5-2': 315,
+  'porrectus:8:5-2~': 316, 'porrectus:8:5-2>': 317, 'porrectus:8:5-2<': 318, 'porrectus:8:5-3': 319,
+  'porrectus:8:5-3~': 320, 'porrectus:8:5-3>': 321, 'porrectus:8:5-3<': 322, 'porrectus:8:5-4': 323,
+  'porrectus:8:5-4~': 324, 'porrectus:8:5-4>': 325, 'porrectus:8:5-4<': 326, 'porrectus:8:5-5': 327,
+  'porrectus:8:5-5~': 328, 'porrectus:8:5-5>': 329, 'porrectus:8:5-5<': 330, 'flexus:9:1': 331,
+  'flexus:9:1~': 332, 'flexus:9:1>': 333, 'flexus:9:1<': 334, 'flexus:9:2': 160, 'flexus:9:2~': 161,
+  'flexus:9:2>': 162, 'flexus:9:2<': 163, 'flexus:9:3': 237, 'flexus:9:3~': 238, 'flexus:9:3>': 239,
+  'flexus:9:3<': 240, 'flexus:9:4': 241, 'flexus:9:4~': 242, 'flexus:9:4>': 243, 'flexus:9:4<': 244,
+  'flexus:9:5': 335, 'flexus:9:5~': 336, 'flexus:9:5>': 337, 'flexus:9:5<': 338,
+  'porrectus:9:1-1': 124, 'porrectus:9:1-1~': 125, 'porrectus:9:1-1>': 126, 'porrectus:9:1-1<': 127,
+  'porrectus:9:2-1': 168, 'porrectus:9:2-1~': 169, 'porrectus:9:2-1>': 170, 'porrectus:9:2-1<': 171,
+  'porrectus:9:2-2': 172, 'porrectus:9:2-2~': 173, 'porrectus:9:2-2>': 174, 'porrectus:9:2-2<': 175,
+  'porrectus:9:3-1': 217, 'porrectus:9:3-1~': 249, 'porrectus:9:3-1>': 219, 'porrectus:9:3-1<': 220,
+  'porrectus:9:3-2': 221, 'porrectus:9:3-2~': 250, 'porrectus:9:3-2>': 223, 'porrectus:9:3-2<': 224,
+  'porrectus:9:3-3': 225, 'porrectus:9:3-3~': 251, 'porrectus:9:3-3>': 227, 'porrectus:9:3-3<': 228,
+  'porrectus:9:4-1': 254, 'porrectus:9:4-1~': 255, 'porrectus:9:4-1>': 256, 'porrectus:9:4-1<': 257,
+  'porrectus:9:4-2': 258, 'porrectus:9:4-2~': 259, 'porrectus:9:4-2>': 260, 'porrectus:9:4-2<': 261,
+  'porrectus:9:4-3': 262, 'porrectus:9:4-3~': 263, 'porrectus:9:4-3>': 264, 'porrectus:9:4-3<': 265,
+  'porrectus:9:4-4': 266, 'porrectus:9:4-4~': 267, 'porrectus:9:4-4>': 268, 'porrectus:9:4-4<': 269,
+  'porrectus:9:5-1': 311, 'porrectus:9:5-1~': 339, 'porrectus:9:5-1>': 313, 'porrectus:9:5-1<': 314,
+  'porrectus:9:5-2': 315, 'porrectus:9:5-2~': 340, 'porrectus:9:5-2>': 317, 'porrectus:9:5-2<': 318,
+  'porrectus:9:5-3': 319, 'porrectus:9:5-3~': 341, 'porrectus:9:5-3>': 321, 'porrectus:9:5-3<': 322,
+  'porrectus:9:5-4': 323, 'porrectus:9:5-4~': 342, 'porrectus:9:5-4>': 325, 'porrectus:9:5-4<': 326,
+  'porrectus:9:5-5': 327, 'porrectus:9:5-5~': 343, 'porrectus:9:5-5>': 329, 'porrectus:9:5-5<': 330,
 };

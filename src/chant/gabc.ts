@@ -23,8 +23,10 @@
  *   - text: syllables of one word touch each other and a space starts the next word, so
  *     `Pu(d)er(f) na(f)tus(e)` is Pu- er na- tus; `-` after a syllable's text is allowed
  *
+ *   - `~`, `>`, `<` after the last note of a group: a liquescent (half-voiced) ending
+ *
  * Not read yet, and refused: clefs with a flat (`cb3`), other divisions (`:`), naturals, separate
- * neumes on one syllable (a space inside the parentheses), liquescents, quilismas and
+ * neumes on one syllable (a space inside the parentheses), liquescents on a single note, quilismas and
  * the other note shapes and modifiers.
  */
 
@@ -62,6 +64,7 @@ export function parseGabc(source: string): ParsedGabc {
   const episemas: number[] = [];
   const ictus: number[] = [];
   const flats: number[] = [];
+  const liquescents: { note: number; mark: '~' | '>' | '<' }[] = [];
   const breaks: number[] = [];
   const groups: Group[] = [];
   const lyrics: string[] = [];
@@ -138,6 +141,11 @@ export function parseGabc(source: string): ParsedGabc {
         notes += ch;
         lastNote = notes.length - 1;
         i++;
+      } else if (ch === '~' || ch === '>' || ch === '<') {
+        if (lastNote < 0 || afterNotes) fail(`"${ch}" must follow a note`);
+        if (liquescents.some((l) => l.note === lastNote)) fail('A note has only one liquescent mark');
+        liquescents.push({ note: lastNote, mark: ch });
+        i++;
       } else if (ch === '.' || ch === '_' || ch === "'" || ch === 'x') {
         if (lastNote < 0 || afterNotes) fail(`"${ch}" must follow a note`);
         const list = ch === '.' ? moras : ch === '_' ? episemas : ch === "'" ? ictus : flats;
@@ -163,6 +171,11 @@ export function parseGabc(source: string): ParsedGabc {
     }
     if (notes.length === first) fail('Parentheses with no notes or division');
     if (notes.length - first > 1) groups.push({ start: first, length: notes.length - first });
+    for (const { note } of liquescents) {
+      if (note >= first && (note !== notes.length - 1 || notes.length - first < 2)) {
+        fail('A liquescent mark is read only on the last note of a group');
+      }
+    }
 
     // the syllable's text: a space before it, or none, says whether a new word starts
     const text = lyric.replace(/^-/, '');
@@ -179,7 +192,7 @@ export function parseGabc(source: string): ParsedGabc {
     if (lyrics.some((t) => t === '')) fail('Either every syllable has text or none does');
     words = lyrics.map((t, i) => (i < lyrics.length - 1 && !wordStart[i + 1] ? `${t}-` : t));
   }
-  return { clef, clefLine, notes, bars, doubles, majors, ticks, moras, episemas, ictus, flats, groups, breaks: breaks.filter((b) => b < notes.length), words };
+  return { clef, clefLine, notes, bars, doubles, majors, ticks, moras, episemas, ictus, flats, liquescents, groups, breaks: breaks.filter((b) => b < notes.length), words };
 }
 
 /** The same snippet without its text: every syllable just its notes, as `(g) (h)`. */

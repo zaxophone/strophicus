@@ -97,7 +97,12 @@ export function ChantStaff({ width, chant, labels, captions, marks, gestures, wa
   // A syllable is a note on its own or a group of notes drawn as one figure; each gets a column.
   const syllables = units(chant);
   const neumes = syllables.map((u) =>
-    u.length > 1 ? neumeFor(positions.slice(u.start, u.start + u.length)) : null,
+    u.length > 1
+      ? neumeFor(
+          positions.slice(u.start, u.start + u.length),
+          chant.liquescents.find((l) => l.note === u.start + u.length - 1)?.mark ?? '',
+        )
+      : null,
   );
   const syllableOfNote = syllables.flatMap((u, i) => Array.from({ length: u.length }, () => i));
   const clefWidth = 2.2 * SPACE;

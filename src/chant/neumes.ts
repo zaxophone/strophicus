@@ -1,5 +1,11 @@
 import { NEUME_GLYPHS, NEUME_TABLE, NeumeGlyph } from './neumeTable';
 
+/**
+ * How a group ends, when its last note is a liquescent (gabc `~`, `>`, `<`: a note sung as a
+ * half-voiced consonant, drawn small and with a tail), or '' for an ordinary last note.
+ */
+export type Liquescent = '' | '~' | '>' | '<';
+
 /** The groups of two or three notes that are written as one joined figure. */
 export type NeumeShape = 'pes' | 'flexus' | 'torculus' | 'porrectus' | 'scandicus';
 
@@ -46,10 +52,10 @@ function classify(positions: number[]): { shape: NeumeShape; steps: number[] } |
  * The figure for notes sung on one syllable, given their staff positions (the
  * bottom line is 0, each step is 1), or null if there is no single glyph for them.
  */
-export function neumeFor(positions: number[]): Neume | null {
+export function neumeFor(positions: number[], liquescent: Liquescent = ''): Neume | null {
   const found = classify(positions);
   if (!found) return null;
-  const index = NEUME_TABLE[`${found.shape}:${positions[0]}:${found.steps.join('-')}`];
+  const index = NEUME_TABLE[`${found.shape}:${positions[0]}:${found.steps.join('-')}${liquescent}`];
   if (index === undefined) return null;
   return { shape: found.shape, glyph: NEUME_GLYPHS[index], heads: HEADS[found.shape] };
 }

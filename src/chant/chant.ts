@@ -8,7 +8,7 @@
  */
 
 import { parseGabc } from './gabc';
-import { neumeFor } from './neumes';
+import { Liquescent, neumeFor } from './neumes';
 
 const FIRST_LINE = 'd'.charCodeAt(0);
 const MAJOR_SCALE = [0, 2, 4, 5, 7, 9, 11];
@@ -48,6 +48,8 @@ export interface Chant {
   ictus: number[];
   /** Indexes of notes with a flat sign written before them; each lowers its ti to te (see `flattened`). */
   flats: number[];
+  /** Liquescent last notes of groups: the note's index and gabc's mark for it. */
+  liquescents: { note: number; mark: Exclude<Liquescent, ''> }[];
   /** The notes joined into one figure (two or three on a syllable); every other note stands alone. */
   groups: Group[];
   /** Indexes where a new line of the staff must begin. */
@@ -68,6 +70,7 @@ export interface ParsedPhrases {
   episemas: number[];
   ictus: number[];
   flats: number[];
+  liquescents: { note: number; mark: Exclude<Liquescent, ''> }[];
   groups: Group[];
 }
 
@@ -86,7 +89,8 @@ export function makeChant(gabc: string): Chant {
   }
   for (const { start, length } of chant.groups) {
     const positions = [...chant.notes.slice(start, start + length)].map(staffPosition);
-    if (!neumeFor(positions)) {
+    const last = chant.liquescents.find((l) => l.note === start + length - 1);
+    if (!neumeFor(positions, last?.mark ?? '')) {
       throw new Error(`No single figure for the group "${chant.notes.slice(start, start + length)}": "${gabc}"`);
     }
   }
