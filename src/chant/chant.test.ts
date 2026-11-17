@@ -2,7 +2,6 @@ import {
   BAR_UNITS,
   degree,
   flattened,
-  flowBreaks,
   layoutBreaks,
   makeChant,
   separators,
@@ -173,20 +172,5 @@ describe('the fa clef', () => {
 
   it('leaves the do clef alone', () => {
     expect(doLine(makeChant('(c4) (h)'))).toBe(4);
-  });
-});
-
-
-describe('flowBreaks', () => {
-  it('fills lines by width and cuts at a phrase bar when the line is full enough', () => {
-    // ten columns of 10, room for 6, a phrase bar before column 5
-    expect(flowBreaks(Array(10).fill(10), [5], [5], [], 60, 4)).toEqual([5]);
-    // no bar to cut at: cut where the next column would overflow
-    expect(flowBreaks(Array(10).fill(10), [], [], [], 60, 4)).toEqual([6]);
-  });
-
-  it('gives wide columns more room and keeps forced breaks', () => {
-    expect(flowBreaks([10, 10, 40, 10, 10], [], [], [], 60, 4)).toEqual([3]);
-    expect(flowBreaks(Array(4).fill(10), [], [], [2], 100, 4)).toEqual([2]);
   });
 });

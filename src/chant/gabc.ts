@@ -28,8 +28,9 @@
  *
  *   - `!`, `/` or a space inside the parentheses: a break between neumes on one syllable, as in
  *     `rí(ghh!jv)a`; the later neumes stand under the same syllable with no text of their own
- *   - `..` after a note is read as the one dot, `v` (virga) on a single note as a plain note, and
- *     `[...]` after an episema (its placement) is ignored
+ *   - `v` (virga) on a single note is read as a plain note, and
+ *     `[uh...]` after an episema puts its line under the note (`[oh...]` over it); a second dot
+ *     (`..`) puts a dot on every note of the figure
  *
  * Not read yet, and refused: clefs with a flat (`cb3`), naturals, liquescents on a single note,
  * quilismas and the other note shapes and modifiers.
@@ -70,6 +71,9 @@ export function parseGabc(source: string): ParsedGabc {
   const ictus: number[] = [];
   const flats: number[] = [];
   const flatLetters: string[] = [];
+  const episemasBelow: number[] = [];
+  const duplex: number[] = [];
+  const continuations: number[] = [];
   const liquescents: { note: number; mark: '~' | '>' | '<' }[] = [];
   const breaks: number[] = [];
   const groups: Group[] = [];
@@ -149,6 +153,7 @@ export function parseGabc(source: string): ParsedGabc {
           fail('A liquescent mark is read only on the last note of a group');
         }
       }
+      if (neumesSoFar > 0) continuations.push(neumeStart);
       // the first neume of a syllable carries its text; the others go on under it
       const text = lyric.replace(/^-/, '').trim();
       if (neumesSoFar === 0 && /\s/.test(text)) fail(`A syllable's text cannot have a space inside it ("${text}")`);
@@ -196,8 +201,13 @@ export function parseGabc(source: string): ParsedGabc {
         i++;
       } else if (ch === '.' || ch === '_' || ch === "'") {
         if (lastNote < 0 || afterNotes) fail(`"${ch}" must follow a note`);
-        // a second dot (punctum mora vocis productae) is read as the one dot
+        // a second dot (augmentum duplex): a dot on every note of the figure, drawn side by side
+        // after a single note and one above the other after a figure
         if (ch === '.' && moras.includes(lastNote) && music[i - 1] === '.' && music[i - 2] !== '.') {
+          for (let k = neumeStart; k <= lastNote; k++) {
+            if (!moras.includes(k)) moras.push(k);
+            duplex.push(k);
+          }
           i++;
           continue;
         }
@@ -223,6 +233,8 @@ export function parseGabc(source: string): ParsedGabc {
         // attributes of the sign before it (where an episema sits), which only change how it is drawn
         const end = music.indexOf(']', i);
         if (end < 0 || lastNote < 0 || music[i - 1] !== '_') fail('"[" is read only after an episema');
+        // `uh` puts the line under the note, `oh` over it
+        if (/\buh\b/.test(music.slice(i + 1, end))) episemasBelow.push(lastNote);
         i = end + 1;
       } else if (ch === '!' || ch === '/' || ch === ' ') {
         if (afterNotes) fail('A neume break cannot follow a division');
@@ -252,7 +264,9 @@ export function parseGabc(source: string): ParsedGabc {
       return next < lyrics.length && !wordStart[next] ? `${t}-` : t;
     });
   }
-  return { clef, clefLine, notes, bars, doubles, majors, ticks, moras, episemas, ictus, flats, flatLetters, liquescents, groups, breaks: breaks.filter((b) => b < notes.length), words };
+  moras.sort((a, b) => a - b);
+  duplex.sort((a, b) => a - b);
+  return { clef, clefLine, notes, bars, doubles, majors, ticks, moras, episemas, ictus, flats, flatLetters, episemasBelow, duplex, continuations, liquescents, groups, breaks: breaks.filter((b) => b < notes.length), words };
 }
 
 /** The same snippet without its text: every syllable just its notes, as `(g) (h)`. */

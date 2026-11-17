@@ -5,7 +5,6 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import {
   BAR_UNITS,
   Chant,
-  flowBreaks,
   layoutBreaks,
   ledgerLines,
   separators,
@@ -30,6 +29,7 @@ import { fitSpace, FULL_SPACE } from './fit';
 import { GLYPHS, GlyphName } from './glyphs';
 import { HEAD_UNITS, neumeFor } from './neumes';
 import { ChantMark, syllableMark } from './marks';
+import { Column, flowBreaks, lineCentres, pitches } from './spacing';
 import { useChantFont } from './typeface';
 import { WavePoint, wavePath } from './wave';
 import type { Gesture } from '../exercise/gestures';
@@ -132,22 +132,36 @@ export function ChantStaff({ width, chant, labels, captions, marks, gestures, wa
   const flatFigure = chant.flats.length ? ((GLYPHS.Punctum.advance + GLYPHS.Flat.advance) * SPACE) / LINE_PITCH : 0;
   const minUnit = Math.max(MIN_UNIT, Math.ceil(needed + 6), Math.ceil(widestFigure + 8), Math.ceil(flatFigure + 8));
   const maxUnit = Math.max(MAX_UNIT, minUnit);
-  // In a flowing score each column is as wide as its own syllable and figure need.
-  const flatW = (GLYPHS.Flat.advance * SPACE) / LINE_PITCH;
-  const flowWidths = syllables.map((u, i) => {
+  // In a flowing score the columns are spaced as Gregorio spaces them (see `spacing.ts`).
+  const flatSign = (GLYPHS.Flat.advance * SPACE) / LINE_PITCH + 0.1 * SPACE;
+  const moraDot = (GLYPHS.AuctumMora.advance * SPACE) / LINE_PITCH;
+  let previousLabel = '';
+  const columns: Column[] = syllables.map((u, i) => {
     const figure = neumes[i] ? (neumes[i]!.glyph.advance * SPACE) / LINE_PITCH : (GLYPHS.Punctum.advance * SPACE) / LINE_PITCH;
-    const sign = (chant.flats.includes(u.start) ? flatW + 2 : 0) + (chant.moras.some((n) => n >= u.start && n < u.start + u.length) ? 8 : 0);
-    return Math.max(MIN_UNIT, figure + sign + 10, textWidth(labels[i] ?? '', LABEL_SIZE) + 8);
+    const continued = chant.continuations.includes(u.start);
+    const dotted = chant.moras.some((n) => n >= u.start && n < u.start + u.length);
+    const doubled = u.length === 1 && chant.duplex.includes(u.start);
+    const dots = dotted ? 0.18 * SPACE + moraDot * (doubled ? 2.2 : 1) : 0;
+    const label = labels[i] ?? '';
+    const kind: Column['kind'] =
+      i === 0 ? 'start' : divisionBefore(chant, u.start) ? 'bar' : continued ? 'neume' : /-$/.test(previousLabel) ? 'word' : 'newWord';
+    if (!continued) previousLabel = label;
+    return {
+      left: figure / 2 + (chant.flats.includes(u.start) ? flatSign : 0),
+      right: figure / 2 + dots,
+      text: continued ? 0 : textWidth(label, LABEL_SIZE),
+      kind,
+    };
   });
-  const flowBar = BAR_UNITS * MIN_UNIT;
+  const columnPitches = pitches(columns, SPACE);
   const breaks = flow
     ? flowBreaks(
-        flowWidths,
+        columns,
+        columnPitches,
         divisions,
         chant.bars.map((n) => syllableOfNote[n]),
         chant.breaks.map((n) => syllableOfNote[n]),
         room,
-        flowBar,
       )
     : layoutBreaks(
         syllables.length,
@@ -182,11 +196,10 @@ export function ChantStaff({ width, chant, labels, captions, marks, gestures, wa
   const unitsOf = (indexes: number[]) =>
     indexes.length + divisions.filter((b) => indexes.includes(b) && b !== indexes[0]).length * BAR_UNITS;
   const unit = flow ? MIN_UNIT : Math.min(maxUnit, room / Math.max(...systems.map(unitsOf)));
-  // a flowing line is spread to fill the width, a little at most
-  const flowLineWidth = (indexes: number[]) =>
-    indexes.reduce((w, sy, k) => w + flowWidths[sy] + (k > 0 && divisions.includes(sy) ? flowBar : 0), 0);
-  const stretchOf = (s: number) =>
-    flow && s < systems.length - 1 ? Math.min(1.25, room / flowLineWidth(systems[s])) : 1;
+  // where a flowing line puts its columns (centres, from the start of its notes): filled out
+  // to the width unless it is the last line
+  const flowCentres = (s: number) =>
+    lineCentres(columns, columnPitches, systems[s][0], systems[s][systems[s].length - 1] + 1, room, s < systems.length - 1);
 
   // keep the note being sung in view: tell the parent where its line starts
   const focusSystem =
@@ -246,22 +259,27 @@ export function ChantStaff({ width, chant, labels, captions, marks, gestures, wa
     let lastGesture: Gesture | null = null;
     let cursor = clefWidth;
     let previousX: number | null = null;
+    let previousRight = 0;
+    const centres = flow ? flowCentres(s) : [];
     indexes.forEach((syllable, column) => {
       const { start, length } = syllables[syllable];
       const neume = neumes[syllable];
       const notes = Array.from({ length }, (_, j) => start + j);
       const division = column > 0 ? divisionBefore(chant, start) : null;
-      const colW = flow ? flowWidths[syllable] * stretchOf(s) : unit;
-      if (division) cursor += BAR_UNITS * (flow ? flowBar * stretchOf(s) / BAR_UNITS : unit);
-      const x = cursor + 0.5 * colW;
-      cursor += colW;
+      const colW = flow ? Math.max(columns[syllable].text + 8, columns[syllable].left + columns[syllable].right) : unit;
+      if (division && !flow) cursor += BAR_UNITS * unit;
+      const x = flow ? clefWidth + centres[column] : cursor + 0.5 * colW;
+      if (flow) cursor = x + columns[syllable].right;
+      else cursor += colW;
       const mark = syllableMark(notes.map((n) => marks[n]));
       const ink = mark?.color ?? inkColor;
 
       if (division && previousX !== null) {
-        elements.push(...divisionGlyphs(division, (previousX + x) / 2, key('bar', column)));
+        const gapCentre = flow ? (previousRight + (x - columns[syllable].left)) / 2 : (previousX + x) / 2;
+        elements.push(...divisionGlyphs(division, gapCentre, key('bar', column)));
       }
       previousX = x;
+      previousRight = x + columns[syllable].right;
 
       // Where the notes of this syllable sit across the column, and how wide the figure is.
       const figureW = neume ? neume.glyph.advance * scl : noteW;
@@ -299,32 +317,56 @@ export function ChantStaff({ width, chant, labels, captions, marks, gestures, wa
           elements.push(glyph(key('flat', column), 'Flat', x - noteW / 2 - flatW - sp * 0.1, onStaff(flatPosition(start)), ink));
         }
       }
-      if (notes.some((n) => chant.episemas.includes(n))) {
-        // The line over the notes: in the space above the highest head, clear of the line above a space note.
-        const high = Math.max(...ps);
-        const lineY = at(high) - (high % 2 === 0 ? 0.62 : 0.8) * sp;
-        const half = neume ? figureW / 2 : noteW * 0.55;
+      // The line of an episema, over or under the notes it marks (from the first to the last of them).
+      for (const side of ['over', 'under'] as const) {
+        const marked = notes
+          .map((n, j) => ({ n, j }))
+          .filter(({ n }) => chant.episemas.includes(n) && chant.episemasBelow.includes(n) === (side === 'under'));
+        if (marked.length === 0) continue;
+        const first = marked[0].j;
+        const last = marked[marked.length - 1].j;
+        const half = neume ? noteW * 0.55 : noteW * 0.55;
+        const from = headX(first) - half;
+        const to = headX(last) + half;
+        let lineY: number;
+        if (side === 'over') {
+          // in the space above the highest marked head, clear of the line above a space note
+          const high = Math.max(...marked.map(({ n }) => positions[n]));
+          lineY = at(high) - (high % 2 === 0 ? 0.62 : 0.8) * sp;
+        } else {
+          const low = Math.min(...marked.map(({ n }) => positions[n]));
+          lineY = at(low) + (low % 2 === 0 ? 0.62 : 0.8) * sp;
+        }
         elements.push(
-          <Line key={key('episema', column)} p1={vec(x - half, lineY)} p2={vec(x + half, lineY)} color={ink} strokeWidth={ruleWidth * 1.6} />,
+          <Line key={key(`episema-${side}`, column)} p1={vec(from, lineY)} p2={vec(to, lineY)} color={ink} strokeWidth={ruleWidth * 1.6} />,
         );
       }
       const ictus = notes.findIndex((n) => chant.ictus.includes(n));
       if (ictus >= 0) {
-        // The ictus: a short upright stroke just under the head.
-        const below = at(ps[ictus]) + sp * 0.62;
+        // The ictus: a short upright stroke under the head, or over the upper note of a podatus, as
+        // Gregorio sets it (it would run into the lower note there).
+        const above = neume?.shape === 'pes' && ictus === length - 1;
+        const stroke = sp * 0.4;
+        const gap = sp * 0.5;
+        const edge = above ? at(ps[ictus]) - gap : at(ps[ictus]) + gap;
         elements.push(
-          <Line key={key('ictus', column)} p1={vec(headX(ictus), below)} p2={vec(headX(ictus), below + sp * 0.7)} color={ink} strokeWidth={ruleWidth * 1.6} />,
+          <Line key={key('ictus', column)} p1={vec(headX(ictus), edge)} p2={vec(headX(ictus), above ? edge - stroke : edge + stroke)} color={ink} strokeWidth={ruleWidth * 1.3} />,
         );
       }
-      const dotted = notes.findIndex((n) => chant.moras.includes(n));
-      if (dotted >= 0) {
-        // The dot of a punctum mora sits beside the note, in the space above when the note is on a line.
-        const p = ps[dotted];
-        const dotAt = p % 2 === 0 ? p + 1 : p;
-        elements.push(
-          glyph(key('mora', column), 'AuctumMora', x + figureW / 2 + sp * 0.18, at(dotAt) + MORA_CENTRE * scl, ink),
-        );
-      }
+      // The dot of a punctum mora sits beside the note, in the space above when the note is on a line.
+      // A double dot (augmentum duplex) puts one beside each note of a figure, one above the other,
+      // or two side by side after a single note.
+      notes
+        .filter((n) => chant.moras.includes(n))
+        .forEach((n) => {
+          const p = positions[n];
+          const dotAt = p % 2 === 0 ? p + 1 : p;
+          const first = x + figureW / 2 + sp * 0.18;
+          elements.push(glyph(key(`mora${n}`, column), 'AuctumMora', first, at(dotAt) + MORA_CENTRE * scl, ink));
+          if (length === 1 && chant.duplex.includes(n)) {
+            elements.push(glyph(key(`mora2-${n}`, column), 'AuctumMora', first + GLYPHS.AuctumMora.advance * scl * 1.2, at(dotAt) + MORA_CENTRE * scl, ink));
+          }
+        });
 
       const gesture = gestures?.[start];
       if (gesture === 'none') {
@@ -389,7 +431,7 @@ export function ChantStaff({ width, chant, labels, captions, marks, gestures, wa
     } else {
       // A bar that falls where the line breaks is drawn at the end of this line.
       const carried = divisionBefore(chant, syllables[systems[s + 1][0]].start);
-      if (carried) elements.push(...divisionGlyphs(carried, cursor + 0.3 * unit, key('carried', 0)));
+      if (carried) elements.push(...divisionGlyphs(carried, flow ? cursor + 0.8 * SPACE : cursor + 0.3 * unit, key('carried', 0)));
       // Custos: a guide at the end of the line showing where the next note sits.
       const nextP = positions[syllables[systems[s + 1][0]].start];
       const custos = custosGlyph(nextP);

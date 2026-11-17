@@ -1,7 +1,7 @@
 import { parseGabc, joinGabc, withoutText } from './gabc';
 
 describe('parseGabc', () => {
-  const plain = { bars: [], doubles: [], majors: [], ticks: [], moras: [], episemas: [], ictus: [], flats: [], flatLetters: [], liquescents: [], groups: [], breaks: [], words: undefined, clef: 'c' as const };
+  const plain = { bars: [], doubles: [], majors: [], ticks: [], moras: [], episemas: [], ictus: [], flats: [], flatLetters: [], episemasBelow: [], duplex: [], continuations: [], liquescents: [], groups: [], breaks: [], words: undefined, clef: 'c' as const };
 
   it('reads the clef and one note per syllable', () => {
     expect(parseGabc('(c4) (f) (g) (h)')).toEqual({ ...plain, clefLine: 4, notes: 'fgh' });
@@ -183,11 +183,15 @@ describe('several neumes on one syllable', () => {
     expect(p.groups).toEqual([{ start: 3, length: 3 }, { start: 8, length: 2 }]);
     expect(p.words).toEqual(['A-', 've', 'Ma-', 'rí-', '', 'a,', 'ple-', 'na,']);
     expect(p.episemas).toEqual([8]);
+    expect(p.episemasBelow).toEqual([8]);
     expect(p.moras).toEqual([7, 10]);
+    expect(p.duplex).toEqual([10]);
   });
 
   it('reads a double dot as one dot, and a virga only on a single note', () => {
     expect(parseGabc('(c4) (h..)').moras).toEqual([0]);
+    // a double dot after a figure is a dot on each of its notes
+    expect(parseGabc('(c4) (df..)')).toMatchObject({ moras: [0, 1], duplex: [0, 1] });
     expect(() => parseGabc('(c4) (hgv)')).toThrow(/virga/);
   });
 });
