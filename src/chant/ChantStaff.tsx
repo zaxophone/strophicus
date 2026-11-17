@@ -1,9 +1,11 @@
 import { Canvas, Line, Path, Rect, Text as SkiaText, vec } from '@shopify/react-native-skia';
+import { useEffect } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import {
   BAR_UNITS,
   Chant,
+  flowBreaks,
   layoutBreaks,
   ledgerLines,
   separators,
@@ -51,6 +53,15 @@ interface Props {
   inkColor?: string;
   /** Tallest the staff may be, in pixels; it is drawn smaller to fit if need be. */
   maxHeight?: number;
+  /**
+   * Lay the chant out as a score to read: each column as wide as its syllable and figure need, lines
+   * cut at the phrase bars and spread to fill the width, drawn at full size however long it is (so
+   * the parent scrolls). Without it every column is alike and the staff shrinks to fit `maxHeight`.
+   */
+  flow?: boolean;
+  /** With `flow`: the note to keep in view. `onFocus` is told the top of its line, in pixels, whenever it moves to a new line. */
+  focus?: number;
+  onFocus?: (top: number) => void;
   /** Makes each note tappable, as when the student picks which one to name. */
   onPressNote?: (index: number) => void;
 }
@@ -92,7 +103,7 @@ function textWidth(text: string, size: number): number {
   return em * size;
 }
 
-export function ChantStaff({ width, chant, labels, captions, marks, gestures, wave = true, inkColor = '#111827', onPressNote, maxHeight }: Props) {
+export function ChantStaff({ width, chant, labels, captions, marks, gestures, wave = true, inkColor = '#111827', onPressNote, maxHeight, flow = false, focus, onFocus }: Props) {
   const positions = [...chant.notes].map(staffPosition);
   // A syllable is a note on its own or a group of notes drawn as one figure; each gets a column.
   const syllables = units(chant);
@@ -119,13 +130,30 @@ export function ChantStaff({ width, chant, labels, captions, marks, gestures, wa
   const flatFigure = chant.flats.length ? ((GLYPHS.Punctum.advance + GLYPHS.Flat.advance) * SPACE) / LINE_PITCH : 0;
   const minUnit = Math.max(MIN_UNIT, Math.ceil(needed + 6), Math.ceil(widestFigure + 8), Math.ceil(flatFigure + 8));
   const maxUnit = Math.max(MAX_UNIT, minUnit);
-  const breaks = layoutBreaks(
-    syllables.length,
-    divisions,
-    chant.breaks.map((n) => syllableOfNote[n]),
-    Math.floor(room / minUnit),
-    chant.bars.map((n) => syllableOfNote[n]),
-  );
+  // In a flowing score each column is as wide as its own syllable and figure need.
+  const flatW = (GLYPHS.Flat.advance * SPACE) / LINE_PITCH;
+  const flowWidths = syllables.map((u, i) => {
+    const figure = neumes[i] ? (neumes[i]!.glyph.advance * SPACE) / LINE_PITCH : (GLYPHS.Punctum.advance * SPACE) / LINE_PITCH;
+    const sign = (chant.flats.includes(u.start) ? flatW + 2 : 0) + (chant.moras.some((n) => n >= u.start && n < u.start + u.length) ? 8 : 0);
+    return Math.max(MIN_UNIT, figure + sign + 10, textWidth(labels[i] ?? '', LABEL_SIZE) + 8);
+  });
+  const flowBar = BAR_UNITS * MIN_UNIT;
+  const breaks = flow
+    ? flowBreaks(
+        flowWidths,
+        divisions,
+        chant.bars.map((n) => syllableOfNote[n]),
+        chant.breaks.map((n) => syllableOfNote[n]),
+        room,
+        flowBar,
+      )
+    : layoutBreaks(
+        syllables.length,
+        divisions,
+        chant.breaks.map((n) => syllableOfNote[n]),
+        Math.floor(room / minUnit),
+        chant.bars.map((n) => syllableOfNote[n]),
+      );
   const systems = splitSystems(syllables.map((_, i) => i), breaks);
 
   // Every line of the staff shares the same vertical range so they stack evenly.
@@ -140,7 +168,7 @@ export function ChantStaff({ width, chant, labels, captions, marks, gestures, wa
   // A long exercise on a short screen is drawn at a smaller scale to fit.
   const labelled = labels.some(Boolean);
   const labelZone = (labelled ? LABEL_ZONE : BARE_ZONE) + (captions ? CAPTION_ZONE : 0);
-  const sp = fitSpace(systems.length, top - bottom, labelZone + SYSTEM_GAP, SYSTEM_GAP, maxHeight);
+  const sp = fitSpace(systems.length, top - bottom, labelZone + SYSTEM_GAP, SYSTEM_GAP, flow ? undefined : maxHeight);
   const stp = sp / 2;
   const scl = sp / LINE_PITCH;
   const font = useChantFont(UNITS_PER_EM * scl);
@@ -151,7 +179,19 @@ export function ChantStaff({ width, chant, labels, captions, marks, gestures, wa
   // Every line shares one note spacing so columns line up from line to line.
   const unitsOf = (indexes: number[]) =>
     indexes.length + divisions.filter((b) => indexes.includes(b) && b !== indexes[0]).length * BAR_UNITS;
-  const unit = Math.min(maxUnit, room / Math.max(...systems.map(unitsOf)));
+  const unit = flow ? MIN_UNIT : Math.min(maxUnit, room / Math.max(...systems.map(unitsOf)));
+  // a flowing line is spread to fill the width, a little at most
+  const flowLineWidth = (indexes: number[]) =>
+    indexes.reduce((w, sy, k) => w + flowWidths[sy] + (k > 0 && divisions.includes(sy) ? flowBar : 0), 0);
+  const stretchOf = (s: number) =>
+    flow && s < systems.length - 1 ? Math.min(1.25, room / flowLineWidth(systems[s])) : 1;
+
+  // keep the note being sung in view: tell the parent where its line starts
+  const focusSystem =
+    focus === undefined ? -1 : systems.findIndex((indexes) => indexes.some((sy) => focus >= syllables[sy].start && focus < syllables[sy].start + syllables[sy].length));
+  useEffect(() => {
+    if (flow && focusSystem >= 0) onFocus?.(focusSystem * systemHeight);
+  }, [flow, focusSystem, systemHeight, onFocus]);
 
   const noteW = GLYPHS.Punctum.advance * scl;
   const ruleWidth = Math.max(1, LINE_THICKNESS * scl);
@@ -209,9 +249,10 @@ export function ChantStaff({ width, chant, labels, captions, marks, gestures, wa
       const neume = neumes[syllable];
       const notes = Array.from({ length }, (_, j) => start + j);
       const division = column > 0 ? divisionBefore(chant, start) : null;
-      if (division) cursor += BAR_UNITS * unit;
-      const x = cursor + 0.5 * unit;
-      cursor += unit;
+      const colW = flow ? flowWidths[syllable] * stretchOf(s) : unit;
+      if (division) cursor += BAR_UNITS * (flow ? flowBar * stretchOf(s) / BAR_UNITS : unit);
+      const x = cursor + 0.5 * colW;
+      cursor += colW;
       const mark = syllableMark(notes.map((n) => marks[n]));
       const ink = mark?.color ?? inkColor;
 
@@ -244,6 +285,10 @@ export function ChantStaff({ width, chant, labels, captions, marks, gestures, wa
         elements.push(
           font && <SkiaText key={key('neume', column)} x={left} y={onStaff(ps[0])} text={neume.glyph.char} font={font} color={ink} />,
         );
+        if (chant.flats.includes(start)) {
+          const flatWidth = GLYPHS.Flat.advance * scl;
+          elements.push(glyph(key('flat', column), 'Flat', left - flatWidth - sp * 0.1, onStaff(ps[0]), ink));
+        }
       } else {
         elements.push(glyph(key('note', column), 'Punctum', x - noteW / 2, onStaff(ps[0]), ink));
         if (chant.flats.includes(start)) {
@@ -295,7 +340,7 @@ export function ChantStaff({ width, chant, labels, captions, marks, gestures, wa
         <View
           key={key('label', column)}
           pointerEvents="none"
-          style={[styles.label, { width: unit, left: x - unit / 2, top: dy + staffHeight + 4 }]}
+          style={[styles.label, { width: colW, left: x - colW / 2, top: dy + staffHeight + 4 }]}
         >
           <Text style={[styles.syllable, { color: ink }]} numberOfLines={1}>
             {labels[syllable]}
@@ -313,7 +358,7 @@ export function ChantStaff({ width, chant, labels, captions, marks, gestures, wa
               key={key(`tap${j}`, column)}
               onPress={() => onPressNote(n)}
               accessibilityLabel={`Note ${n + 1}`}
-              style={{ position: 'absolute', left: x - unit / 2 + (j * unit) / length, width: unit / length, top: dy, height: staffHeight + labelZone }}
+              style={{ position: 'absolute', left: x - colW / 2 + (j * colW) / length, width: colW / length, top: dy, height: staffHeight + labelZone }}
             />,
           ),
         );

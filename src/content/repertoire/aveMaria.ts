@@ -46,8 +46,8 @@ const PHRASES = [
   },
 ];
 
-/** The whole prayer: each phrase on a line of its own. */
-const WHOLE = joinGabc(...PHRASES.map((p) => p.gabc.replace(/\s*\((;|::)\)\s*$/, ' ($1)') + ' (z)')).replace(/\s*\(z\)$/, '');
+/** The whole prayer, one score: the staff cuts its lines at the half bars. */
+const WHOLE = joinGabc(...PHRASES.map((p) => p.gabc));
 
 export const AVE_MARIA: Lesson = {
   id: 'rep-ave-maria',
@@ -55,31 +55,17 @@ export const AVE_MARIA: Lesson = {
   summary: 'The Hail Mary in the simple tone, a chant for every day.',
   free: true,
   exercises: [
-    ...PHRASES.map((p, i) =>
-      exercise({
-        id: `rep-${p.id}`,
-        title: p.title,
-        gabc: p.gabc,
-        source,
-        instructions: `
-Phrase ${i + 1} of 5 of the Ave Maria: "${p.latin}" (${p.english})
-
-Sing it on the Latin text, one syllable to each note or joined group of notes. Sing the half bars and the little ticks as short breaths, and keep the words flowing.${
-          i === 0
-            ? '\n\nThe flat sign in "Maria" makes ti into te, and it holds until the next bar.'
-            : ''
-        }`,
-      }),
-    ),
     exercise({
-      id: 'rep-ave-maria-whole',
-      title: 'The whole prayer',
+      id: 'rep-ave-maria',
+      title: 'Sing the Ave Maria',
       gabc: WHOLE,
       source,
       instructions: `
-Now sing the whole Ave Maria, one phrase to a line: "Ave Maria, gratia plena, Dominus tecum, benedicta tu in mulieribus, et benedictus fructus ventris tui, Jesus. Sancta Maria, Mater Dei, ora pro nobis peccatoribus, nunc et in hora mortis nostrae. Amen."
+The Hail Mary in the simple tone: "${PHRASES.map((p) => p.english).join(' ')}"
 
-Take a breath at each half bar and let the last note of each line settle before the next begins.`,
+Sing it on the Latin words under the notes, one syllable to each note or joined group. Breathe at the half bars and keep the words flowing. The flat sign in "Maria" makes ti into te, until the next bar.
+
+The score scrolls by itself as you sing; you can also scroll it yourself.`,
     }),
   ],
 };

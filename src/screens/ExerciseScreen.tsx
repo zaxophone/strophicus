@@ -1,6 +1,7 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   Pressable,
+  ScrollView,
   StyleSheet,
   Text,
   useWindowDimensions,
@@ -66,6 +67,7 @@ export function SingExercise({ lesson, index, tonic, onIndexChange, onExit, onBa
   // Set when the student taps the locked arrow, to say why it won't go.
   const [nudge, setNudge] = useState(false);
   const playback = useRef<Playback | null>(null);
+  const scroller = useRef<React.ComponentRef<typeof ScrollView>>(null);
   const segmenter = useRef(new NoteSegmenter());
 
   // Exercises care about intervals, not register, so octave errors are folded away.
@@ -231,9 +233,27 @@ export function SingExercise({ lesson, index, tonic, onIndexChange, onExit, onBa
             )
           : 'Keep going, following the notes.';
 
+  // A piece of repertoire is one long score: shown whole at full size, scrolling to follow the singer.
+  const score = lesson.free;
+  const focus = hearing ? playingNote ?? undefined : nextNote >= 0 ? nextNote : undefined;
+  const follow = useCallback((top: number) => scroller.current?.scrollTo({ y: Math.max(0, top - 12), animated: true }), []);
+
   return (
     <View style={styles.screen}>
       <View style={styles.content}>
+        {score ? (
+          <ScrollView ref={scroller} style={styles.score} contentContainerStyle={styles.scoreContent}>
+            <ChantStaff
+              flow
+              width={width - 32}
+              chant={exercise.chant}
+              labels={exercise.words ?? unitLabels(exercise.chant, exercise.labels)}
+              marks={marks}
+              focus={focus}
+              onFocus={follow}
+            />
+          </ScrollView>
+        ) : (
         <StaffArea>
           {(maxHeight) => (
             <ChantStaff
@@ -246,6 +266,7 @@ export function SingExercise({ lesson, index, tonic, onIndexChange, onExit, onBa
             />
           )}
         </StaffArea>
+        )}
 
         <Text style={[styles.message, finished && styles.messageOk, nudge && styles.messageNudge]}>{message}</Text>
 
@@ -288,6 +309,8 @@ export function SingExercise({ lesson, index, tonic, onIndexChange, onExit, onBa
 const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: '#fff' },
   content: { flex: 1, padding: 16, gap: 14, alignItems: 'center' },
+  score: { flex: 1, alignSelf: 'stretch' },
+  scoreContent: { alignItems: 'center', paddingBottom: 24 },
   message: { color: colors.muted, textAlign: 'center', minHeight: 36, fontSize: 15 },
   messageOk: { color: colors.success, fontWeight: '700' },
   messageNudge: { color: colors.danger, fontWeight: '600' },

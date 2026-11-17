@@ -184,6 +184,44 @@ export function layoutBreaks(
   return breaks;
 }
 
+/**
+ * Line breaks for a staff whose columns have widths of their own (a chant with words, where a
+ * syllable may be wide). Each line takes as many columns as fit in `capacity`; a line that has to
+ * be cut is cut at its last phrase bar (`preferred`) if that keeps it at least 40% full, else at its
+ * last division of any kind if that keeps it 55% full, else just before the column that overflows.
+ * `barWidth` is the room a division takes. Forced breaks are kept.
+ */
+export function flowBreaks(
+  widths: number[],
+  divisions: number[],
+  preferred: number[],
+  forced: number[],
+  capacity: number,
+  barWidth: number,
+): number[] {
+  const breaks: number[] = [];
+  const upTo = (start: number, end: number) => {
+    let w = 0;
+    for (let i = start; i < end; i++) w += widths[i] + (i > start && divisions.includes(i) ? barWidth : 0);
+    return w;
+  };
+  let start = 0;
+  while (start < widths.length) {
+    let end = start + 1;
+    while (end < widths.length && !forced.includes(end) && upTo(start, end + 1) <= capacity) end++;
+    if (end < widths.length && !forced.includes(end)) {
+      const last = (list: number[]) => [...list].reverse().find((b) => b > start && b <= end);
+      const phrase = last(preferred);
+      const any = last(divisions);
+      if (phrase !== undefined && upTo(start, phrase) >= 0.4 * capacity) end = phrase;
+      else if (any !== undefined && upTo(start, any) >= 0.55 * capacity) end = any;
+    }
+    if (end < widths.length) breaks.push(end);
+    start = end;
+  }
+  return breaks;
+}
+
 /** Steps above the bottom staff line; negative below it. */
 export function staffPosition(letter: string): number {
   return letter.charCodeAt(0) - FIRST_LINE;
