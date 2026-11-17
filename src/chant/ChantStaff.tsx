@@ -115,6 +115,8 @@ export function ChantStaff({ width, chant, labels, captions, marks, gestures, wa
         )
       : null,
   );
+  /** Staff position of the flat sign standing before note `n`. */
+  const flatPosition = (n: number) => staffPosition(chant.flatLetters[chant.flats.indexOf(n)]);
   const syllableOfNote = syllables.flatMap((u, i) => Array.from({ length: u.length }, () => i));
   const clefWidth = 2.2 * SPACE;
   const rightMargin = 2 * SPACE;
@@ -287,14 +289,14 @@ export function ChantStaff({ width, chant, labels, captions, marks, gestures, wa
         );
         if (chant.flats.includes(start)) {
           const flatWidth = GLYPHS.Flat.advance * scl;
-          elements.push(glyph(key('flat', column), 'Flat', left - flatWidth - sp * 0.1, onStaff(ps[0]), ink));
+          elements.push(glyph(key('flat', column), 'Flat', left - flatWidth - sp * 0.1, onStaff(flatPosition(start)), ink));
         }
       } else {
         elements.push(glyph(key('note', column), 'Punctum', x - noteW / 2, onStaff(ps[0]), ink));
         if (chant.flats.includes(start)) {
-          // The flat sign stands just before its note, on the same line or space.
+          // The flat sign stands just before its note, on the line or space it flattens.
           const flatW = GLYPHS.Flat.advance * scl;
-          elements.push(glyph(key('flat', column), 'Flat', x - noteW / 2 - flatW - sp * 0.1, onStaff(ps[0]), ink));
+          elements.push(glyph(key('flat', column), 'Flat', x - noteW / 2 - flatW - sp * 0.1, onStaff(flatPosition(start)), ink));
         }
       }
       if (notes.some((n) => chant.episemas.includes(n))) {

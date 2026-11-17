@@ -101,7 +101,7 @@ It can be translated as: "I will sing for you on the ten-stringed lute."`,
       recording: 38,
       title: 'Both sentences',
       key: 'fa=f',
-      gabc: '(c4) De(f)us,(gh) cán(h)ti(h)cum(h) no(h)vum(h) can(h)tá(ix)bo(h) ti(g)bi:(h:)(z) in(h) psal(h)té(h)ri(h)o(h) de(h)ca(h)cór(h)do(h) psal(g)lam(f) ti(gh)bi.(gf)',
+      gabc: '(c4) De(f)us,(gh) cán(h)ti(h)cum(h) no(h)vum(h) can(h)tá(ixi)bo(h) ti(g)bi:(h:)(z) in(h) psal(h)té(h)ri(h)o(h) de(h)ca(h)cór(h)do(h) psal(g)lam(f) ti(gh)bi.(gf)',
       instructions: `
 Now sing both sentences, one after the other. At the asterisk (*) after "tibi", wait and take a quiet breath before beginning the second half.
 

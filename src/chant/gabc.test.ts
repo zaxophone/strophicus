@@ -1,7 +1,7 @@
 import { parseGabc, joinGabc, withoutText } from './gabc';
 
 describe('parseGabc', () => {
-  const plain = { bars: [], doubles: [], majors: [], ticks: [], moras: [], episemas: [], ictus: [], flats: [], liquescents: [], groups: [], breaks: [], words: undefined, clef: 'c' as const };
+  const plain = { bars: [], doubles: [], majors: [], ticks: [], moras: [], episemas: [], ictus: [], flats: [], flatLetters: [], liquescents: [], groups: [], breaks: [], words: undefined, clef: 'c' as const };
 
   it('reads the clef and one note per syllable', () => {
     expect(parseGabc('(c4) (f) (g) (h)')).toEqual({ ...plain, clefLine: 4, notes: 'fgh' });
@@ -46,13 +46,23 @@ describe('parseGabc', () => {
     expect(parseGabc('(c2) (c) (d;)')).toEqual({ ...plain, clefLine: 2, notes: 'cd' });
   });
 
-  it('reads . as a dot, _ as an episema, \' as an ictus and x as a flat sign, on the note before', () => {
-    expect(parseGabc('(c3) (h.) (g_) (f._) (e\') (gx)')).toMatchObject({
+  it('reads . as a dot, _ as an episema, \' as an ictus, and a letter with x as a flat sign before the next note', () => {
+    expect(parseGabc('(c3) (h.) (g_) (f._) (e\') (gxg)')).toMatchObject({
       moras: [0, 2],
       episemas: [1, 2],
       ictus: [3],
       flats: [4],
+      flatLetters: ['g'],
     });
+  });
+
+  it('reads the flat sign as standing at its own height, not as a note', () => {
+    const p = parseGabc("(c4) Ma(d)rí(ixdh'!iv)a,(h.)");
+    expect(p.notes).toBe('ddhih');
+    expect(p.flats).toEqual([1]);
+    expect(p.flatLetters).toEqual(['i']);
+    expect(() => parseGabc('(c4) (ix)')).toThrow(/followed by a note/);
+    expect(() => parseGabc('(c4) (dixh)')).toThrow(/inside a figure/);
   });
 
   it('refuses a modifier that follows nothing, or is repeated', () => {

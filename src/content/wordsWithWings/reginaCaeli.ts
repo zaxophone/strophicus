@@ -5,7 +5,7 @@
 export const REGINA_CAELI_KEY = 'fa=g';
 
 export const REGINA_CAELI: string[] = [
-  '(c4) Re(f)gi(g)na(f) cae(g)li(h) lae(ix)tá(h)re,(g;) al(ix)le(h)lú(g)ia:(f;) Qui(f)a(j) quem(j) me(k)ru(j)i(ix)sti(h)',
-  '(c4) por(f)tá(g)re,(h;) al(ix)le(h)lú(g)ia.(f:) Re(j)sur(j)ré(k)xit,(j) si(j)cut(f) di(g)xit,(f,) al(g)le(h)lú(ix)ia:(j)',
-  '(c4) o(j)ra(f) pro(g) no(ix)bis(h) De(g)um,(f,) al(e)le(g)lú(gg)ia.(f)',
+  '(c4) Re(f)gi(g)na(f) cae(g)li(h) lae(ixi)tá(h)re,(g;) al(ixi)le(h)lú(g)ia:(f;) Qui(f)a(j) quem(j) me(k)ru(j)i(ixi)sti(h)',
+  '(c4) por(f)tá(g)re,(h;) al(ixi)le(h)lú(g)ia.(f:) Re(j)sur(j)ré(k)xit,(j) si(j)cut(f) di(g)xit,(f,) al(g)le(h)lú(ixi)ia:(j)',
+  '(c4) o(j)ra(f) pro(g) no(ixi)bis(h) De(g)um,(f,) al(e)le(g)lú(gg)ia.(f)',
 ];

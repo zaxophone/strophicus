@@ -13,7 +13,8 @@
  *   - notes in one pair of parentheses with no space between them are one joined
  *     figure on one syllable: `(gh)`; a syllable with no text is written `(g)`
  *   - after a note: `.` dot (punctum mora), `_` line over it (episema), `'` ictus,
- *     `x` flat sign (only before ti; it holds on that line or space until the next bar)
+ *     (a flat sign is written before a note: `ixi` is a flat at ti's height, then the note ti; only ti
+     may be flattened, and the sign holds on that line or space until the next bar)
  *   - divisions inside the parentheses after the notes, or alone: `,` divisio minima (a
  *     short tick), `;` divisio minor (a half bar: a one-beat rest), `:` divisio maior (a full bar, also a
  *     rest), `::` divisio finalis
@@ -68,6 +69,7 @@ export function parseGabc(source: string): ParsedGabc {
   const episemas: number[] = [];
   const ictus: number[] = [];
   const flats: number[] = [];
+  const flatLetters: string[] = [];
   const liquescents: { note: number; mark: '~' | '>' | '<' }[] = [];
   const breaks: number[] = [];
   const groups: Group[] = [];
@@ -134,6 +136,8 @@ export function parseGabc(source: string): ParsedGabc {
     // The neume being read: the notes between the start of the syllable (or a `!` or `/`) and its end.
     let neumeStart = first;
     let virga = false;
+    // a flat sign (`ix`) waits for the next note, which it stands before
+    let pendingFlat: string | null = null;
     let neumesSoFar = 0;
     const endNeume = () => {
       const length = notes.length - neumeStart;
@@ -158,7 +162,13 @@ export function parseGabc(source: string): ParsedGabc {
     };
     while (i < music.length) {
       const ch = music[i];
-      if (/[a-m]/.test(ch)) {
+      if (/[a-m]/.test(ch) && music[i + 1] === 'x') {
+        // a flat sign at this height (it is not a note): it holds on that line or space until the next bar
+        if (afterNotes) fail('A flat sign cannot follow a division in one syllable');
+        if (pendingFlat !== null) fail('A flat sign must be followed by a note');
+        pendingFlat = ch;
+        i += 2;
+      } else if (/[a-m]/.test(ch)) {
         if (afterNotes) fail('A note cannot follow a division in one syllable');
         if (notes.length === first && pendingBeforeFirst !== null && notes.length > 0) {
           if (pendingBeforeFirst === 'tick') ticks.push(notes.length);
@@ -169,6 +179,13 @@ export function parseGabc(source: string): ParsedGabc {
           }
           pendingBeforeFirst = null;
         }
+        if (pendingFlat !== null) {
+          // the sign is drawn before the first note of a figure; a note in the middle of one cannot carry it
+          if (notes.length !== neumeStart) fail('A flat sign inside a figure is not read; put it before the figure');
+          flats.push(notes.length);
+          flatLetters.push(pendingFlat);
+          pendingFlat = null;
+        }
         notes += ch;
         lastNote = notes.length - 1;
         i++;
@@ -177,15 +194,15 @@ export function parseGabc(source: string): ParsedGabc {
         if (liquescents.some((l) => l.note === lastNote)) fail('A note has only one liquescent mark');
         liquescents.push({ note: lastNote, mark: ch });
         i++;
-      } else if (ch === '.' || ch === '_' || ch === "'" || ch === 'x') {
+      } else if (ch === '.' || ch === '_' || ch === "'") {
         if (lastNote < 0 || afterNotes) fail(`"${ch}" must follow a note`);
         // a second dot (punctum mora vocis productae) is read as the one dot
         if (ch === '.' && moras.includes(lastNote) && music[i - 1] === '.' && music[i - 2] !== '.') {
           i++;
           continue;
         }
-        const list = ch === '.' ? moras : ch === '_' ? episemas : ch === "'" ? ictus : flats;
-        const name = ch === '.' ? 'dot' : ch === '_' ? 'episema' : ch === "'" ? 'ictus' : 'flat sign';
+        const list = ch === '.' ? moras : ch === '_' ? episemas : ictus;
+        const name = ch === '.' ? 'dot' : ch === '_' ? 'episema' : 'ictus';
         if (list.includes(lastNote)) fail(`A note has only one ${name}`);
         list.push(lastNote);
         i++;
@@ -217,6 +234,7 @@ export function parseGabc(source: string): ParsedGabc {
         fail(`"${ch}" is not read yet`);
       }
     }
+    if (pendingFlat !== null) fail('A flat sign must be followed by a note');
     if (notes.length === first) fail('Parentheses with no notes or division');
     endNeume();
   }
@@ -234,7 +252,7 @@ export function parseGabc(source: string): ParsedGabc {
       return next < lyrics.length && !wordStart[next] ? `${t}-` : t;
     });
   }
-  return { clef, clefLine, notes, bars, doubles, majors, ticks, moras, episemas, ictus, flats, liquescents, groups, breaks: breaks.filter((b) => b < notes.length), words };
+  return { clef, clefLine, notes, bars, doubles, majors, ticks, moras, episemas, ictus, flats, flatLetters, liquescents, groups, breaks: breaks.filter((b) => b < notes.length), words };
 }
 
 /** The same snippet without its text: every syllable just its notes, as `(g) (h)`. */

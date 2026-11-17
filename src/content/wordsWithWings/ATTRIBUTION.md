@@ -26,7 +26,7 @@ clef, then each syllable's text with its notes in parentheses, for example
 `(c4) Pu(d)er(f) na(f)tus(e) in(f) Bét(g)le(f)hem,(e;)`. The app reads this subset:
 pitches `a`-`m` after a do clef (`c1`-`c4`); notes in one pair of parentheses are a
 joined figure on one syllable (`(de)`); after a note `.` is a dot (punctum mora), `_`
-an episema, `'` an ictus and `x` a flat sign (before ti only); and the divisions `,`
+an episema, `'` an ictus; and the divisions `,`
 (divisio minima), `;` (divisio minor, a half bar) and `::` (a double bar). Syllables of
 one word touch, and a space starts the next word, so the hyphens printed under the
 notes are derived. Anything else in gabc is refused with an error rather than misread.
@@ -58,9 +58,10 @@ permission before the app is published, or drop the `audio/` folder and
 `recordings.ts`. Each exercise's `recording` is the number the instructor
 edition prints beside it.
 
-**Flat sign.** From Lesson 8 on, an `x` after a note letter puts a flat sign
-before it (as in gabc); it is allowed only on ti, which is then sung as te, and
-holds until the next bar. Recordings 19 and 20 (Lesson 8) are bundled like 1-18,
+**Flat sign.** From Lesson 8 on, a letter followed by `x` is a flat sign at that
+height, standing before the next note (as in gabc: `ixi` is a flat on ti, then the note
+ti, and `ixdh` a flat on ti before the notes re and la); it is allowed only on ti,
+which is then sung as te, and holds on that line or space until the next bar. Recordings 19 and 20 (Lesson 8) are bundled like 1-18,
 with the same unclear-rights note.
 
 **Later lessons (11 to 20).** Lessons 11-20 are encoded the same way, from the instructor

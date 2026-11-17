@@ -144,21 +144,21 @@ describe('layoutBreaks', () => {
 
 describe('flat sign', () => {
   // with the do clef on line 4, do is j and ti is i
-  it('parses x after a note and keeps the flat until the next bar', () => {
-    const chant = makeChant('(c4) (j) (ix) (h) (i;) (i)');
+  it('parses a flat sign before a note and keeps it until the next bar', () => {
+    const chant = makeChant('(c4) (j) (ixi) (h) (i;) (i)');
     expect(chant.flats).toEqual([1]);
     expect(flattened(chant)).toEqual([false, true, false, true, false]);
   });
 
   // with the do clef on line 3, do is h and ti is g
   it('lowers the pitch and renames ti to te', () => {
-    const e = exercise({ id: 'f', title: 'f', gabc: '(c3) (h) (gx) (h) (g;) (g)', instructions: 'x' });
+    const e = exercise({ id: 'f', title: 'f', gabc: '(c3) (h) (gxg) (h) (g;) (g)', instructions: 'x' });
     expect(e.labels).toEqual(['do', 'te', 'do', 'te', 'ti']);
     expect(e.offsets).toEqual([0, -2, 0, -2, -1]);
   });
 
   it('refuses a flat on anything but ti', () => {
-    expect(() => makeChant('(c3) (h) (ix)')).toThrow(/ti/);
+    expect(() => makeChant('(c3) (h) (ixi)')).toThrow(/ti/);
   });
 });
 

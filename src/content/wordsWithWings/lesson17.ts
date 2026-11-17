@@ -15,9 +15,9 @@ const instructor = 'Words with Wings Instructor Edition';
 // Alleluias go over, under, over, under: the ictus fall on "le" and "ia" and the line ends on a
 // thesis. Alleluia 4 has an arsis on "Al", and a looped arsis on the first note of "lú".
 const ALLELUIAS = [
-  { n: 1, recording: 83, key: 'te=c', gabc: '(c4) Al(ix)le(h)lú(g)ia.(f)', line: '-t-t', page: 57 },
-  { n: 2, recording: 84, key: 'sol=a', gabc: '(c4) Al(g)le(h)lú(ix)ia.(j)', line: '-t-t', page: 57 },
-  { n: 3, recording: 83, key: 'te=c', gabc: '(c4) Al(ix)le(h)lú(g)ia.(f)', line: '-t-t', page: 57 },
+  { n: 1, recording: 83, key: 'te=c', gabc: '(c4) Al(ixi)le(h)lú(g)ia.(f)', line: '-t-t', page: 57 },
+  { n: 2, recording: 84, key: 'sol=a', gabc: '(c4) Al(g)le(h)lú(ixi)ia.(j)', line: '-t-t', page: 57 },
+  { n: 3, recording: 83, key: 'te=c', gabc: '(c4) Al(ixi)le(h)lú(g)ia.(f)', line: '-t-t', page: 57 },
   { n: 4, recording: 85, key: 'mi=f-sharp', gabc: '(c4) Al(e)le(g)lú(gg)ia.(f)', line: 'a-a-t', page: 57 },
 ];
 

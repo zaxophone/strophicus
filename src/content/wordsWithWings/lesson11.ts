@@ -43,7 +43,7 @@ We will sing the whole Latin phrase on one note the first time, as we have becom
   {
     n: 2,
     key: 'la=a',
-    gabc: deus('h', 'h', 'ix', ['h', 'h', 'h']),
+    gabc: deus('h', 'h', 'ixi', ['h', 'h', 'h']),
     intro: `
 Let us look for an important word and lift the tone on its accented syllable. Here the second syllable of "cantábo" goes up to te: the note has a flat sign in front of it, so you sing te, not ti.
 
@@ -52,7 +52,7 @@ Do you remember what we called the note over the second syllable of "cantábo"? 
   {
     n: 3,
     key: 'la=a',
-    gabc: deus('h', 'h', 'ix', ['h', 'g', 'h']),
+    gabc: deus('h', 'h', 'ixi', ['h', 'g', 'h']),
     intro: `
 In Gregorian chant, as in all art, balance is very important. If the melody goes up in one spot, you can restore the balance by going down somewhere else. Here the melody goes down on "ti" of "tibi".
 
@@ -61,21 +61,21 @@ Because it goes down, "tibi" gets extra attention as well. It is an accent that 
   {
     n: 4,
     key: 'sol=g',
-    gabc: deus('g', 'h', 'ix', ['h', 'g', 'h']),
+    gabc: deus('g', 'h', 'ixi', ['h', 'g', 'h']),
     intro: `
 We make the melody even more beautiful. Before birds (or airplanes) can fly, they must take off. It is the same with a Gregorian melody: we start a little lower, on sol. The note after "De" is la, as before.`,
   },
   {
     n: 5,
     key: 'fa=f',
-    gabc: deus('f', 'h', 'ix', ['h', 'g', 'h']),
+    gabc: deus('f', 'h', 'ixi', ['h', 'g', 'h']),
     intro: `
 Or a little lower still: the first note is now fa.`,
   },
   {
     n: 6,
     key: 'fa=f',
-    gabc: `(c4) De(f)us,(gh) cán(h)ti(h)cum(h) no(h)vum(h) can(h)tá(ix)bo(h) ti(g)bi.(h)`,
+    gabc: `(c4) De(f)us,(gh) cán(h)ti(h)cum(h) no(h)vum(h) can(h)tá(ixi)bo(h) ti(g)bi.(h)`,
     intro: `
 There is quite a leap at the word "Deus". Maybe we can close the gap a bit? The syllable "us" is now sung on a group of two notes. Arrive on the lower note first and then move upward, tying the notes smoothly together when you sing.
 

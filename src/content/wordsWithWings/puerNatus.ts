@@ -11,19 +11,19 @@ export const PUER_NATUS: Record<number, string[]> = {
   1: [
     '(c4) Pu(d)er(f) na(f)tus(e) in(f) Bét(g)le(f)hem,(e) al(d)le(f)lú(e_)ia(d.;)',
     '(c4) Un(d)de(f) gau(g)det(h) Je(g)rú(h)sa(g)lem,(f_;) al(f)le(f)lú(f)ia,(f) al(h)le(g)lú(f_)ia(e.;)',
-    '(c4) In(d) cor(f)dis(g) jú(h)bi(ix)lo(j_;)',
+    '(c4) In(d) cor(f)dis(g) jú(h)bi(ixi)lo(j_;)',
     '(c4) Chri(j)stum(f) na(f)tum(f) a(h)do(g)ré(f_)mus,(e;) Cum(d) no(f)vo(f) cán(e)ti(e)co(d::)',
   ],
   2: [
     '(c4) As(d)súmp(f)sit(f) car(e)nem(f) Fi(g)li(f)us,(e) al(d)le(f)lú(e_)ia(d.;)',
     '(c4) De(d)i(f) Pa(g)tris(h) al(g)tis(h)si(g)mus,(f_;) al(f)le(f)lú(f)ia,(f) al(h)le(g)lú(f_)ia(e.;)',
-    '(c4) In(d) cor(f)dis(g) jú(h)bi(ix)lo(j_;)',
+    '(c4) In(d) cor(f)dis(g) jú(h)bi(ixi)lo(j_;)',
     '(c4) Chri(j)stum(f) na(f)tum(f) a(h)do(g)ré(f_)mus(e;) cum(d) no(f)vo(f) cán(e)ti(e)co(d::)',
   ],
   3: [
     '(c4) Per(d) Ga(f)bri(f)é(e)lem(f) nún(g)ti(f)um,(e) al(d)le(f)lú(e_)ia(d.;)',
     '(c4) Vir(d)go(f) con(g)cé(h)pit(g) Fí(h)li(g)um,(f_;) al(f)le(f)lú(f)ia,(f) al(h)le(g)lú(f_)ia(e.;)',
-    '(c4) In(d) cor(f)dis(g) jú(h)bi(ix)lo(j_;)',
+    '(c4) In(d) cor(f)dis(g) jú(h)bi(ixi)lo(j_;)',
     '(c4) Chri(j)stum(f) na(f)tum(f) a(h)do(g)ré(f_)mus(e;) Cum(d) no(f)vo(f) cán(e)ti(e)co(d::)',
   ],
 };
@@ -36,6 +36,6 @@ export const PUER_NATUS_HOMEWORK: string[] = [
   '(c4) (d) (f) (f) (e) (f) (g) (f) (e) (d) (f) (e_) (d.;)',
   '(c4) (d) (f) (g) (h) (g) (h) (g) (f_;) (f) (f) (f) (f;)',
   '(c4) (h) (g) (f) (e;)',
-  '(c4) (d) (f) (g) (h) (ix) (j_;)',
+  '(c4) (d) (f) (g) (h) (ixi) (j_;)',
   '(c4) (j) (f) (f) (f) (h) (g) (f_) (e;) (d) (f) (f) (e) (e) (d::)',
 ];

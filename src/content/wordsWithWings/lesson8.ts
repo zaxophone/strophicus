@@ -112,7 +112,7 @@ Try singing the whole text on one single note. How does it sound? In Gregorian c
       instructions: `
 In the next line you will meet a sign you have not seen yet. It looks a little like a b. We call it a flat sign.
 
-{{gabc: (c4) (h) (g) (ix) (j)}}
+{{gabc: (c4) (h) (g) (ixi) (j)}}
 
 When the flat sign stands in front of a note, that note is lowered a little. Instead of ti, you sing te. Te sounds a little lower than ti. The flat holds until the next bar.`,
       source: `${instructor}, Lesson 8, p. 22`,

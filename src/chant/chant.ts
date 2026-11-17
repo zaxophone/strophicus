@@ -46,8 +46,13 @@ export interface Chant {
   episemas: number[];
   /** Indexes of notes with an ictus, the small vertical stroke under a note (the first note of a group). */
   ictus: number[];
-  /** Indexes of notes with a flat sign written before them; each lowers its ti to te (see `flattened`). */
+  /**
+   * Indexes of the notes a flat sign is drawn before, and the height (note letter) of each sign: it
+   * lowers that ti to te, and every ti after it on the same line or space until the next bar (see
+   * `flattened`). The sign need not be at the height of the note it stands before, as in `ixdh`.
+   */
   flats: number[];
+  flatLetters: string[];
   /** Liquescent last notes of groups: the note's index and gabc's mark for it. */
   liquescents: { note: number; mark: Exclude<Liquescent, ''> }[];
   /** The notes joined into one figure (two or three on a syllable); every other note stands alone. */
@@ -70,6 +75,7 @@ export interface ParsedPhrases {
   episemas: number[];
   ictus: number[];
   flats: number[];
+  flatLetters: string[];
   liquescents: { note: number; mark: Exclude<Liquescent, ''> }[];
   groups: Group[];
 }
@@ -82,9 +88,9 @@ export function makeChant(gabc: string): Chant {
   const { words: _words, ...parsed } = parseGabc(gabc);
   const chant: Chant = parsed;
   const clefLine = doLine(chant);
-  for (const k of chant.flats) {
-    if (solfegeName(chant.notes[k], clefLine) !== 'ti') {
-      throw new Error(`A flat sign goes before ti, not ${solfegeName(chant.notes[k], clefLine)}: "${gabc}"`);
+  for (const letter of chant.flatLetters) {
+    if (solfegeName(letter, clefLine) !== 'ti') {
+      throw new Error(`A flat sign goes on ti, not ${solfegeName(letter, clefLine)}: "${gabc}"`);
     }
   }
   for (const { start, length } of chant.groups) {
@@ -249,12 +255,13 @@ export function solfegeName(letter: string, clefLine: number): string {
  * Which notes are sung flat. A flat sign lowers its note, and the notes after
  * it on the same line or space, until the next bar.
  */
-export function flattened(chant: Pick<Chant, 'notes' | 'bars' | 'flats'>): boolean[] {
+export function flattened(chant: Pick<Chant, 'notes' | 'bars' | 'flats' | 'flatLetters'>): boolean[] {
   const out: boolean[] = [];
   let active: string | null = null;
   for (let k = 0; k < chant.notes.length; k++) {
     if (chant.bars.includes(k)) active = null;
-    if (chant.flats.includes(k)) active = chant.notes[k];
+    const sign = chant.flats.indexOf(k);
+    if (sign >= 0) active = chant.flatLetters[sign];
     out.push(active === chant.notes[k]);
   }
   return out;
