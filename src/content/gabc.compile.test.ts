@@ -5,7 +5,7 @@ import { spawnSync } from 'child_process';
 import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
-import { LESSONS } from '../exercise/lessons';
+import { LESSONS, REPERTOIRE } from '../exercise/lessons';
 
 const gregorio = spawnSync('gregorio', ['--version'], { encoding: 'utf8' });
 const available = gregorio.status === 0;
@@ -13,7 +13,7 @@ const available = gregorio.status === 0;
 /** Every gabc snippet in the lessons: each exercise's melody, and the pictures in the instructions. */
 function snippets(): [string, string][] {
   const found: [string, string][] = [];
-  for (const lesson of LESSONS) {
+  for (const lesson of [...LESSONS, ...REPERTOIRE]) {
     for (const e of lesson.exercises) {
       if (e.gabc) found.push([e.id, e.gabc]);
       let n = 0;

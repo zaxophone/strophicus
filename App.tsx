@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { BackHandler, StyleSheet, View } from 'react-native';
 
 import { loadChantTypeface } from './src/chant/typeface';
-import { LESSONS } from './src/exercise/lessons';
+import { LESSONS, REPERTOIRE } from './src/exercise/lessons';
 import { ProgressProvider, useProgress } from './src/progress/ProgressContext';
 import { LessonScreen } from './src/screens/LessonScreen';
 import { HomeScreen } from './src/screens/HomeScreen';
@@ -14,7 +14,7 @@ loadChantTypeface().catch(() => {});
 
 type Route =
   | { name: 'home' }
-  | { name: 'lesson'; lessonIndex: number; exerciseIndex: number; toExercise?: boolean }
+  | { name: 'lesson'; lessonIndex: number; exerciseIndex: number; toExercise?: boolean; piece?: boolean }
   | { name: 'tuner' };
 
 export default function App() {
@@ -50,15 +50,17 @@ function Screens() {
         <HomeScreen
           lessons={LESSONS}
           progress={progress}
+          repertoire={REPERTOIRE}
           onOpenLesson={(lessonIndex, exerciseIndex) => setRoute({ name: 'lesson', lessonIndex, exerciseIndex })}
+          onOpenPiece={(lessonIndex, exerciseIndex) => setRoute({ name: 'lesson', lessonIndex, exerciseIndex, piece: true })}
           onOpenTuner={() => setRoute({ name: 'tuner' })}
         />
       )}
       {route.name === 'lesson' && (
         <LessonScreen
-          key={`${route.lessonIndex}-${route.exerciseIndex}`}
+          key={`${route.piece ? 'p' : 'l'}${route.lessonIndex}-${route.exerciseIndex}`}
           startOnExercise={route.toExercise}
-          lesson={LESSONS[route.lessonIndex]}
+          lesson={(route.piece ? REPERTOIRE : LESSONS)[route.lessonIndex]}
           index={route.exerciseIndex}
           tonic={tonic}
           onTonicChange={setTonic}

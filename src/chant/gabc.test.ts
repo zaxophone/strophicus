@@ -56,7 +56,7 @@ describe('parseGabc', () => {
   });
 
   it('refuses a modifier that follows nothing, or is repeated', () => {
-    for (const bad of ['(c2) (.)', '(c2) (c..)', '(c2) (c__)', "(c2) (c'')", '(c2) (cxx)', '(c2) (;.)']) {
+    for (const bad of ['(c2) (.)', '(c2) (c...)', '(c2) (c__)', "(c2) (c'')", '(c2) (cxx)', '(c2) (;.)']) {
       expect(() => parseGabc(bad)).toThrow();
     }
   });
@@ -109,8 +109,7 @@ describe('parseGabc', () => {
   });
 
   it('refuses gabc it cannot draw instead of misreading it', () => {
-    expect(() => parseGabc('(c2) (c) (d e)')).toThrow(/Separate neumes/);
-    expect(() => parseGabc('(c2) (c) (d/e)')).toThrow(/Separate neumes/);
+    expect(() => parseGabc('(c2) (c) (d/)')).toThrow(/both sides/);
     expect(() => parseGabc('(c2) (c) (D)')).toThrow(/not read yet/);
     expect(() => parseGabc('(c2) (c) (d:::)')).toThrow(/one division/);
     expect(() => parseGabc('(c2) (c) (iy)')).toThrow(/not read yet/);
@@ -164,5 +163,21 @@ describe('gabc helpers', () => {
 
   it('joins snippets under the first one\'s clef', () => {
     expect(joinGabc('(c4) Pu(d)er(f;)', '(c4) Un(d)de(f)')).toBe('(c4) Pu(d)er(f;) Un(d)de(f)');
+  });
+});
+
+describe('several neumes on one syllable', () => {
+  it('reads ! / and a space as breaks between neumes, the text staying with the first', () => {
+    const p = parseGabc("(c4) A(f)ve(c') Ma(d)rí(ghh!jv)a,(h.) (,) ple(g_[uh:l]h)na,(h..)");
+    expect(p.notes).toBe('fcdghhjhghh');
+    expect(p.groups).toEqual([{ start: 3, length: 3 }, { start: 8, length: 2 }]);
+    expect(p.words).toEqual(['A-', 've', 'Ma-', 'rí-', '', 'a,', 'ple-', 'na,']);
+    expect(p.episemas).toEqual([8]);
+    expect(p.moras).toEqual([7, 10]);
+  });
+
+  it('reads a double dot as one dot, and a virga only on a single note', () => {
+    expect(parseGabc('(c4) (h..)').moras).toEqual([0]);
+    expect(() => parseGabc('(c4) (hgv)')).toThrow(/virga/);
   });
 });

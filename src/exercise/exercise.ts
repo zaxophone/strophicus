@@ -80,6 +80,8 @@ export interface Lesson {
   title: string;
   /** A line or two for the home page. */
   summary: string;
+  /** Any exercise may be opened at any time, and the arrows need no pass (repertoire pieces). */
+  free?: boolean;
   exercises: Exercise[];
 }
 

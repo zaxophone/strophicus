@@ -38,6 +38,7 @@ export function nextExerciseIndex(lesson: Lesson, progress: Progress): number {
  * do. Later ones stay closed until the ones before them are passed.
  */
 export function isUnlocked(lesson: Lesson, index: number, progress: Progress): boolean {
+  if (lesson.free) return true;
   const first = lesson.exercises.findIndex((e) => !isPassed(progress, e.id));
   return first === -1 || index <= first;
 }
@@ -56,6 +57,7 @@ export function canMoveTo(
   progress: Progress,
 ): boolean {
   if (to < 0 || to >= lesson.exercises.length || to === from) return false;
+  if (lesson.free) return true;
   if (to < from) return true;
   // An exercise just sung right counts at once, before its pass is saved.
   const current = lesson.exercises[from].id;

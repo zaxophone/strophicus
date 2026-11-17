@@ -75,3 +75,11 @@ movement lines the books draw over the Alleluias of Lesson 17 are encoded as `ge
 (`-` over a note, `t` under it, `a` curling round it, `.` no line), read from the scan.
 `tools/read_staff.py` and `tools/read_page.py` read note heads from a scan as gabc
 letters; every staff of Lessons 11-20 was checked against them.
+
+**Repertoire (`src/content/repertoire/`), not from the workbook.** *Ave Maria* (Salutatio
+Angelica, simple tone) is the GregoBase chant no. 1860 (https://gregobase.selapa.net/chant.php?id=1860),
+Solesmes version of the Liber Usualis 1961 p. 1861 (also Chants of the Church 1956 p. 86), mode 1,
+transcribed to gabc by Andrew Hinkley. Check GregoBase's licence terms for that chant before
+the app is published. The gabc is used as it stands, cut into phrases, with these changes the
+app needs: `ho(ffg)ra` is written `ho(ff!g)ra` (the app has no single figure for it), and the
+double dot `..` is read as one dot, a virga as a plain note.

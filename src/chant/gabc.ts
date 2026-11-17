@@ -25,9 +25,13 @@
  *
  *   - `~`, `>`, `<` after the last note of a group: a liquescent (half-voiced) ending
  *
- * Not read yet, and refused: clefs with a flat (`cb3`), other divisions (`:`), naturals, separate
- * neumes on one syllable (a space inside the parentheses), liquescents on a single note, quilismas and
- * the other note shapes and modifiers.
+ *   - `!`, `/` or a space inside the parentheses: a break between neumes on one syllable, as in
+ *     `rí(ghh!jv)a`; the later neumes stand under the same syllable with no text of their own
+ *   - `..` after a note is read as the one dot, `v` (virga) on a single note as a plain note, and
+ *     `[...]` after an episema (its placement) is ignored
+ *
+ * Not read yet, and refused: clefs with a flat (`cb3`), naturals, liquescents on a single note,
+ * quilismas and the other note shapes and modifiers.
  */
 
 import type { Group, ParsedPhrases } from './chant';
@@ -70,6 +74,8 @@ export function parseGabc(source: string): ParsedGabc {
   const lyrics: string[] = [];
   /** Whether a space came before each syllable's text, which starts a new word. */
   const wordStart: boolean[] = [];
+  /** Whether each neume goes on the syllable before it (a second neume of one syllable, after `!` or `/`). */
+  const continues: boolean[] = [];
   let clefLine: number | null = null;
   let clef: 'c' | 'f' = 'c';
   let pending: 'tick' | 'bar' | 'major' | 'double' | null = null;
@@ -125,6 +131,31 @@ export function parseGabc(source: string): ParsedGabc {
     let i = 0;
     let lastNote = -1;
     let afterNotes = false;
+    // The neume being read: the notes between the start of the syllable (or a `!` or `/`) and its end.
+    let neumeStart = first;
+    let virga = false;
+    let neumesSoFar = 0;
+    const endNeume = () => {
+      const length = notes.length - neumeStart;
+      if (length === 0) fail('A neume break needs notes on both sides');
+      if (virga && length > 1) fail('A virga (v) is read only on a note of its own');
+      if (length > 1) groups.push({ start: neumeStart, length });
+      for (const { note } of liquescents) {
+        if (note >= neumeStart && (note !== notes.length - 1 || length < 2)) {
+          fail('A liquescent mark is read only on the last note of a group');
+        }
+      }
+      // the first neume of a syllable carries its text; the others go on under it
+      const text = lyric.replace(/^-/, '').trim();
+      if (neumesSoFar === 0 && /\s/.test(text)) fail(`A syllable's text cannot have a space inside it ("${text}")`);
+      wordStart.push(neumesSoFar === 0 && /^\s/.test(lyric));
+      continues.push(neumesSoFar > 0);
+      lyrics.push(neumesSoFar === 0 ? text : '');
+      neumesSoFar++;
+      neumeStart = notes.length;
+      virga = false;
+      lastNote = -1;
+    };
     while (i < music.length) {
       const ch = music[i];
       if (/[a-m]/.test(ch)) {
@@ -148,6 +179,11 @@ export function parseGabc(source: string): ParsedGabc {
         i++;
       } else if (ch === '.' || ch === '_' || ch === "'" || ch === 'x') {
         if (lastNote < 0 || afterNotes) fail(`"${ch}" must follow a note`);
+        // a second dot (punctum mora vocis productae) is read as the one dot
+        if (ch === '.' && moras.includes(lastNote) && music[i - 1] === '.' && music[i - 2] !== '.') {
+          i++;
+          continue;
+        }
         const list = ch === '.' ? moras : ch === '_' ? episemas : ch === "'" ? ictus : flats;
         const name = ch === '.' ? 'dot' : ch === '_' ? 'episema' : ch === "'" ? 'ictus' : 'flat sign';
         if (list.includes(lastNote)) fail(`A note has only one ${name}`);
@@ -161,8 +197,20 @@ export function parseGabc(source: string): ParsedGabc {
         setPending(division);
         afterNotes = true;
         i += division.length;
-      } else if (ch === ' ' || ch === '/' || ch === '!') {
-        fail('Separate neumes on one syllable are not read yet; join the notes or give each its own syllable');
+      } else if (ch === 'v') {
+        // a virga is a single note drawn with a stem; it is drawn here as a plain note
+        if (lastNote < 0 || afterNotes) fail('"v" must follow a note');
+        virga = true;
+        i++;
+      } else if (ch === '[') {
+        // attributes of the sign before it (where an episema sits), which only change how it is drawn
+        const end = music.indexOf(']', i);
+        if (end < 0 || lastNote < 0 || music[i - 1] !== '_') fail('"[" is read only after an episema');
+        i = end + 1;
+      } else if (ch === '!' || ch === '/' || ch === ' ') {
+        if (afterNotes) fail('A neume break cannot follow a division');
+        endNeume();
+        i++;
       } else if (/[A-Z]/.test(ch)) {
         fail(`"${ch}" is a note shape (inclinatum or liquescent) that is not read yet`);
       } else {
@@ -170,27 +218,21 @@ export function parseGabc(source: string): ParsedGabc {
       }
     }
     if (notes.length === first) fail('Parentheses with no notes or division');
-    if (notes.length - first > 1) groups.push({ start: first, length: notes.length - first });
-    for (const { note } of liquescents) {
-      if (note >= first && (note !== notes.length - 1 || notes.length - first < 2)) {
-        fail('A liquescent mark is read only on the last note of a group');
-      }
-    }
-
-    // the syllable's text: a space before it, or none, says whether a new word starts
-    const text = lyric.replace(/^-/, '');
-    wordStart.push(/^\s/.test(lyric));
-    const trimmed = text.trim();
-    if (/\s/.test(trimmed)) fail(`A syllable's text cannot have a space inside it ("${trimmed}")`);
-    lyrics.push(trimmed);
+    endNeume();
   }
   if (clefLine === null) fail('A snippet starts with its clef, such as (c4)');
 
   // an exercise's divisions after its last note are not kept (the staff always ends with a bar)
   let words: string[] | undefined;
   if (lyrics.some((t) => t !== '')) {
-    if (lyrics.some((t) => t === '')) fail('Either every syllable has text or none does');
-    words = lyrics.map((t, i) => (i < lyrics.length - 1 && !wordStart[i + 1] ? `${t}-` : t));
+    if (lyrics.some((t, i) => t === '' && !continues[i])) fail('Either every syllable has text or none does');
+    // a hyphen follows a syllable's text when the next syllable (not its second neume) goes on the same word
+    words = lyrics.map((t, i) => {
+      if (continues[i]) return '';
+      let next = i + 1;
+      while (next < lyrics.length && continues[next]) next++;
+      return next < lyrics.length && !wordStart[next] ? `${t}-` : t;
+    });
   }
   return { clef, clefLine, notes, bars, doubles, majors, ticks, moras, episemas, ictus, flats, liquescents, groups, breaks: breaks.filter((b) => b < notes.length), words };
 }

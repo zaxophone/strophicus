@@ -45,13 +45,15 @@ export function LessonScreen(props: ExerciseScreenProps) {
   };
 
   const lessonLabel = lesson.number === undefined ? lesson.title : `Lesson ${lesson.number}`;
+  // a piece of repertoire goes back to the home page, labelled by where it sits there
+  const backLabel = lesson.free ? 'Repertoire' : 'Lessons';
 
   return (
     <View style={{ flex: 1, backgroundColor: '#fff' }}>
       <ScreenHeader
         title={lessonLabel}
         subtitle={exercise.title}
-        backLabel="Lessons"
+        backLabel={backLabel}
         onBack={onExit}
       />
       <View style={{ alignItems: 'center', paddingTop: 4 }}>

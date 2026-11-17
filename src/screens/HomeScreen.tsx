@@ -6,12 +6,15 @@ import { colors } from '../ui/theme';
 
 interface Props {
   lessons: Lesson[];
+  /** Pieces to sing, listed after the lessons. */
+  repertoire: Lesson[];
   progress: Progress;
   onOpenLesson: (lessonIndex: number, exerciseIndex: number) => void;
+  onOpenPiece: (pieceIndex: number, exerciseIndex: number) => void;
   onOpenTuner: () => void;
 }
 
-export function HomeScreen({ lessons, progress, onOpenLesson, onOpenTuner }: Props) {
+export function HomeScreen({ lessons, repertoire, progress, onOpenLesson, onOpenPiece, onOpenTuner }: Props) {
   const resume = resumePoint(lessons, progress);
 
   return (
@@ -61,6 +64,24 @@ export function HomeScreen({ lessons, progress, onOpenLesson, onOpenTuner }: Pro
                 </View>
                 <Text style={styles.count}>{done} of {total}</Text>
               </View>
+            </View>
+            <Text style={styles.chevron}>›</Text>
+          </Pressable>
+        );
+      })}
+
+      <Text style={styles.section}>Repertoire</Text>
+      {repertoire.map((piece, i) => {
+        const { done, total, complete } = lessonProgress(piece, progress);
+        return (
+          <Pressable key={piece.id} style={styles.card} onPress={() => onOpenPiece(i, 0)} accessibilityRole="button">
+            <View style={[styles.badge, complete && styles.badgeDone]}>
+              <Text style={[styles.badgeText, complete && styles.badgeTextDone]}>{complete ? '✓' : '♪'}</Text>
+            </View>
+            <View style={styles.cardBody}>
+              <Text style={styles.cardTitle}>{piece.title}</Text>
+              <Text style={styles.cardSummary}>{piece.summary}</Text>
+              <Text style={styles.count}>{done} of {total} sung</Text>
             </View>
             <Text style={styles.chevron}>›</Text>
           </Pressable>
