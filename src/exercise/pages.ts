@@ -15,6 +15,9 @@ export function pageChars(screenHeight: number): number {
 /** A paragraph that is nothing but bold text, such as a sentence being quoted. */
 const isBoldLine = (paragraph: string) => /^\*\*[^*]+\*\*$/.test(paragraph);
 
+/** Whether the bold line that ends a unit was introduced by a paragraph ending in a colon ("Here is the sentence:"). */
+const introduced = (unit: string[]) => unit.length > 1 && unit[unit.length - 2].endsWith(':');
+
 /**
  * Splits written instructions into pages. Paragraphs (separated by a blank
  * line) stay whole; they are packed onto a page until the next would overflow
@@ -29,8 +32,8 @@ export function paginate(instructions: string, limit = PAGE_CHARS): string[][] {
     const before = units[units.length - 1];
     const last = before?.[before.length - 1];
     if (before && isFigure(paragraph) && !isFigure(last)) before.push(paragraph);
-    // a line set in bold is what the paragraphs around it talk about: they stay on its page
-    else if (before && (isBoldLine(paragraph) || (last !== undefined && isBoldLine(last)))) before.push(paragraph);
+    // a line set in bold stays with the paragraph before it, and with the one after it if the one before ends in a colon
+    else if (before && (isBoldLine(paragraph) || (last !== undefined && isBoldLine(last) && introduced(before)))) before.push(paragraph);
     else units.push([paragraph]);
   }
   const pages: string[][] = [];
