@@ -70,10 +70,12 @@ const LATE_PENALTY = 0.001;
  * the ordinary unevenness of a person singing, and only catch clearly clipped
  * or dragged notes.
  */
-const SHORTEST = 0.6;
+const SHORTEST = 0.55;
 const LONGEST = 1.8;
+/** How much silence between two notes still counts as part of the first (a consonant, a quick breath), in frames. */
+const MAX_PAUSE_FRAMES = 4;
 /** A note with an episema or tick must come to about the 1.5 beats asked for (a little slack for the measuring). */
-const SHORTEST_LENGTHENED = 0.9;
+const SHORTEST_LENGTHENED = 0.75;
 /** A rest is the loosest part of the rhythm: singers often leave a little less than a beat. */
 const SHORTEST_BEFORE_REST = 0.5;
 /** Notes needed to know the singer's pulse before judging any rhythm. */
@@ -298,7 +300,14 @@ function judgeTiming(
     if (!a || !b) return null;
     const sameNote = a.note === b.note && b.part === a.part + 1;
     const nextNote = b.note === a.note + 1 && b.part === 0 && a.part === a.parts - 1;
-    return sameNote || nextNote ? start(k + 1) - start(k) : null;
+    if (!sameNote && !nextNote) return null;
+    const gap = start(k + 1) - start(k);
+    // a breath or pause between notes is not a longer note: count only a little of the silence (a rest is judged from the silence itself)
+    if (nextNote && !rest[k]) {
+      const sounded = sung[a.note].startFrame + sung[a.note].frames - start(k);
+      return Math.min(gap, sounded + MAX_PAUSE_FRAMES);
+    }
+    return gap;
   };
 
   const intervals = results.map((_, k) => (k < results.length - 1 ? interval(k) : null));

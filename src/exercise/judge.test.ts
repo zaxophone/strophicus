@@ -233,7 +233,7 @@ describe('rhythm', () => {
     starts.map((startFrame, i) => ({
       midi: 60 + [0, 2, 4, 5, 7, 9][i],
       startFrame,
-      frames: 16,
+      frames: i < starts.length - 1 ? starts[i + 1] - startFrame - 2 : 16,
       open: i === starts.length - 1,
     }));
   const OFFSETS = [0, 2, 4, 5, 7, 9];
