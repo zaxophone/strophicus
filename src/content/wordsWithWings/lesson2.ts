@@ -91,7 +91,7 @@ The last note, over **LORD**, has a dot after it.
 
 In both cases the note is sung a little longer. Listen to how strange it sounds if you say **Come, let us ring out our joy to the LORD** with **come** made short, or with the last word not lengthened. That longer note is there for a reason!
 
-Now sing the first melody. Begin on any comfortable note.`
+Now we're going to try singing ourselves! Begin on any comfortable note.`
             : `
 Now sing melody ${i + 1}, with **${word}** given its wings. Remember the line over **Come** and the dot after the last note: both are a little longer.`,
         source: `${workbook}, p. 2, melody ${i + 1}; ${instructor}, Lesson 2, p. 6–7`,
