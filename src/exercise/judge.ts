@@ -45,6 +45,8 @@ export interface TimingSpec {
   held: number[];
   /** Whether a half bar (a one-beat rest) follows each note. */
   rest: boolean[];
+  /** Notes asked to be "a little longer" (an episema or a tick): right if held at least that long, however much longer. */
+  atLeast?: boolean[];
 }
 
 /** Costs, in units of 50 cents of error, that decide how sung notes line up with the melody. */
@@ -70,6 +72,8 @@ const LATE_PENALTY = 0.001;
  */
 const SHORTEST = 0.6;
 const LONGEST = 1.8;
+/** A note with an episema or tick must come to about the 1.5 beats asked for (a little slack for the measuring). */
+const SHORTEST_LENGTHENED = 0.9;
 /** A rest is the loosest part of the rhythm: singers often leave a little less than a beat. */
 const SHORTEST_BEFORE_REST = 0.5;
 /** Notes needed to know the singer's pulse before judging any rhythm. */
@@ -271,7 +275,7 @@ function judgeTiming(
   results: NoteResult[],
   placed: (Placement | null)[],
   sung: SungNote[],
-  { advance, held, rest }: TimingSpec,
+  { advance, held, rest, atLeast }: TimingSpec,
 ): boolean {
   const start = (k: number) => {
     const p = placed[k]!;
@@ -299,8 +303,9 @@ function judgeTiming(
     if (frames === null) return;
     const ratio = frames / ((advance[k] ?? 1) * beat);
     results[k].ratio = ratio;
-    const shortest = rest[k] ? SHORTEST_BEFORE_REST : SHORTEST;
-    let timing: NoteTiming = ratio < shortest ? 'short' : ratio > LONGEST ? 'long' : 'ok';
+    const lengthened = !!atLeast?.[k] && !rest[k];
+    const shortest = rest[k] ? SHORTEST_BEFORE_REST : lengthened ? SHORTEST_LENGTHENED : SHORTEST;
+    let timing: NoteTiming = ratio < shortest ? 'short' : ratio > LONGEST && !lengthened ? 'long' : 'ok';
 
     const note = placed[k] && placed[k]!.parts === 1 ? sung[placed[k]!.note] : null;
     if (timing === 'ok' && rest[k] && note) {

@@ -48,6 +48,10 @@ function timingMessage(
       ? `${label} has a dot, but the bar line cuts it short: sing one beat, then rest.`
       : `${label} ran on past the beat. Sing one beat, then rest.`;
   }
+  if (beats > 1 && !dotted) {
+    // an episema (or a tick) asks for a little longer: at least one and a half beats
+    return `${label} should be held a little longer, about one and a half beats.`;
+  }
   if (beats > 1) {
     return timing === 'short'
       ? `${label} has a dot, so hold it twice as long.`

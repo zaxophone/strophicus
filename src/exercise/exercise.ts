@@ -238,5 +238,7 @@ export function timingSpec(exercise: Pick<Exercise, 'beats' | 'chant'>): TimingS
     advance: timings.map((t) => t.advance),
     held: timings.map((t) => t.held),
     rest: timings.map((t) => t.rest),
+    // an episema or a tick asks for a little longer, not an exact length; a dot is exact
+    atLeast: exercise.beats.map((b, k) => b === LONGER && !exercise.chant.moras.includes(k)),
   };
 }
