@@ -7,7 +7,18 @@ import { VENI_KEY, VENI_LINES, VENI_QUI } from './veniSancte';
 const workbook = "Words with Wings Children's Workbook";
 const instructor = 'Words with Wings Instructor Edition';
 
-const LINES = [...VENI_LINES, VENI_QUI.per, VENI_QUI.gentes];
+// The four lines as the book prints them (p. 46): a bar after "fidélium," and a double bar at the
+// end of each of the other three, each on its own line.
+const ending = (gabc: string, from: string, to: string) => {
+  if (!gabc.endsWith(from)) throw new Error('Veni Sancte line does not end as expected');
+  return gabc.slice(0, -from.length) + to;
+};
+const LINES = [
+  ending(VENI_LINES[0], '(f)', '(f;)'),
+  ending(VENI_LINES[1], '(g)', '(g::)'),
+  ending(VENI_QUI.per, '(f)', '(f::)'),
+  ending(VENI_QUI.gentes, '(g)', '(g::)'),
+];
 
 export const LESSON_20: Lesson = {
   id: 'wow-20',
@@ -37,7 +48,7 @@ Press Hear the choir to listen to the whole song.`,
       recording: 94,
       title: 'Veni Sancte Spiritus',
       key: VENI_KEY,
-      gabc: joinGabc(...LINES),
+      gabc: joinGabc(...LINES.flatMap((line, i) => (i ? ['(z)', line] : [line]))),
       instructions:
         'The whole song on one page; it scrolls by itself as you sing. Hear the choir sings it through, so you can follow along. Sing it to the end, and then you have sung the whole song!',
       source: `${workbook}, p. 46; ${instructor}, Lesson 20, pp. 65-66`,

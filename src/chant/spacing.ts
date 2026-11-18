@@ -134,6 +134,19 @@ export function flowBreaks(
       if (phrase !== undefined && width(start, phrase) >= 0.4 * capacity) end = phrase;
       else if (any !== undefined && width(start, any) >= 0.55 * capacity) end = any;
     }
+    if (end < columns.length && !forced.includes(end)) {
+      // don't leave a stray few notes before a forced break: share the stretch over the two lines
+      const stop = forced.find((f) => f > end) ?? columns.length;
+      if (width(end, stop) < 0.4 * capacity && width(end, stop) > 0) {
+        const lopsided = (e: number) => Math.abs(width(start, e) - width(e, stop));
+        const fits = (e: number) => width(start, e) <= capacity && width(e, stop) <= capacity;
+        const options = Array.from({ length: end - start }, (_, i) => start + 1 + i).filter(fits);
+        const marks = options.filter((e) => divisions.includes(e));
+        const best = (list: number[]) => list.reduce((a, b) => (lopsided(b) < lopsided(a) ? b : a));
+        // a division near the middle is better than a cut mid-word
+        if (options.length) end = marks.length && lopsided(best(marks)) < 0.5 * capacity ? best(marks) : best(options);
+      }
+    }
     if (end < columns.length) breaks.push(end);
     start = end;
   }
