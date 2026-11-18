@@ -37,7 +37,7 @@ You will notice that a Gregorian staff has four lines, not five as is usual. And
 
 {{gabc: (c4) (g) (h) (i) (h) (g) (f) (g)}}
 
-The sign at the start of the staff is a clef, which means "key". This one is the do clef. It sits on a line, and the note on that line is do.
+The {{clef}} sign at the start of the staff is a clef, which means "key". This one is the do clef. It sits on a line, and the note on that line is do.
 
 {{gabc: (c4) do(j)}}
 

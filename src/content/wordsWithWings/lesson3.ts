@@ -30,7 +30,7 @@ export const LESSON_3: Lesson = {
       instructions: `
 Gregorian chant is written on a staff of four lines, not five, and the notes are square.
 
-The sign at the start of the staff is the do clef. It sits on the top line, so the note on that line is do.
+The {{clef}} sign at the start of the staff is the do clef. It sits on the top line, so the note on that line is do.
 
 {{gabc: (c4) do(j)}}
 

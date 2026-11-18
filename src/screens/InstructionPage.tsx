@@ -1,6 +1,7 @@
 import { StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 
 import { useBookRecording } from '../audio/useBookRecording';
+import { ClefGlyph } from '../chant/ClefGlyph';
 import { ChantStaff } from '../chant/ChantStaff';
 import { parseBlock } from '../exercise/blocks';
 import type { Exercise } from '../exercise/exercise';
@@ -54,7 +55,9 @@ export function InstructionPage({ exercise, paragraphs, page, pages, finish, ton
                 <ChantStaff width={figureWidth} chant={block.chant} labels={block.words ?? []} marks={[]} gestures={block.gestures} />
               </View>
             ) : (
-              <Text key={i} style={[styles.text, { fontSize: size, lineHeight: size * 1.5 }]}>{block.text}</Text>
+              <Text key={i} style={[styles.text, { fontSize: size, lineHeight: size * 1.5 }]}>
+                {block.text.split('{{clef}}').flatMap((part, n) => (n === 0 ? [part] : [<InlineClef key={n} />, part]))}
+              </Text>
             );
           })}
         </View>
@@ -94,6 +97,15 @@ export function InstructionPage({ exercise, paragraphs, page, pages, finish, ton
           <ArrowButton direction="next" ready finish={finish && last && exercise.kind === 'read'} onPress={onNext} />
         </View>
       </View>
+    </View>
+  );
+}
+
+/** The do clef drawn in the middle of a sentence. */
+function InlineClef() {
+  return (
+    <View style={{ width: 10, height: 30, marginBottom: -9 }}>
+      <ClefGlyph />
     </View>
   );
 }
