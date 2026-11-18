@@ -132,12 +132,12 @@ export function ChantStaff({ width, chant, labels, captions, marks, gestures, wa
   // Words need more room than a note does, so a line holds fewer syllables. What matters
   // is that neighbouring words do not run together, not the single widest word.
   const widths = labels.map((l, i) => Math.max(textWidth(l, labelSize), textWidth(captions?.[i] ?? '', labelSize)));
-  const needed = Math.max(0, ...widths.map((w, i) => (w + (widths[i + 1] ?? w)) / 2));
+  const needed = Math.max(0, ...widths.map((w, i) => (w + (widths[i + 1] ?? 0)) / 2));
   // and a joined figure must fit its column
   const widestFigure = Math.max(0, ...neumes.map((n) => (n ? (n.glyph.advance * SPACE) / LINE_PITCH : 0)));
   // and a note with a flat sign needs room for the sign beside it
   const flatFigure = chant.flats.length ? ((GLYPHS.Punctum.advance + GLYPHS.Flat.advance) * SPACE) / LINE_PITCH : 0;
-  const minUnit = Math.max(MIN_UNIT, Math.ceil(needed + 6), Math.ceil(widestFigure + 8), Math.ceil(flatFigure + 8));
+  const minUnit = Math.max(MIN_UNIT, Math.ceil(needed + 2), Math.ceil(widestFigure + 8), Math.ceil(flatFigure + 8));
   const maxUnit = Math.max(MAX_UNIT, minUnit);
   // In a flowing score the columns are spaced as Gregorio spaces them (see `spacing.ts`).
   const flatSign = (GLYPHS.Flat.advance * SPACE) / LINE_PITCH + 0.1 * SPACE;
