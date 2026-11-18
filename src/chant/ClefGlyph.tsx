@@ -4,7 +4,7 @@ import { clefRaise, LINE_1, LINE_PITCH, UNITS_PER_EM } from './fontMetrics';
 import { useChantFont } from './typeface';
 
 /** Width, in staff spaces, of the room the inline clef takes. */
-export const CLEF_WIDTH = 1.4;
+export const CLEF_WIDTH = 1.6;
 /** How far the clef reaches above and below its line, in staff steps, for both together. */
 const CLEF_REACH = 1.8;
 
@@ -21,7 +21,7 @@ export function ClefGlyph({ space = 8, color = '#111827' }: { space?: number; co
   return (
     <Canvas style={{ width: CLEF_WIDTH * space, height }}>
       {font && (
-        <SkiaText x={0} y={line + 3 * space + LINE_1 * scl - clefRaise(4) * scl} text={GLYPHS.CClef.char} font={font} color={color} />
+        <SkiaText x={0.4 * space} y={line + 3 * space + LINE_1 * scl - clefRaise(4) * scl} text={GLYPHS.CClef.char} font={font} color={color} />
       )}
     </Canvas>
   );

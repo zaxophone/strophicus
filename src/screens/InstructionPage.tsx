@@ -104,7 +104,7 @@ export function InstructionPage({ exercise, paragraphs, page, pages, finish, ton
 /** The do clef drawn in the middle of a sentence. */
 function InlineClef() {
   return (
-    <View style={{ width: 11, height: 14.4 }}>
+    <View style={{ width: 12.8, height: 14.4 }}>
       <ClefGlyph />
     </View>
   );
