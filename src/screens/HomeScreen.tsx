@@ -1,7 +1,7 @@
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import type { Lesson } from '../exercise/exercise';
-import { lessonProgress, nextExerciseIndex, Progress, resumePoint } from '../progress/progress';
+import { isLessonUnlocked, lessonProgress, Progress, resumePoint, startIndex } from '../progress/progress';
 import { colors } from '../ui/theme';
 
 interface Props {
@@ -43,16 +43,20 @@ export function HomeScreen({ lessons, repertoire, progress, onOpenLesson, onOpen
 
       {lessons.map((lesson, i) => {
         const { done, total, complete } = lessonProgress(lesson, progress);
+        const locked = !isLessonUnlocked(lessons, i, progress);
         return (
           <Pressable
             key={lesson.id}
-            style={styles.card}
-            onPress={() => onOpenLesson(i, nextExerciseIndex(lesson, progress))}
+            style={[styles.card, locked && styles.locked]}
+            disabled={locked}
+            onPress={() => onOpenLesson(i, startIndex(lesson, progress))}
             accessibilityRole="button"
+            accessibilityState={{ disabled: locked }}
+            accessibilityHint={locked ? 'Locked until you pass the lesson before it' : undefined}
           >
             <View style={[styles.badge, complete && styles.badgeDone]}>
               <Text style={[styles.badgeText, complete && styles.badgeTextDone]}>
-                {complete ? '✓' : lesson.number ?? '♪'}
+                {locked ? '🔒' : complete ? '✓' : lesson.number ?? '♪'}
               </Text>
             </View>
             <View style={styles.cardBody}>
@@ -65,7 +69,7 @@ export function HomeScreen({ lessons, repertoire, progress, onOpenLesson, onOpen
                 <Text style={styles.count}>{done} of {total}</Text>
               </View>
             </View>
-            <Text style={styles.chevron}>›</Text>
+            {!locked && <Text style={styles.chevron}>›</Text>}
           </Pressable>
         );
       })}
@@ -119,6 +123,7 @@ const styles = StyleSheet.create({
   resumeLesson: { color: '#e0e7ff', fontSize: 14, marginTop: 2 },
   resumeArrow: { color: '#fff', fontSize: 34, lineHeight: 36, marginLeft: 8 },
   card: { flexDirection: 'row', alignItems: 'center', gap: 14, backgroundColor: colors.card, borderRadius: 18, borderWidth: 1, borderColor: colors.line, padding: 16 },
+  locked: { opacity: 0.5 },
   badge: { width: 44, height: 44, borderRadius: 22, backgroundColor: colors.primaryTint, alignItems: 'center', justifyContent: 'center' },
   badgeDone: { backgroundColor: colors.successTint },
   badgeText: { fontSize: 20, fontWeight: '800', color: colors.primaryInk },

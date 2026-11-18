@@ -34,11 +34,32 @@ export function nextExerciseIndex(lesson: Lesson, progress: Progress): number {
 }
 
 /**
+ * Where to start a lesson opened from the home page: at its beginning once it has been
+ * passed all the way through, otherwise at the next exercise still to do.
+ */
+export function startIndex(lesson: Lesson, progress: Progress): number {
+  return lessonProgress(lesson, progress).complete ? 0 : nextExerciseIndex(lesson, progress);
+}
+
+/**
+ * Whether a lesson can be opened: the first always, and each of the others once the one before
+ * it has been passed. A lesson already begun stays open, so progress made before lessons were
+ * locked is not lost. Pieces of repertoire are never locked.
+ */
+export function isLessonUnlocked(lessons: Lesson[], index: number, progress: Progress): boolean {
+  const lesson = lessons[index];
+  if (lesson.free || index === 0) return true;
+  if (lessonProgress(lessons[index - 1], progress).complete) return true;
+  return lesson.exercises.some((e) => isPassed(progress, e.id));
+}
+
+/**
  * Whether an exercise can be opened: any up to and including the next one to
  * do. Later ones stay closed until the ones before them are passed.
  */
 export function isUnlocked(lesson: Lesson, index: number, progress: Progress): boolean {
-  if (lesson.free) return true;
+  // a lesson passed all the way through can be visited in any order
+  if (lesson.free || lessonProgress(lesson, progress).complete) return true;
   const first = lesson.exercises.findIndex((e) => !isPassed(progress, e.id));
   return first === -1 || index <= first;
 }
@@ -57,7 +78,7 @@ export function canMoveTo(
   progress: Progress,
 ): boolean {
   if (to < 0 || to >= lesson.exercises.length || to === from) return false;
-  if (lesson.free) return true;
+  if (lesson.free || lessonProgress(lesson, progress).complete) return true;
   if (to < from) return true;
   // An exercise just sung right counts at once, before its pass is saved.
   const current = lesson.exercises[from].id;

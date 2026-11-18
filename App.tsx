@@ -4,7 +4,7 @@ import { BackHandler, StyleSheet, View } from 'react-native';
 
 import { loadChantTypeface } from './src/chant/typeface';
 import { LESSONS, REPERTOIRE } from './src/exercise/lessons';
-import { nextExerciseIndex } from './src/progress/progress';
+import { startIndex } from './src/progress/progress';
 import { ProgressProvider, useProgress } from './src/progress/ProgressContext';
 import { LessonScreen } from './src/screens/LessonScreen';
 import { CompleteScreen } from './src/screens/CompleteScreen';
@@ -81,7 +81,7 @@ function Screens() {
             setRoute({
               name: 'lesson',
               lessonIndex: route.lessonIndex + 1,
-              exerciseIndex: nextExerciseIndex(LESSONS[route.lessonIndex + 1], progress),
+              exerciseIndex: startIndex(LESSONS[route.lessonIndex + 1], progress),
             })
           }
         />
