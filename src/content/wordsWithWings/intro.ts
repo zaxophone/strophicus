@@ -45,7 +45,7 @@ The do clef can sit on other lines too, and then do moves with it.
 
 {{gabc: (c3) do(h)}}
 
-We will sing the names of the notes: do, re, mi, fa, sol, la, ti, and do again. Did you know those names were invented in the Middle Ages?
+These are the names of the notes: do, re, mi, fa, sol, la, ti, and do again. Did you know those names were invented in the Middle Ages?
 
 {{gabc: (c4) do(c) re(d) mi(e) fa(f) sol(g) la(h) ti(i) do(j)}}`,
       source: `${instructor}, "In the Beginning ...", p. 3`,
