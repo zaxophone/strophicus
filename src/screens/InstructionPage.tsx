@@ -56,7 +56,7 @@ export function InstructionPage({ exercise, paragraphs, page, pages, finish, ton
               </View>
             ) : (
               <Text key={i} style={[styles.text, { fontSize: size, lineHeight: size * 1.5 }]}>
-                {block.text.split('{{clef}}').flatMap((part, n) => (n === 0 ? [part] : [<InlineClef key={n} />, part]))}
+                {inline(block.text)}
               </Text>
             );
           })}
@@ -99,6 +99,14 @@ export function InstructionPage({ exercise, paragraphs, page, pages, finish, ton
       </View>
     </View>
   );
+}
+
+/** A paragraph's text with `**bold**` made bold and `{{clef}}` drawn as the do clef. */
+function inline(text: string) {
+  return text.split('**').flatMap((part, b) => {
+    const pieces = part.split('{{clef}}').flatMap((chunk, n) => (n === 0 ? [chunk] : [<InlineClef key={`c${b}-${n}`} />, chunk]));
+    return b % 2 ? [<Text key={`b${b}`} style={{ fontWeight: '700' }}>{pieces}</Text>] : pieces;
+  });
 }
 
 /** The do clef drawn in the middle of a sentence. */

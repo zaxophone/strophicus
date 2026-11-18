@@ -21,7 +21,11 @@ export const LESSON_1: Lesson = {
       instructions: `
 To understand how to sing Gregorian chant, let us begin with a sentence. Speaking and singing chant fit closely together.
 
-Here is a sentence of ten words: "Come, let us ring out our joy to the LORD." Are all the words of the same importance?
+Here is a sentence of ten words:
+
+**Come, let us ring out our joy to the LORD.**
+
+Are all the words of the same importance?
 
 Say it three times. First lift your voice on "joy". Then say it again and lift your voice on "our". Then once more, lifting it on "LORD".
 
