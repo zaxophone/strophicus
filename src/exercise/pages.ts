@@ -28,12 +28,15 @@ const introduced = (unit: string[]) => unit.length > 1 && unit[unit.length - 2].
 export function paginate(instructions: string, limit = PAGE_CHARS): string[][] {
   const paragraphs = instructions.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
   const units: string[][] = [];
+  // only kept together if they would still fit on one page
+  const fitsWith = (unit: string[], paragraph: string) =>
+    [...unit, paragraph].reduce((total, p) => total + blockSize(p), 0) <= limit;
   for (const paragraph of paragraphs) {
     const before = units[units.length - 1];
     const last = before?.[before.length - 1];
     if (before && isFigure(paragraph) && !isFigure(last)) before.push(paragraph);
     // a line set in bold stays with the paragraph before it, and with the one after it if the one before ends in a colon
-    else if (before && (isBoldLine(paragraph) || (last !== undefined && isBoldLine(last) && introduced(before)))) before.push(paragraph);
+    else if (before && fitsWith(before, paragraph) && (isBoldLine(paragraph) || (last !== undefined && isBoldLine(last) && introduced(before)))) before.push(paragraph);
     else units.push([paragraph]);
   }
   const pages: string[][] = [];
