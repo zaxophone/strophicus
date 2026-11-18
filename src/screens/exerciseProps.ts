@@ -9,6 +9,8 @@ export interface ExerciseScreenProps {
   /** Moves to another exercise, landing on its exercise page rather than its instructions if asked. */
   onIndexChange: (index: number, toExercise?: boolean) => void;
   onExit: () => void;
+  /** Called on finishing the lesson's last exercise. */
+  onFinish: () => void;
   /** Open on the exercise itself, as when coming back from the exercise after it. */
   startOnExercise?: boolean;
 }

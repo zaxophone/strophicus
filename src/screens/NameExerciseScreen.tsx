@@ -18,7 +18,7 @@ import { ArrowButton, barStyles, RecordingButton, StaffArea } from './exercisePa
  * next unnamed one is picked for them) and choose its solfege syllable. A `mark`
  * exercise is the same screen with two choices, arsis or thesis, for each note.
  */
-export function NameExerciseScreen({ lesson, index, tonic, onIndexChange, onExit, onBack }: ExerciseBodyProps) {
+export function NameExerciseScreen({ lesson, index, tonic, onIndexChange, onFinish, onBack }: ExerciseBodyProps) {
   const { width } = useWindowDimensions();
   const { progress, markPassed } = useProgress();
   const exercise = lesson.exercises[index];
@@ -56,7 +56,7 @@ export function NameExerciseScreen({ lesson, index, tonic, onIndexChange, onExit
   };
   const next = () => {
     if (!done) return setNudge(true);
-    if (last) onExit();
+    if (last) onFinish();
     else go(index + 1);
   };
 

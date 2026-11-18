@@ -56,7 +56,7 @@ function timingMessage(
   return `${label} was too ${timing}. Give each note the same length.`;
 }
 
-export function SingExercise({ lesson, index, tonic, onIndexChange, onExit, onBack }: ExerciseBodyProps) {
+export function SingExercise({ lesson, index, tonic, onIndexChange, onFinish, onBack }: ExerciseBodyProps) {
   const { width } = useWindowDimensions();
   const { progress, markPassed } = useProgress();
   const [playing, setPlaying] = useState(false);
@@ -135,7 +135,7 @@ export function SingExercise({ lesson, index, tonic, onIndexChange, onExit, onBa
       setNudge(true);
       return;
     }
-    if (last) onExit();
+    if (last) onFinish();
     else go(index + 1);
   };
 

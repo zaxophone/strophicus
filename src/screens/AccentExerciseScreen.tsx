@@ -18,7 +18,7 @@ import { ExerciseBodyProps } from './exerciseProps';
  * With plain sentences, they read one aloud and mark the word they stressed
  * (any choice is right: it is their own).
  */
-export function AccentExerciseScreen({ lesson, index, tonic, onIndexChange, onExit, onBack }: ExerciseBodyProps) {
+export function AccentExerciseScreen({ lesson, index, tonic, onIndexChange, onFinish, onBack }: ExerciseBodyProps) {
   const { width } = useWindowDimensions();
   const { progress, markPassed } = useProgress();
   const exercise = lesson.exercises[index];
@@ -52,7 +52,7 @@ export function AccentExerciseScreen({ lesson, index, tonic, onIndexChange, onEx
   const next = () => {
     if (!done) return setNudge(true);
     stop();
-    if (last) onExit();
+    if (last) onFinish();
     else onIndexChange(index + 1, false);
   };
 

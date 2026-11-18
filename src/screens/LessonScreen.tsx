@@ -18,7 +18,7 @@ import { NameExerciseScreen } from './NameExerciseScreen';
  * The parent gives it a new `key` for each exercise, so each starts fresh.
  */
 export function LessonScreen(props: ExerciseScreenProps) {
-  const { lesson, index, startOnExercise, onIndexChange, onExit } = props;
+  const { lesson, index, startOnExercise, onIndexChange, onExit, onFinish } = props;
   const { progress, markPassed } = useProgress();
   const exercise = lesson.exercises[index];
   const { height } = useWindowDimensions();
@@ -40,7 +40,7 @@ export function LessonScreen(props: ExerciseScreenProps) {
   // Reaching the end of a reading is all that is asked of the student.
   const finishReading = () => {
     markPassed(exercise.id);
-    if (last) onExit();
+    if (last) onFinish();
     else onIndexChange(index + 1, false);
   };
 

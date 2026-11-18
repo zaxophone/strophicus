@@ -4,8 +4,10 @@ import { BackHandler, StyleSheet, View } from 'react-native';
 
 import { loadChantTypeface } from './src/chant/typeface';
 import { LESSONS, REPERTOIRE } from './src/exercise/lessons';
+import { nextExerciseIndex } from './src/progress/progress';
 import { ProgressProvider, useProgress } from './src/progress/ProgressContext';
 import { LessonScreen } from './src/screens/LessonScreen';
+import { CompleteScreen } from './src/screens/CompleteScreen';
 import { HomeScreen } from './src/screens/HomeScreen';
 import { TunerScreen } from './src/screens/TunerScreen';
 
@@ -15,6 +17,7 @@ loadChantTypeface().catch(() => {});
 type Route =
   | { name: 'home' }
   | { name: 'lesson'; lessonIndex: number; exerciseIndex: number; toExercise?: boolean; piece?: boolean }
+  | { name: 'done'; lessonIndex: number; piece?: boolean }
   | { name: 'tuner' };
 
 export default function App() {
@@ -66,6 +69,21 @@ function Screens() {
           onTonicChange={setTonic}
           onIndexChange={(exerciseIndex, toExercise) => setRoute({ ...route, exerciseIndex, toExercise })}
           onExit={home}
+          onFinish={() => setRoute({ name: 'done', lessonIndex: route.lessonIndex, piece: route.piece })}
+        />
+      )}
+      {route.name === 'done' && (
+        <CompleteScreen
+          lesson={(route.piece ? REPERTOIRE : LESSONS)[route.lessonIndex]}
+          next={route.piece ? undefined : LESSONS[route.lessonIndex + 1]}
+          onHome={home}
+          onNext={() =>
+            setRoute({
+              name: 'lesson',
+              lessonIndex: route.lessonIndex + 1,
+              exerciseIndex: nextExerciseIndex(LESSONS[route.lessonIndex + 1], progress),
+            })
+          }
         />
       )}
       {route.name === 'tuner' && <TunerScreen onExit={home} />}
