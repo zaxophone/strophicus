@@ -17,7 +17,7 @@ describe('NoteSegmenter', () => {
 
   it('ignores notes shorter than the minimum', () => {
     const seg = new NoteSegmenter();
-    feed(seg, [...hold(57, 5), ...silence(4)]);
+    feed(seg, [...hold(57, 3), ...silence(4)]);
     expect(seg.notes).toHaveLength(0);
   });
 

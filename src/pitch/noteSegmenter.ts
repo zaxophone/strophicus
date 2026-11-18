@@ -49,7 +49,7 @@ export interface NoteSegmenterOptions {
 
 const DEFAULTS: Required<NoteSegmenterOptions> = {
   tolerance: 0.6,
-  minFrames: 8,
+  minFrames: 5,
   gapFrames: 3,
   flatness: 0.25,
   dipRatio: 0.65,
