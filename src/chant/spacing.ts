@@ -47,7 +47,10 @@ export const BAR_STROKE = 0.1;
 /** How far the glue of a line may be stretched past its stretch values before the line is left short. */
 export const MAX_STRETCH_RATIO = 2.5;
 
-export type ColumnKind = 'start' | 'neume' | 'word' | 'newWord' | 'bar';
+/** A tick (divisio minima) is only a small mark: it takes a word space with room for the stroke, and stretches like one. */
+export const TICK_ROOM = BAR_STROKE + 0.5;
+
+export type ColumnKind = 'start' | 'neume' | 'word' | 'newWord' | 'bar' | 'tick';
 
 export interface Column {
   /** From the figure's centre to the left end of what is drawn for it (a flat sign counts). */
@@ -63,12 +66,20 @@ export interface Column {
 export function pitchBetween(a: Column, b: Column, space: number): { pitch: number; glue: number; stretch: number } {
   const kind = b.kind === 'start' ? 'word' : b.kind;
   const gap =
-    kind === 'bar' ? 2 * GAP.noteBar + BAR_STROKE : kind === 'neume' ? GAP.neume : kind === 'newWord' ? GAP.newWord : GAP.word;
-  const textGap = kind === 'bar' ? TEXT_GAP.bar : kind === 'newWord' ? TEXT_GAP.newWord : TEXT_GAP.word;
+    kind === 'bar'
+      ? 2 * GAP.noteBar + BAR_STROKE
+      : kind === 'tick'
+        ? GAP.newWord + TICK_ROOM
+        : kind === 'neume'
+          ? GAP.neume
+          : kind === 'newWord'
+            ? GAP.newWord
+            : GAP.word;
+  const textGap = kind === 'bar' ? TEXT_GAP.bar : kind === 'newWord' || kind === 'tick' ? TEXT_GAP.newWord : TEXT_GAP.word;
   const notes = a.right + b.left + gap * space;
   const text = (a.text + b.text) / 2 + textGap * space;
   const pitch = Math.max(notes, text);
-  return { pitch, glue: pitch - a.right - b.left, stretch: STRETCH[kind] * space };
+  return { pitch, glue: pitch - a.right - b.left, stretch: (kind === 'tick' ? STRETCH.newWord : STRETCH[kind]) * space };
 }
 
 /** The pitches for a whole row of columns (entry 0 is unused). */

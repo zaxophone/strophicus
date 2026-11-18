@@ -160,7 +160,7 @@ export function ChantStaff({ width, chant, labels, captions, marks, gestures, wa
     const dots = dotted ? 0.18 * SPACE + moraDot * (doubled ? 2.2 : 1) : 0;
     const label = labels[i] ?? '';
     const kind: Column['kind'] =
-      i === 0 ? 'start' : divisionBefore(chant, u.start) ? 'bar' : continued ? 'neume' : /-$/.test(previousLabel) ? 'word' : 'newWord';
+      i === 0 ? 'start' : divisionBefore(chant, u.start) === 'tick' ? 'tick' : divisionBefore(chant, u.start) ? 'bar' : continued ? 'neume' : /-$/.test(previousLabel) ? 'word' : 'newWord';
     if (!continued) previousLabel = label;
     return {
       left: figure / 2 + (chant.flats.includes(u.start) ? flatSign : 0),
