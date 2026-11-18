@@ -79,6 +79,8 @@ export function AccentExerciseScreen({ lesson, index, tonic, onIndexChange, onFi
   return (
     <View style={styles.screen}>
       <View style={styles.content}>
+        <Text style={[styles.message, right && styles.messageOk, nudge && styles.messageNudge]}>{message}</Text>
+
         {melody ? (
           <StaffArea>
             {(maxHeight) => (
@@ -111,8 +113,6 @@ export function AccentExerciseScreen({ lesson, index, tonic, onIndexChange, onFi
         )}
 
         {book.available && <RecordingButton playing={book.playing} onPress={hearChoir} />}
-
-        <Text style={[styles.message, right && styles.messageOk, nudge && styles.messageNudge]}>{message}</Text>
       </View>
 
       <View style={barStyles.bar}>
@@ -135,7 +135,7 @@ export function AccentExerciseScreen({ lesson, index, tonic, onIndexChange, onFi
 const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: '#fff' },
   content: { flex: 1, padding: 16, gap: 14, alignItems: 'center' },
-  message: { color: colors.muted, textAlign: 'center', minHeight: 36, fontSize: 15 },
+  message: { color: colors.body, textAlign: 'center', minHeight: 48, fontSize: 18, lineHeight: 25 },
   messageOk: { color: colors.success, fontWeight: '700' },
   messageNudge: { color: colors.danger, fontWeight: '600' },
   lines: { flex: 1, alignSelf: 'stretch', justifyContent: 'center', gap: 14 },

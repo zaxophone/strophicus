@@ -107,6 +107,8 @@ export function NameExerciseScreen({ lesson, index, tonic, onIndexChange, onFini
   return (
     <View style={styles.screen}>
       <View style={styles.content}>
+        <Text style={[styles.message, finished && styles.messageOk, nudge && styles.messageNudge]}>{message}</Text>
+
         <StaffArea>
           {(maxHeight) => (
             <ChantStaff
@@ -125,8 +127,6 @@ export function NameExerciseScreen({ lesson, index, tonic, onIndexChange, onFini
             />
           )}
         </StaffArea>
-
-        <Text style={[styles.message, finished && styles.messageOk, nudge && styles.messageNudge]}>{message}</Text>
 
         {book.available && <RecordingButton playing={book.playing} onPress={hearChoir} />}
 
@@ -164,7 +164,7 @@ export function NameExerciseScreen({ lesson, index, tonic, onIndexChange, onFini
 const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: '#fff' },
   content: { flex: 1, padding: 16, gap: 14, alignItems: 'center' },
-  message: { color: colors.muted, textAlign: 'center', minHeight: 36, fontSize: 15 },
+  message: { color: colors.body, textAlign: 'center', minHeight: 48, fontSize: 18, lineHeight: 25 },
   messageOk: { color: colors.success, fontWeight: '700' },
   messageNudge: { color: colors.danger, fontWeight: '600' },
   palette: { flexDirection: 'row', gap: 6, justifyContent: 'center' },
