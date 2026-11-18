@@ -265,15 +265,15 @@ export function SingExercise({ lesson, index, tonic, onIndexChange, onFinish, on
             />
           </ScrollView>
         ) : (
-        <StaffArea scroll={zoom > 1}>
-          {(maxHeight) => (
+        <StaffArea scroll>
+          {() => (
             <ChantStaff
               width={width - 32}
               chant={exercise.chant}
               labels={exercise.words ?? unitLabels(exercise.chant, exercise.labels)}
               marks={marks}
               gestures={exercise.gestures}
-              maxHeight={maxHeight}
+              flow
               scale={zoom}
             />
           )}

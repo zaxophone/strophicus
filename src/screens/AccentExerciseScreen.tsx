@@ -86,15 +86,15 @@ export function AccentExerciseScreen({ lesson, index, tonic, onIndexChange, onFi
         <ZoomControl />
 
         {melody ? (
-          <StaffArea scroll={zoom > 1}>
-            {(maxHeight) => (
+          <StaffArea scroll>
+            {() => (
               <ChantStaff
                 width={width - 32}
                 chant={exercise.chant}
                 labels={exercise.words ?? unitLabels(exercise.chant, exercise.labels)}
                 marks={marks}
                 onPressNote={(i) => setNote(i)}
-                maxHeight={maxHeight}
+                flow
                 scale={zoom}
               />
             )}

@@ -113,8 +113,8 @@ export function NameExerciseScreen({ lesson, index, tonic, onIndexChange, onFini
 
         <ZoomControl />
 
-        <StaffArea scroll={zoom > 1}>
-          {(maxHeight) => (
+        <StaffArea scroll>
+          {() => (
             <ChantStaff
               wave={marking}
               width={width - 32}
@@ -127,7 +127,7 @@ export function NameExerciseScreen({ lesson, index, tonic, onIndexChange, onFini
                 setNudge(false);
                 setNaming((s) => selectNote(s, i));
               }}
-              maxHeight={maxHeight}
+              flow
               scale={zoom}
             />
           )}
