@@ -64,9 +64,9 @@ Can you figure out which word is the most important in each melody: **our**, **j
 Ignore the little line over the first note and the dot after the last for now. You will meet them soon.`
             : i === 1
               ? `
-Here is the second melody. Listen to it, and tap the word that sounds most important.`
+Here is the second melody. Listen to it, and tap the syllable that sounds most important.`
               : `
-Here comes the last one. Listen, and tap the word that sounds most important.`,
+Here comes the last one. Listen, and tap the syllable that sounds most important.`,
         source: `${workbook}, p. 2, melody ${i + 1}; ${instructor}, Lesson 2, p. 6–7`,
       }),
     ),

@@ -66,13 +66,13 @@ export function AccentExerciseScreen({ lesson, index, tonic, onIndexChange, onFi
 
   const message = nudge
     ? melody
-      ? 'Find the word the melody goes up on to move on.'
+      ? 'Find the syllable the melody goes up on to move on.'
       : 'Tap a word to move on.'
     : melody
       ? right
-        ? `Yes, "${noteName(exercise, units(exercise.chant)[exercise.answer ?? 0].start)}": the note goes up there, so that word is given wings. Tap the arrow to go on.`
+        ? `Yes, "${noteName(exercise, units(exercise.chant)[exercise.answer ?? 0].start)}": the note goes up there, so that syllable is given wings. Tap the arrow to go on.`
         : note === null
-          ? 'Tap Hear it, listen, then tap the word that sounds most important.'
+          ? 'Tap Hear it, listen, then tap the syllable that sounds most important.'
           : `Not "${noteName(exercise, note)}". Listen again: where does the melody rise?`
       : spot === null
         ? 'Say a sentence out loud, then tap the word you gave the most weight.'
