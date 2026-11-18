@@ -32,7 +32,7 @@ const LEAD_SECONDS = 0.1;
 export function playMelody(
   tonicMidi: number,
   offsets: number[],
-  { beats, held, bpm = 80, onNote }: MelodyOptions = {},
+  { beats, held, bpm = 120, onNote }: MelodyOptions = {},
 ): Playback {
   let stopped = false;
   let timers: ReturnType<typeof setTimeout>[] = [];

@@ -87,7 +87,7 @@ export interface Lesson {
   exercises: Exercise[];
 }
 
-const DEFAULT_BPM = 80;
+const DEFAULT_BPM = 120;
 /** The gabc of an exercise that has no staff: just a clef. */
 const NO_STAFF = '(c2)';
 /** A note with an episema, or before a tick: sung a little longer, not twice as long. */
