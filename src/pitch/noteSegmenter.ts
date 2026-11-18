@@ -5,7 +5,17 @@ export interface SungNote {
   frames: number;
   /** Still being sung, so its pitch may yet change. */
   open: boolean;
+  /**
+   * Frames between this note's end and the next note's start that were audibly
+   * sounding, though not at a steady pitch: the consonants that lead into the next syllable.
+   */
+  soundAfter?: number;
 }
+
+/** A frame is audible, not silence, when it is this many times louder than the quietest frame heard. */
+const AUDIBLE_RATIO = 3;
+/** The quietest level taken as the room, so a perfectly silent stretch cannot make everything look loud. */
+const MIN_FLOOR = 0.001;
 
 export interface NoteSegmenterOptions {
   /** Semitones a frame may stray from the note and still belong to it. */
@@ -125,6 +135,8 @@ export class NoteSegmenter {
   private candidate: Run | null = null;
   private gap = 0;
   private frame = 0;
+  /** The loudness of every frame so far, to tell consonants from silence between notes. */
+  private levels: number[] = [];
 
   constructor(options: NoteSegmenterOptions = {}) {
     this.o = { ...DEFAULTS, ...options };
@@ -134,10 +146,25 @@ export class NoteSegmenter {
   get notes(): SungNote[] {
     const current = this.current;
     // A note just split off a longer one isn't counted until it has held a moment.
-    if (!current || (current.fromSplit && current.values.length < this.o.minSplitFrames)) {
-      return this.done;
-    }
-    return [...this.done, this.toNote(current, true)];
+    const notes =
+      !current || (current.fromSplit && current.values.length < this.o.minSplitFrames)
+        ? this.done
+        : [...this.done, this.toNote(current, true)];
+    return this.withSoundAfter(notes);
+  }
+
+  /** The notes, each told how much of the gap after it was audible. */
+  private withSoundAfter(notes: SungNote[]): SungNote[] {
+    const floor = Math.max(MIN_FLOOR, Math.min(...this.levels.filter((l) => l > 0), Infinity));
+    return notes.map((note, i) => {
+      const next = notes[i + 1];
+      if (!next) return note;
+      let sounding = 0;
+      for (let f = note.startFrame + note.frames; f < next.startFrame; f++) {
+        if ((this.levels[f] ?? 0) > AUDIBLE_RATIO * floor) sounding++;
+      }
+      return { ...note, soundAfter: sounding };
+    });
   }
 
   /**
@@ -156,6 +183,7 @@ export class NoteSegmenter {
     this.candidate = null;
     this.gap = 0;
     this.frame = 0;
+    this.levels = [];
   }
 
   /**
@@ -164,6 +192,7 @@ export class NoteSegmenter {
    */
   push(midi: number | null, level = 0): void {
     const index = this.frame++;
+    this.levels[index] = level;
 
     if (midi === null) {
       if (++this.gap >= this.o.gapFrames) {

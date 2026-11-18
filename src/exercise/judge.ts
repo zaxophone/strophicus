@@ -72,8 +72,8 @@ const LATE_PENALTY = 0.001;
  */
 const SHORTEST = 0.55;
 const LONGEST = 1.8;
-/** How much silence between two notes still counts as part of the first (a consonant, a quick breath), in frames. */
-const MAX_PAUSE_FRAMES = 4;
+/** Most audible, unpitched sound between two notes (consonants) that is left out of the first note's length, in frames. */
+const MAX_CONSONANT_FRAMES = 12;
 /** A note with an episema or tick must come to about the 1.5 beats asked for (a little slack for the measuring). */
 const SHORTEST_LENGTHENED = 0.75;
 /** A rest is the loosest part of the rhythm: singers often leave a little less than a beat. */
@@ -302,11 +302,8 @@ function judgeTiming(
     const nextNote = b.note === a.note + 1 && b.part === 0 && a.part === a.parts - 1;
     if (!sameNote && !nextNote) return null;
     const gap = start(k + 1) - start(k);
-    // a breath or pause between notes is not a longer note: count only a little of the silence (a rest is judged from the silence itself)
-    if (nextNote && !rest[k]) {
-      const sounded = sung[a.note].startFrame + sung[a.note].frames - start(k);
-      return Math.min(gap, sounded + MAX_PAUSE_FRAMES);
-    }
+    // consonants leading into the next syllable are not a longer note, but silence is: it counts in full
+    if (nextNote && !rest[k]) return gap - Math.min(sung[a.note].soundAfter ?? 0, MAX_CONSONANT_FRAMES);
     return gap;
   };
 
