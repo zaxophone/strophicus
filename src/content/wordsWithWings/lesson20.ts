@@ -7,18 +7,8 @@ import { VENI_KEY, VENI_LINES, VENI_QUI } from './veniSancte';
 const workbook = "Words with Wings Children's Workbook";
 const instructor = 'Words with Wings Instructor Edition';
 
-// The four lines as the book prints them (p. 46): a bar after "fidélium," and a double bar at the
-// end of each of the other three, each on its own line.
-const ending = (gabc: string, from: string, to: string) => {
-  if (!gabc.endsWith(from)) throw new Error('Veni Sancte line does not end as expected');
-  return gabc.slice(0, -from.length) + to;
-};
-const LINES = [
-  ending(VENI_LINES[0], '(f)', '(f;)'),
-  ending(VENI_LINES[1], '(g)', '(g::)'),
-  ending(VENI_QUI.per, '(f)', '(f::)'),
-  ending(VENI_QUI.gentes, '(g)', '(g::)'),
-];
+// The four lines, each on its own line of the score, with the notation as the lessons give it.
+const LINES = [...VENI_LINES, VENI_QUI.per, VENI_QUI.gentes];
 
 export const LESSON_20: Lesson = {
   id: 'wow-20',
