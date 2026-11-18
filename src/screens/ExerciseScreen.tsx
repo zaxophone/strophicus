@@ -22,6 +22,7 @@ import { useProgress } from '../progress/ProgressContext';
 import { ExerciseBodyProps } from './exerciseProps';
 import { ArrowButton, barStyles, RecordingButton, StaffArea } from './exerciseParts';
 import { colors } from '../ui/theme';
+import { useZoom, ZoomControl } from '../ui/zoom';
 
 const NOTE_COLORS: Record<NoteStatus, string> = {
   pending: colors.ink,
@@ -61,6 +62,7 @@ function timingMessage(
 }
 
 export function SingExercise({ lesson, index, tonic, onIndexChange, onFinish, onBack }: ExerciseBodyProps) {
+  const { zoom } = useZoom();
   const { width } = useWindowDimensions();
   const { progress, markPassed } = useProgress();
   const [playing, setPlaying] = useState(false);
@@ -247,10 +249,13 @@ export function SingExercise({ lesson, index, tonic, onIndexChange, onFinish, on
       <View style={styles.content}>
         <Text style={[styles.message, finished && styles.messageOk, nudge && styles.messageNudge]}>{message}</Text>
 
+        <ZoomControl />
+
         {score ? (
           <ScrollView ref={scroller} style={styles.score} contentContainerStyle={styles.scoreContent}>
             <ChantStaff
               flow
+              scale={zoom}
               width={width - 32}
               chant={exercise.chant}
               labels={exercise.words ?? unitLabels(exercise.chant, exercise.labels)}
@@ -260,7 +265,7 @@ export function SingExercise({ lesson, index, tonic, onIndexChange, onFinish, on
             />
           </ScrollView>
         ) : (
-        <StaffArea>
+        <StaffArea scroll={zoom > 1}>
           {(maxHeight) => (
             <ChantStaff
               width={width - 32}
@@ -269,6 +274,7 @@ export function SingExercise({ lesson, index, tonic, onIndexChange, onFinish, on
               marks={marks}
               gestures={exercise.gestures}
               maxHeight={maxHeight}
+              scale={zoom}
             />
           )}
         </StaffArea>

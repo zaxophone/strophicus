@@ -11,6 +11,7 @@ import { allNamed, nameNote, selectNote, startMarking, startNaming } from '../ex
 import { isPassed } from '../progress/progress';
 import { useProgress } from '../progress/ProgressContext';
 import { colors } from '../ui/theme';
+import { useZoom, ZoomControl } from '../ui/zoom';
 import { ArrowButton, barStyles, RecordingButton, StaffArea } from './exerciseParts';
 
 /**
@@ -19,6 +20,7 @@ import { ArrowButton, barStyles, RecordingButton, StaffArea } from './exercisePa
  * exercise is the same screen with two choices, arsis or thesis, for each note.
  */
 export function NameExerciseScreen({ lesson, index, tonic, onIndexChange, onFinish, onBack }: ExerciseBodyProps) {
+  const { zoom } = useZoom();
   const { width } = useWindowDimensions();
   const { progress, markPassed } = useProgress();
   const exercise = lesson.exercises[index];
@@ -109,7 +111,9 @@ export function NameExerciseScreen({ lesson, index, tonic, onIndexChange, onFini
       <View style={styles.content}>
         <Text style={[styles.message, finished && styles.messageOk, nudge && styles.messageNudge]}>{message}</Text>
 
-        <StaffArea>
+        <ZoomControl />
+
+        <StaffArea scroll={zoom > 1}>
           {(maxHeight) => (
             <ChantStaff
               wave={marking}
@@ -124,6 +128,7 @@ export function NameExerciseScreen({ lesson, index, tonic, onIndexChange, onFini
                 setNaming((s) => selectNote(s, i));
               }}
               maxHeight={maxHeight}
+              scale={zoom}
             />
           )}
         </StaffArea>

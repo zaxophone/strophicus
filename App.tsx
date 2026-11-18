@@ -5,6 +5,7 @@ import { BackHandler, StyleSheet, View } from 'react-native';
 import { loadChantTypeface } from './src/chant/typeface';
 import { LESSONS, REPERTOIRE } from './src/exercise/lessons';
 import { startIndex } from './src/progress/progress';
+import { ZoomProvider } from './src/ui/zoom';
 import { ProgressProvider, useProgress } from './src/progress/ProgressContext';
 import { LessonScreen } from './src/screens/LessonScreen';
 import { CompleteScreen } from './src/screens/CompleteScreen';
@@ -23,7 +24,9 @@ type Route =
 export default function App() {
   return (
     <ProgressProvider>
-      <Screens />
+      <ZoomProvider>
+        <Screens />
+      </ZoomProvider>
     </ProgressProvider>
   );
 }

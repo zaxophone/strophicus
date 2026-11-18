@@ -15,9 +15,10 @@ export function fitSpace(
   fixed: number,
   lastGap: number,
   maxHeight: number | undefined,
+  full: number = FULL_SPACE,
 ): number {
-  if (maxHeight === undefined || maxHeight <= 0) return FULL_SPACE;
+  if (maxHeight === undefined || maxHeight <= 0) return full;
   const room = (maxHeight + lastGap) / systems - fixed;
   const space = (2 * room) / steps;
-  return Math.max(MIN_SPACE, Math.min(FULL_SPACE, space));
+  return Math.max(MIN_SPACE, Math.min(full, space));
 }

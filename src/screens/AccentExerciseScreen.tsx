@@ -9,6 +9,7 @@ import { noteName } from '../exercise/exercise';
 import { isPassed } from '../progress/progress';
 import { useProgress } from '../progress/ProgressContext';
 import { colors } from '../ui/theme';
+import { useZoom, ZoomControl } from '../ui/zoom';
 import { ArrowButton, barStyles, RecordingButton, StaffArea } from './exerciseParts';
 import { ExerciseBodyProps } from './exerciseProps';
 
@@ -19,6 +20,7 @@ import { ExerciseBodyProps } from './exerciseProps';
  * (any choice is right: it is their own).
  */
 export function AccentExerciseScreen({ lesson, index, tonic, onIndexChange, onFinish, onBack }: ExerciseBodyProps) {
+  const { zoom } = useZoom();
   const { width } = useWindowDimensions();
   const { progress, markPassed } = useProgress();
   const exercise = lesson.exercises[index];
@@ -81,8 +83,10 @@ export function AccentExerciseScreen({ lesson, index, tonic, onIndexChange, onFi
       <View style={styles.content}>
         <Text style={[styles.message, right && styles.messageOk, nudge && styles.messageNudge]}>{message}</Text>
 
+        <ZoomControl />
+
         {melody ? (
-          <StaffArea>
+          <StaffArea scroll={zoom > 1}>
             {(maxHeight) => (
               <ChantStaff
                 width={width - 32}
@@ -91,6 +95,7 @@ export function AccentExerciseScreen({ lesson, index, tonic, onIndexChange, onFi
                 marks={marks}
                 onPressNote={(i) => setNote(i)}
                 maxHeight={maxHeight}
+                scale={zoom}
               />
             )}
           </StaffArea>

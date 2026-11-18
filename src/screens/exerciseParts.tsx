@@ -1,5 +1,5 @@
 import { ReactNode, useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import type { Exercise, Lesson } from '../exercise/exercise';
 import { describeKey, keyTonic } from '../exercise/key';
@@ -70,11 +70,19 @@ export function FitToHeight({ children }: { children: ReactNode }) {
  * Fills the room left on the screen and centres a staff in it, telling it how
  * tall it may be. The staff redraws itself smaller if it would not fit.
  */
-export function StaffArea({ children }: { children: (maxHeight: number) => ReactNode }) {
+export function StaffArea({ children, scroll = false }: { children: (maxHeight: number) => ReactNode; scroll?: boolean }) {
   const [room, setRoom] = useState(0);
   return (
     <View style={styles.fit} onLayout={(e) => setRoom(e.nativeEvent.layout.height)}>
-      {room > 0 && children(room)}
+      {room > 0 &&
+        // zoomed in, the staff keeps its size and scrolls inside the room
+        (scroll ? (
+          <ScrollView style={{ alignSelf: 'stretch' }} contentContainerStyle={{ alignItems: 'center', flexGrow: 1, justifyContent: 'center' }}>
+            {children(room)}
+          </ScrollView>
+        ) : (
+          children(room)
+        ))}
     </View>
   );
 }

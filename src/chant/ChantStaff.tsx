@@ -59,6 +59,8 @@ interface Props {
    * the parent scrolls). Without it every column is alike and the staff shrinks to fit `maxHeight`.
    */
   flow?: boolean;
+  /** Zoom: draws the staff at the score size times this (1 is the Repertoire's size), letting it grow past the room. */
+  scale?: number;
   /** With `flow`: the note to keep in view. `onFocus` is told the top of its line, in pixels, whenever it moves to a new line. */
   focus?: number;
   onFocus?: (top: number) => void;
@@ -74,8 +76,8 @@ interface Props {
 const FLOW_SPACE = 14;
 const TEXT_PER_SPACE = 10 / 8.15;
 /** Room under the staff for a label and its hint, and for a caption under them. */
-const LABEL_ZONE = 40;
-const CAPTION_ZONE = 22;
+const LABEL_ZONE_EMS = 2.2;
+const CAPTION_ZONE_EMS = 1.3;
 /** Room kept under a staff with no labels at all, as in a picture of a symbol. */
 const BARE_ZONE = 6;
 const SYSTEM_GAP = 6;
@@ -84,6 +86,8 @@ const MIN_UNIT = 22;
 const LABEL_SIZE = 15;
 const CAPTION_SIZE = LABEL_SIZE;
 const MAX_UNIT = 40;
+/** The staff space those sizes were chosen at; at another size they scale with it. */
+const UNIT_SPACE = 20;
 /** How far the clef reaches above and below its line, in staff steps. */
 const CLEF_REACH = 1.8;
 const HALO = 'rgba(79, 70, 229, 0.16)';
@@ -108,9 +112,13 @@ function textWidth(text: string, size: number): number {
   return em * size;
 }
 
-export function ChantStaff({ width, chant, labels, captions, marks, gestures, wave = true, inkColor = '#111827', onPressNote, maxHeight, flow = false, focus, onFocus }: Props) {
-  const SPACE = flow ? FLOW_SPACE : FULL_SPACE;
-  const labelSize = flow ? TEXT_PER_SPACE * SPACE : LABEL_SIZE;
+export function ChantStaff({ width, chant, labels, captions, marks, gestures, wave = true, inkColor = '#111827', onPressNote, maxHeight, flow = false, focus, onFocus, scale }: Props) {
+  // A flowing score and any staff given a `scale` are drawn at the score size, in Gregorio's proportions;
+  // others (figures in the text) at the larger fixed size.
+  const sized = flow || scale !== undefined;
+  const SPACE = sized ? FLOW_SPACE * (scale ?? 1) : FULL_SPACE;
+  const labelSize = sized ? TEXT_PER_SPACE * SPACE : LABEL_SIZE;
+  const k = SPACE / UNIT_SPACE;
   const positions = [...chant.notes].map(staffPosition);
   // A syllable is a note on its own or a group of notes drawn as one figure; each gets a column.
   const syllables = units(chant);
@@ -137,8 +145,8 @@ export function ChantStaff({ width, chant, labels, captions, marks, gestures, wa
   const widestFigure = Math.max(0, ...neumes.map((n) => (n ? (n.glyph.advance * SPACE) / LINE_PITCH : 0)));
   // and a note with a flat sign needs room for the sign beside it
   const flatFigure = chant.flats.length ? ((GLYPHS.Punctum.advance + GLYPHS.Flat.advance) * SPACE) / LINE_PITCH : 0;
-  const minUnit = Math.max(MIN_UNIT, Math.ceil(needed + 2), Math.ceil(widestFigure + 8), Math.ceil(flatFigure + 8));
-  const maxUnit = Math.max(MAX_UNIT, minUnit);
+  const minUnit = Math.max(MIN_UNIT * k, Math.ceil(needed + 2), Math.ceil(widestFigure + 8), Math.ceil(flatFigure + 8));
+  const maxUnit = Math.max(MAX_UNIT * k, minUnit);
   // In a flowing score the columns are spaced as Gregorio spaces them (see `spacing.ts`).
   const flatSign = (GLYPHS.Flat.advance * SPACE) / LINE_PITCH + 0.1 * SPACE;
   const moraDot = (GLYPHS.AuctumMora.advance * SPACE) / LINE_PITCH;
@@ -190,8 +198,9 @@ export function ChantStaff({ width, chant, labels, captions, marks, gestures, wa
   const bottom = Math.min(-1, Math.min(...positions) - (waved ? 2.3 : chant.ictus.length ? 2 : 1), clefAt - CLEF_REACH);
   // A long exercise on a short screen is drawn at a smaller scale to fit.
   const labelled = labels.some(Boolean);
-  const labelZone = (labelled ? LABEL_ZONE : BARE_ZONE) + (captions ? CAPTION_ZONE : 0);
-  const sp = flow ? SPACE : fitSpace(systems.length, top - bottom, labelZone + SYSTEM_GAP, SYSTEM_GAP, maxHeight);
+  const labelZone = (labelled ? LABEL_ZONE_EMS * labelSize : BARE_ZONE) + (captions ? CAPTION_ZONE_EMS * labelSize : 0);
+  // zoomed in past 1 the staff keeps its size and the screen scrolls; otherwise it shrinks to fit
+  const sp = flow ? SPACE : fitSpace(systems.length, top - bottom, labelZone + SYSTEM_GAP, SYSTEM_GAP, scale !== undefined && scale > 1 ? undefined : maxHeight, SPACE);
   const stp = sp / 2;
   const scl = sp / LINE_PITCH;
   const font = useChantFont(UNITS_PER_EM * scl);
@@ -202,7 +211,7 @@ export function ChantStaff({ width, chant, labels, captions, marks, gestures, wa
   // Every line shares one note spacing so columns line up from line to line.
   const unitsOf = (indexes: number[]) =>
     indexes.length + divisions.filter((b) => indexes.includes(b) && b !== indexes[0]).length * BAR_UNITS;
-  const unit = flow ? MIN_UNIT : Math.min(maxUnit, room / Math.max(...systems.map(unitsOf)));
+  const unit = flow ? MIN_UNIT * k : Math.min(maxUnit, room / Math.max(...systems.map(unitsOf)));
   // where a flowing line puts its columns (centres, from the start of its notes): filled out
   // to the width unless it is the last line
   const flowCentres = (s: number) =>
@@ -395,7 +404,7 @@ export function ChantStaff({ width, chant, labels, captions, marks, gestures, wa
           pointerEvents="none"
           style={[styles.label, { width: labelW, left: x - labelW / 2, top: dy + staffHeight + 4 }]}
         >
-          <Text style={[styles.syllable, { color: ink, fontSize: labelSize }, flow && styles.flowSyllable]} numberOfLines={1}>
+          <Text style={[styles.syllable, { color: ink, fontSize: labelSize }, sized && styles.flowSyllable]} numberOfLines={1}>
             {labels[syllable]}
           </Text>
           <Text style={[styles.hint, { color: ink }]}>{mark?.hint ?? ''}</Text>
