@@ -28,7 +28,7 @@ export const LESSON_4: Lesson = {
       instructions: `
 A litany is a prayer made of many short calls, each one answered. In the Litany of the Saints we call on the saints by name, and the answer is the same every time: "pray for us".
 
-Let us begin with Saint Gregory, who gave Gregorian chant its name. In Latin his name is "Sancte Gregóri". Tap Hear it and listen to it.
+Let us begin with Saint Gregory, who gave Gregorian chant its name. In Latin his name is "Sancte Gregóri".
 
 Which note has wings? Which word does the melody go up on? Look for the accent mark over the vowel: that syllable is emphasised, so the melody goes up there.`,
       source: `${workbook}, p. 6; ${instructor}, Lesson 4, p. 11`,
