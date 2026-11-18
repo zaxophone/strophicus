@@ -74,7 +74,8 @@ interface Props {
  * against a 0.2862cm (8.15pt) staff space, about 1.23 spaces.
  */
 const FLOW_SPACE = 14;
-const TEXT_PER_SPACE = 10 / 8.15;
+// one point under Gregorio's 10pt-to-staff ratio at the base size, as it looked a little large
+const TEXT_PER_SPACE = (FLOW_SPACE * (10 / 8.15) - 1) / FLOW_SPACE;
 /** Room under the staff for a label and its hint, and for a caption under them. */
 const LABEL_ZONE_EMS = 2.2;
 const CAPTION_ZONE_EMS = 1.3;
