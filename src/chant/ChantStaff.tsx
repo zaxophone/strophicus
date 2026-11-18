@@ -89,6 +89,8 @@ const CAPTION_SIZE = LABEL_SIZE;
 const MAX_UNIT = 40;
 /** The staff space those sizes were chosen at; at another size they scale with it. */
 const UNIT_SPACE = 20;
+/** Space between the two strokes of a double bar, a little closer than the font's own. */
+const DOUBLE_GAP = Math.round(FINALIS_GAP * 0.6);
 /** How far the clef reaches above and below its line, in staff steps. */
 const CLEF_REACH = 1.8;
 const HALO = 'rgba(79, 70, 229, 0.16)';
@@ -109,7 +111,21 @@ function divisionBefore(chant: Chant, noteIndex: number): Division | null {
 /** About how wide a piece of text is at a font size, in pixels. */
 function textWidth(text: string, size: number): number {
   let em = 0;
-  for (const ch of text) em += /[A-Z]/.test(ch) ? 0.7 : /[a-z0-9áéíóúý]/.test(ch) ? 0.54 : ch === ' ' ? 0.28 : 0.38;
+  for (const ch of text) {
+    em += /[ilj'.,;:!|]/.test(ch)
+      ? 0.26
+      : /[frtI]/.test(ch)
+        ? 0.34
+        : /[mwMW]/.test(ch)
+          ? 0.82
+          : /[A-Z]/.test(ch)
+            ? 0.66
+            : ch === ' '
+              ? 0.26
+              : /[a-z0-9áéíóúý]/.test(ch)
+                ? 0.53
+                : 0.4;
+  }
   return em * size;
 }
 
@@ -135,7 +151,8 @@ export function ChantStaff({ width, chant, labels, captions, marks, gestures, wa
   const flatPosition = (n: number) => staffPosition(chant.flatLetters[chant.flats.indexOf(n)]);
   const syllableOfNote = syllables.flatMap((u, i) => Array.from({ length: u.length }, () => i));
   const clefWidth = 2.2 * SPACE;
-  const rightMargin = 2 * SPACE;
+  // a flowing line runs nearly to the end of the width, leaving only room for the bar carried over from the line before
+  const rightMargin = (sized ? 1.5 : 2) * SPACE;
   const room = width - clefWidth - rightMargin;
   const divisions = separators(chant).map((n) => syllableOfNote[n]);
   // Words need more room than a note does, so a line holds fewer syllables. What matters
@@ -256,7 +273,7 @@ export function ChantStaff({ width, chant, labels, captions, marks, gestures, wa
     const divisionGlyphs = (kind: Division, centre: number, k: string) => {
       if (kind === 'double') {
         const stroke = GLYPHS.DivisioMaiorFour.advance * scl;
-        const gap = FINALIS_GAP * scl;
+        const gap = DOUBLE_GAP * scl;
         const first = centre - (2 * stroke + gap) / 2;
         return [
           glyph(`${k}-a`, 'DivisioMaiorFour', first, origin),
@@ -441,8 +458,9 @@ export function ChantStaff({ width, chant, labels, captions, marks, gestures, wa
     if (lastLine) {
       // Divisio finalis: two strokes across the staff.
       const stroke = GLYPHS.DivisioMaiorFour.advance * scl;
-      const second = width - 3 - stroke;
-      const first = second - stroke - FINALIS_GAP * scl;
+      // a flowing line ends its double bar just after its last note; others put it at the end of the staff
+      const first = flow ? cursor + 1.2 * SPACE : width - 3 - 2 * stroke - DOUBLE_GAP * scl;
+      const second = first + stroke + DOUBLE_GAP * scl;
       elements.push(
         glyph(key('final', 0), 'DivisioMaiorFour', first, origin),
         glyph(key('final', 1), 'DivisioMaiorFour', second, origin),

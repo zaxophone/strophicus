@@ -19,13 +19,13 @@ describe('column spacing, as Gregorio sets it', () => {
     expect(wide.pitch).toBeGreaterThanOrEqual(60);
   });
 
-  it('stretches only the spaces between words and around bars', () => {
+  it('stretches the spaces between syllables and words a little, and bars the most', () => {
     const columns = [col('start'), col('word'), col('newWord'), col('word'), col('bar'), col('word')];
     const all = pitches(columns, SPACE);
     const natural = lineCentres(columns, all, 0, 6, 0, false);
     const wide = lineCentres(columns, all, 0, 6, 400, true);
     const step = (xs: number[], i: number) => xs[i] - xs[i - 1];
-    expect(step(wide, 1)).toBeCloseTo(step(natural, 1)); // inside a word: rigid
+    expect(step(wide, 1)).toBeGreaterThan(step(natural, 1)); // inside a word: a little
     expect(step(wide, 2)).toBeGreaterThan(step(natural, 2)); // between words: stretches
     expect(step(wide, 4)).toBeGreaterThan(step(natural, 4)); // round a bar: stretches most
     expect(step(wide, 4) - step(natural, 4)).toBeGreaterThan(step(wide, 2) - step(natural, 2));

@@ -16,9 +16,9 @@ export const GAP = {
   /** Between two neumes of one syllable (`interelementspace`). */
   neume: 0.06927 * CM,
   /** Between the notes of two syllables of one word (`intersyllablespacenotes`). */
-  word: 0.24 * CM,
+  word: 0.12 * CM,
   /** Between the notes of two words (`interwordspacenotes`). */
-  newWord: 0.29 * CM,
+  newWord: 0.145 * CM,
   /** From the notes to a bar, and from the bar to the notes (`notebarspace`), each side. */
   noteBar: 0.31903 * CM,
 };
@@ -28,7 +28,7 @@ export const TEXT_GAP = {
   /** Two syllables of one word: the hyphen between them is part of the text itself. */
   word: 0,
   /** Between two words (`interwordspacetext`). */
-  newWord: 0.17 * CM,
+  newWord: 0.085 * CM,
   /** Either side of a bar (`textbartextspace`). */
   bar: 0.24611 * CM,
 };
@@ -36,16 +36,19 @@ export const TEXT_GAP = {
 /** How much each kind of glue may stretch, in staff spaces (Gregorio's "plus" values). */
 export const STRETCH = {
   neume: 0.00182 * CM,
-  word: 0,
-  newWord: 0.05 * CM,
+  word: 0.6 * GAP.word,
+  newWord: 0.6 * GAP.newWord,
   bar: 2 * 0.27345 * CM,
 };
+
+/** The least spacing is this much more than what the notes and the text strictly need. */
+const MORE_ROOM = 1.1;
 
 /** The width of a division stroke, in staff spaces (it is a thin line). */
 export const BAR_STROKE = 0.1;
 
 /** How far the glue of a line may be stretched past its stretch values before the line is left short. */
-export const MAX_STRETCH_RATIO = 2.5;
+export const MAX_STRETCH_RATIO = 4;
 
 /** A tick (divisio minima) is only a small mark: it takes a word space with room for the stroke, and stretches like one. */
 export const TICK_ROOM = BAR_STROKE + 0.5;
@@ -78,7 +81,8 @@ export function pitchBetween(a: Column, b: Column, space: number): { pitch: numb
   const textGap = kind === 'bar' ? TEXT_GAP.bar : kind === 'newWord' || kind === 'tick' ? TEXT_GAP.newWord : TEXT_GAP.word;
   const notes = a.right + b.left + gap * space;
   const text = (a.text + b.text) / 2 + textGap * space;
-  const pitch = Math.max(notes, text);
+  // a little more than the least either asks for, between syllables and words (not inside a neume)
+  const pitch = Math.max(notes, text) * (kind === 'neume' ? 1 : MORE_ROOM);
   return { pitch, glue: pitch - a.right - b.left, stretch: (kind === 'tick' ? STRETCH.newWord : STRETCH[kind]) * space };
 }
 
@@ -142,21 +146,8 @@ export function flowBreaks(
       const last = (list: number[]) => [...list].reverse().find((b) => b > start && b <= end);
       const phrase = last(preferred);
       const any = last(divisions);
-      if (phrase !== undefined && width(start, phrase) >= 0.4 * capacity) end = phrase;
-      else if (any !== undefined && width(start, any) >= 0.55 * capacity) end = any;
-    }
-    if (end < columns.length && !forced.includes(end)) {
-      // don't leave a stray few notes before a forced break: share the stretch over the two lines
-      const stop = forced.find((f) => f > end) ?? columns.length;
-      if (width(end, stop) < 0.4 * capacity && width(end, stop) > 0) {
-        const lopsided = (e: number) => Math.abs(width(start, e) - width(e, stop));
-        const fits = (e: number) => width(start, e) <= capacity && width(e, stop) <= capacity;
-        const options = Array.from({ length: end - start }, (_, i) => start + 1 + i).filter(fits);
-        const marks = options.filter((e) => divisions.includes(e));
-        const best = (list: number[]) => list.reduce((a, b) => (lopsided(b) < lopsided(a) ? b : a));
-        // a division near the middle is better than a cut mid-word
-        if (options.length) end = marks.length && lopsided(best(marks)) < 0.5 * capacity ? best(marks) : best(options);
-      }
+      if (phrase !== undefined && width(start, phrase) >= 0.85 * capacity) end = phrase;
+      else if (any !== undefined && width(start, any) >= 0.85 * capacity) end = any;
     }
     if (end < columns.length) breaks.push(end);
     start = end;
