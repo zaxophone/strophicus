@@ -47,9 +47,9 @@ Tap a note, then choose its name: **do re mi fa sol la ti**. The first one is gi
       // books print only the descending half
       gabc: '(c4) (c) (d) (e) (f) (g) (h) (i) (j) (z) (i) (h) (g) (f) (e) (d) (c)',
       instructions: `
-Now sing what you have named: the scale from the low do up to the high do and back down again.
+Now sing what you have named: the scale from the low **do** up to the high **do** and back down again.
 
-Tap Start listening and sing the first note on any pitch that is comfortable. That note is do, and every other note is measured from it, so keep each step the same size.
+Tap Start listening and sing the first note on any pitch that is comfortable. That note is **do**, and every other note is measured from it, so keep each step the same size.
 
 Give every note the same length, like steady footsteps, and choose a pace that feels natural. Then try singing it once more looking only at the notes, not at the names.`,
       source: `${workbook}, p. 4 (opening staff), sung up and back; ${instructor}, Lesson 3, p. 9`,
@@ -62,9 +62,9 @@ Give every note the same length, like steady footsteps, and choose a pace that f
       key: 'do=d',
       gabc: '(c4) (c) (d) (e;) (e) (d) (c;) (c) (d) (d;) (d) (c) (d;) (d) (e) (d)',
       instructions: `
-Here is a longer line. The first three notes are named for you: do, re, mi. Name the rest.
+Here is a longer line. The first three notes are named for you: **do**, **re**, **mi**. Name the rest.
 
-Do is the note in the space below the staff, the one the clef points to from the top line. Count up from it: re is on the bottom line, and mi is the space above that.
+**Do** is the note in the space below the staff, the one the clef points to from the top line. Count up from it: **re** is on the bottom line, and **mi** is the space above that.
 
 The short vertical lines divide the music into small phrases, like commas in a sentence. They do not change the names.`,
       source: `${workbook}, p. 4, Exercise 1; ${instructor}, Lesson 3, p. 9`,
@@ -76,11 +76,11 @@ The short vertical lines divide the music into small phrases, like commas in a s
       key: 'do=d',
       gabc: '(c4) (c) (d) (e;) (e) (d) (c;) (c) (d) (d;) (d) (c) (d;) (d) (e) (d)',
       instructions: `
-Sing the names you just worked out: do re mi, mi re do, and so on.
+Sing the names you just worked out: **do re mi**, **mi re do**, and so on.
 
 At each vertical line take a breath. Sing the note before the line for one beat, then rest for one beat while you breathe, and carry on.
 
-Start on do, the lowest note, and use your first note as the key for the whole exercise. Every other note is one beat.`,
+Start on **do**, the lowest note, and use your first note as the key for the whole exercise. Every other note is one beat.`,
       source: `${workbook}, p. 4, Exercise 1; ${instructor}, Lesson 3, p. 9`,
     }),
     exercise({
@@ -91,7 +91,7 @@ Start on do, the lowest note, and use your first note as the key for the whole e
       key: 'do=d',
       gabc: '(c4) (c) (d) (e) (d;) (d) (d) (d) (e;) (e) (d) (e) (d;) (c) (d) (e) (d)',
       instructions: `
-The next line starts on do. Name the rest of the notes, group by group.
+The next line starts on **do**. Name the rest of the notes, group by group.
 
 Look for notes that sit side by side at the same height. They have the same name, because they are the same note sung again.`,
       source: `${workbook}, p. 4, Exercise 2; ${instructor}, Lesson 3, p. 10`,
@@ -103,9 +103,9 @@ Look for notes that sit side by side at the same height. They have the same name
       key: 'do=d',
       gabc: '(c4) (c) (d) (e) (d;) (d) (d) (d) (e;) (e) (d) (e) (d;) (c) (d) (e) (d)',
       instructions: `
-Four groups of four notes. Start on do and sing the names you just worked out.
+Four groups of four notes. Start on **do** and sing the names you just worked out.
 
-The second group stays on re three times before it steps up to mi, so sing each re at exactly the same pitch. You can sing them smoothly, one clear note after another; you do not need to stop your voice between them.
+The second group stays on **re** three times before it steps up to **mi**, so sing each **re** at exactly the same pitch. You can sing them smoothly, one clear note after another; you do not need to stop your voice between them.
 
 At each vertical line, sing the last note for one beat and then rest for one beat.`,
       source: `${workbook}, p. 4, Exercise 2; ${instructor}, Lesson 3, p. 10`,
@@ -119,7 +119,7 @@ At each vertical line, sing the last note for one beat and then rest for one bea
       // the book labels the four phrases A to D and starts this one on re
       gabc: '(c4) (d) (c) (d) (e;) (d) (d) (e) (c) (d;) (e) (c) (c) (d;) (d) (e) (c) (e) (d)',
       instructions: `
-This is the hardest one, and it does not start on do. The first note is re, on the bottom line, and the next note goes down to do.
+This is the hardest one, and it does not start on do. The first note is **re**, on the bottom line, and the next note goes down to **do**.
 
 Name every note. The four groups are called A, B, C and D in your workbook.`,
       source: `${workbook}, p. 5, Exercise 3; ${instructor}, Lesson 3, p. 10`,
@@ -131,11 +131,11 @@ Name every note. The four groups are called A, B, C and D in your workbook.`,
       key: 're=e',
       gabc: '(c4) (d) (c) (d) (e;) (d) (d) (e) (c) (d;) (e) (c) (c) (d;) (d) (e) (c) (e) (d)',
       instructions: `
-Sing the names of this line, starting on re.
+Sing the names of this line, starting on **re**.
 
-Choose a comfortable pitch for re. Do is the step just below it.
+Choose a comfortable pitch for **re**. **Do** is the step just below it.
 
-Take a breath at each vertical line: one beat of singing on the last note, then one beat of rest. When you can do it with the names, try the same melody on the single syllable "nu" and see whether you could still tell the four groups apart.`,
+Take a breath at each vertical line: one beat of singing on the last note, then one beat of rest. When you can do it with the names, try the same melody on the single syllable **nu** and see whether you could still tell the four groups apart.`,
       source: `${workbook}, p. 5, Exercise 3; ${instructor}, Lesson 3, p. 10`,
     }),
   ],
