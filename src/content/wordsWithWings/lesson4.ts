@@ -46,7 +46,11 @@ Look at the clef. Do you see that it is in a different place than it was in the 
 
 {{gabc: (c3) Sanc(h)te(h) Gre(h)gó(i)ri,(g)}}
 
-The clef is now on the third line, so the note on that line is do. This is a double bar. It ends the first phrase, and you take a breath there.
+The clef is now on the third line, so the note on that line is **do**.
+
+{{gabc: (c3) Sanc(h)te(h) Gre(h)gó(i)ri,(g::)}}
+
+This is a double bar. It ends the first phrase, and you take a breath there.
 
 With Gregorian chant, the clef can be in different places. Find do on the clef and the other notes follow from it.`,
       source: `${workbook}, p. 6; ${instructor}, Lesson 4, p. 11–12`,
