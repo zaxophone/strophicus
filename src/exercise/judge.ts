@@ -279,7 +279,17 @@ function judgeTiming(
 ): boolean {
   const start = (k: number) => {
     const p = placed[k]!;
-    return sung[p.note].startFrame + (p.part * sung[p.note].frames) / p.parts;
+    // one held note may stand for several repeated notes: it is shared out by how long each
+    // was meant to last, not evenly (a lengthened first note takes more of it)
+    const first = k - p.part;
+    let before = 0;
+    let total = 0;
+    for (let j = 0; j < p.parts; j++) {
+      const share = advance[first + j] ?? 1;
+      if (j < p.part) before += share;
+      total += share;
+    }
+    return sung[p.note].startFrame + (before / total) * sung[p.note].frames;
   };
   /** Frames from the start of note k to the start of note k + 1, if both were sung one after the other. */
   const interval = (k: number): number | null => {
