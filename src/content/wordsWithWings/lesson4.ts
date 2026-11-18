@@ -73,14 +73,32 @@ Tap a note, then choose its name.`,
       key,
       gabc: '(c3) Sanc(h)te(h) Bo(h)ne(h)fá(i)ti,(g::) o(g)ra(f) pro(g) no(h)bis.(h)',
       instructions: `
-In the workbook you write the name of a saint you chose, and its notes. Here is how. These four rules fit every name:
+A saint's name can be sung to the same pattern. These four rules fit every name:
 
 1. The first two notes are already there: they are "Sancte" (or "Sancta" for a woman).
 2. Each syllable gets one note.
 3. On the accented syllable, go up (to re).
 4. On the syllables after the accented one, go down (to ti).
 
-Here is "Sancte Bonefáti" (St. Boniface), made with those rules. The accent is on "fá". Sing it, and let the rules tell you where each note goes.`,
+Here are four saints, each divided into syllables and given notes by those rules. The accent mark shows where the melody goes up.
+
+St. Boniface:
+
+{{gabc: (c3) Sanc(h)te(h) Bo(h)ne(h)fá(i)ti(g)}}
+
+St. Francis:
+
+{{gabc: (c3) Sanc(h)te(h) Fran(h)cís(i)ce(g)}}
+
+St. Benedict:
+
+{{gabc: (c3) Sanc(h)te(h) Be(h)ne(h)dí(i)cte(g)}}
+
+St. Cecilia:
+
+{{gabc: (c3) San(h)cta(h) Ce(h)cí(i)li(g)a(g)}}
+
+Now sing "Sancte Bonefáti". Let the rules tell you where each note goes.`,
       source: `${workbook}, p. 6; ${instructor}, Lesson 4, p. 11–12 and Appendix, p. 67`,
     }),
   ],

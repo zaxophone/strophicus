@@ -44,7 +44,8 @@ texts or replace them with a public-domain translation.
 
 **Not from the book.** The lesson 4 exercise "Sancte Bonefáti, ora pro nobis"
 is built here by the four rules the instructor gives (p. 11–12) for the name
-"Bonefáti" in the Appendix list (p. 67). The workbook has the student write
+"Bonefáti" in the Appendix list (p. 67). The other three names shown beside it in the
+instructions (Francísce, Benedícte, Cecília) are made the same way and are not from the book. The workbook has the student write
 their own saint's melody.
 
 **Recordings (`audio/`).** Recordings 1–18 are the companion Audio Library to
