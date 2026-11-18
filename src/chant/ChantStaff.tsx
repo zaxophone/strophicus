@@ -278,6 +278,8 @@ export function ChantStaff({ width, chant, labels, captions, marks, gestures, wa
       const x = flow ? clefWidth + centres[column] : cursor + 0.5 * colW;
       if (flow) cursor = x + columns[syllable].right;
       else cursor += colW;
+      // the label is never narrower than its text, which is wider than the estimate when bold
+      const labelW = Math.max(colW, 1.25 * Math.max(textWidth(labels[syllable] ?? '', labelSize), textWidth(captions?.[syllable] ?? '', labelSize)) + 4);
       const mark = syllableMark(notes.map((n) => marks[n]));
       const ink = mark?.color ?? inkColor;
 
@@ -391,7 +393,7 @@ export function ChantStaff({ width, chant, labels, captions, marks, gestures, wa
         <View
           key={key('label', column)}
           pointerEvents="none"
-          style={[styles.label, { width: colW, left: x - colW / 2, top: dy + staffHeight + 4 }]}
+          style={[styles.label, { width: labelW, left: x - labelW / 2, top: dy + staffHeight + 4 }]}
         >
           <Text style={[styles.syllable, { color: ink, fontSize: labelSize }, flow && styles.flowSyllable]} numberOfLines={1}>
             {labels[syllable]}
