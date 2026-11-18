@@ -55,9 +55,11 @@ export const LESSON_2: Lesson = {
         instructions:
           i === 0
             ? `
-In the last lesson you made your voice go up on a word you found important. Now we will do something different. The next three melodies all have the same words: "Come, let us ring out our joy to the LORD."
+In the last lesson you made your voice go up on a word you found important. Now we will do something different. The next three melodies all have the same words:
 
-Can you figure out which word is the most important in each melody: "our", "joy" or "LORD"? Tap Hear it and listen. How can you tell? The note goes up, so a word is made more important.
+**Come, let us ring out our joy to the LORD.**
+
+Can you figure out which word is the most important in each melody: **our**, **joy** or **LORD**? Tap Hear it and listen. How can you tell? The note goes up, so a word is made more important.
 
 Ignore the little line over the first note and the dot after the last for now. You will meet them soon.`
             : i === 1
@@ -79,19 +81,19 @@ Here comes the last one. Listen, and tap the word that sounds most important.`,
         instructions:
           i === 0
             ? `
-Did you see that there are different ways to make a note longer? Look at the first note, over "Come". It has a short horizontal line above it. This line is called an episema.
+Did you see that there are different ways to make a note longer? Look at the first note, over **Come**. It has a short horizontal line above it. This line is called an episema.
 
 {{gabc: (c4) Come(h_)}}
 
-The last note, over "LORD", has a dot after it.
+The last note, over **LORD**, has a dot after it.
 
 {{gabc: (c4) LORD(h.)}}
 
-In both cases the note is sung a little longer. Listen to how strange it sounds if you say "Come, let us ring out our joy to the LORD" with "come" made short, or with the last word not lengthened. That longer note is there for a reason!
+In both cases the note is sung a little longer. Listen to how strange it sounds if you say **Come, let us ring out our joy to the LORD** with **come** made short, or with the last word not lengthened. That longer note is there for a reason!
 
 Now sing the first melody. Begin on any comfortable note.`
             : `
-Now sing melody ${i + 1}, with "${word}" given its wings. Remember the line over "Come" and the dot after the last note: both are a little longer.`,
+Now sing melody ${i + 1}, with **${word}** given its wings. Remember the line over **Come** and the dot after the last note: both are a little longer.`,
         source: `${workbook}, p. 2, melody ${i + 1}; ${instructor}, Lesson 2, p. 6–7`,
       }),
     ),
@@ -108,13 +110,13 @@ Now sing melody ${i + 1}, with "${word}" given its wings. Remember the line over
             ? `
 Let us sing the three melodies again. The notation is different now, but it still shows that some notes are longer than others.
 
-Do you see the tick above the staff after "Come"? It is the same comma you would see in the text: the note before it is sung a little longer. This sign is called a divisio minima. You take no breath at it.
+Do you see the tick above the staff after **Come**? It is the same comma you would see in the text: the note before it is sung a little longer. This sign is called a divisio minima. You take no breath at it.
 
 {{gabc: (c4) Come,(h,) let(h) us(h) ring(h)}}
 
 Sing the first melody again.`
             : `
-Sing melody ${i + 1} again. The tick after "Come" asks for a little more time on that note, with no breath.`,
+Sing melody ${i + 1} again. The tick after **Come** asks for a little more time on that note, with no breath.`,
         source: `${workbook}, p. 3, melody ${i + 1}; ${instructor}, Lesson 2, p. 8`,
       }),
     ),
