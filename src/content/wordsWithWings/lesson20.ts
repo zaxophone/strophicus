@@ -1,8 +1,9 @@
+import { joinGabc } from '../../chant/gabc';
 import { exercise, Lesson } from '../../exercise/exercise';
 import { VENI_KEY, VENI_LINES, VENI_QUI } from './veniSancte';
 
 // Lesson 20, "The Dove (3)": the whole Pentecost hymn, Veni Sancte Spiritus (workbook
-// p. 46), on four staves. The last lesson of the book.
+// p. 46), as one score. The last lesson of the book.
 const workbook = "Words with Wings Children's Workbook";
 const instructor = 'Words with Wings Instructor Edition';
 
@@ -12,6 +13,7 @@ export const LESSON_20: Lesson = {
   id: 'wow-20',
   number: 20,
   title: 'The Dove (3)',
+  score: true,
   summary: 'Sing the whole Pentecost hymn, Veni Sancte Spiritus, from beginning to end.',
   exercises: [
     exercise({
@@ -30,21 +32,15 @@ Come, Holy Spirit, fill the hearts of Thy faithful, enkindle in them the fire of
 Press Hear the choir to listen to the whole song.`,
       source: `${workbook}, p. 46; ${instructor}, Lesson 20, p. 65`,
     }),
-    ...LINES.map((gabc, i) =>
-      exercise({
-        id: `wow-20-line-${i + 1}`,
-        recording: 94,
-        title: `Veni Sancte Spiritus: line ${i + 1} of 4`,
-        key: VENI_KEY,
-        gabc,
-        instructions:
-          i === 0
-            ? 'The first line of the whole song. Hear the choir sings all four lines, so you can hear where each comes in.'
-            : i === 3
-              ? 'The last line. Sing it to the end, and then you have sung the whole song!'
-              : `This is line ${i + 1} of the song. Sing it along with the choir.`,
-        source: `${workbook}, p. 46; ${instructor}, Lesson 20, p. ${i < 2 ? 65 : 66}`,
-      }),
-    ),
+    exercise({
+      id: 'wow-20-song',
+      recording: 94,
+      title: 'Veni Sancte Spiritus',
+      key: VENI_KEY,
+      gabc: joinGabc(...LINES),
+      instructions:
+        'The whole song on one page; it scrolls by itself as you sing. Hear the choir sings it through, so you can follow along. Sing it to the end, and then you have sung the whole song!',
+      source: `${workbook}, p. 46; ${instructor}, Lesson 20, pp. 65-66`,
+    }),
   ],
 };

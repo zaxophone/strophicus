@@ -67,7 +67,12 @@ interface Props {
 }
 
 /** Width of a staff space in pixels; the font is scaled so its staff matches. */
-const SPACE = FULL_SPACE;
+/**
+ * A flowing score is drawn smaller, with text in Gregorio's proportion to the staff: its 10pt text
+ * against a 0.2862cm (8.15pt) staff space, about 1.23 spaces.
+ */
+const FLOW_SPACE = 14;
+const TEXT_PER_SPACE = 10 / 8.15;
 /** Room under the staff for a label and its hint, and for a caption under them. */
 const LABEL_ZONE = 40;
 const CAPTION_ZONE = 22;
@@ -104,6 +109,8 @@ function textWidth(text: string, size: number): number {
 }
 
 export function ChantStaff({ width, chant, labels, captions, marks, gestures, wave = true, inkColor = '#111827', onPressNote, maxHeight, flow = false, focus, onFocus }: Props) {
+  const SPACE = flow ? FLOW_SPACE : FULL_SPACE;
+  const labelSize = flow ? TEXT_PER_SPACE * SPACE : LABEL_SIZE;
   const positions = [...chant.notes].map(staffPosition);
   // A syllable is a note on its own or a group of notes drawn as one figure; each gets a column.
   const syllables = units(chant);
@@ -124,7 +131,7 @@ export function ChantStaff({ width, chant, labels, captions, marks, gestures, wa
   const divisions = separators(chant).map((n) => syllableOfNote[n]);
   // Words need more room than a note does, so a line holds fewer syllables. What matters
   // is that neighbouring words do not run together, not the single widest word.
-  const widths = labels.map((l, i) => Math.max(textWidth(l, LABEL_SIZE), textWidth(captions?.[i] ?? '', CAPTION_SIZE)));
+  const widths = labels.map((l, i) => Math.max(textWidth(l, labelSize), textWidth(captions?.[i] ?? '', labelSize)));
   const needed = Math.max(0, ...widths.map((w, i) => (w + (widths[i + 1] ?? w)) / 2));
   // and a joined figure must fit its column
   const widestFigure = Math.max(0, ...neumes.map((n) => (n ? (n.glyph.advance * SPACE) / LINE_PITCH : 0)));
@@ -149,7 +156,7 @@ export function ChantStaff({ width, chant, labels, captions, marks, gestures, wa
     return {
       left: figure / 2 + (chant.flats.includes(u.start) ? flatSign : 0),
       right: figure / 2 + dots,
-      text: continued ? 0 : textWidth(label, LABEL_SIZE),
+      text: continued ? 0 : textWidth(label, labelSize),
       kind,
     };
   });
@@ -184,7 +191,7 @@ export function ChantStaff({ width, chant, labels, captions, marks, gestures, wa
   // A long exercise on a short screen is drawn at a smaller scale to fit.
   const labelled = labels.some(Boolean);
   const labelZone = (labelled ? LABEL_ZONE : BARE_ZONE) + (captions ? CAPTION_ZONE : 0);
-  const sp = fitSpace(systems.length, top - bottom, labelZone + SYSTEM_GAP, SYSTEM_GAP, flow ? undefined : maxHeight);
+  const sp = flow ? SPACE : fitSpace(systems.length, top - bottom, labelZone + SYSTEM_GAP, SYSTEM_GAP, maxHeight);
   const stp = sp / 2;
   const scl = sp / LINE_PITCH;
   const font = useChantFont(UNITS_PER_EM * scl);
@@ -386,7 +393,7 @@ export function ChantStaff({ width, chant, labels, captions, marks, gestures, wa
           pointerEvents="none"
           style={[styles.label, { width: colW, left: x - colW / 2, top: dy + staffHeight + 4 }]}
         >
-          <Text style={[styles.syllable, { color: ink }]} numberOfLines={1}>
+          <Text style={[styles.syllable, { color: ink, fontSize: labelSize }, flow && styles.flowSyllable]} numberOfLines={1}>
             {labels[syllable]}
           </Text>
           <Text style={[styles.hint, { color: ink }]}>{mark?.hint ?? ''}</Text>
@@ -459,6 +466,7 @@ export function ChantStaff({ width, chant, labels, captions, marks, gestures, wa
 const styles = StyleSheet.create({
   label: { position: 'absolute', alignItems: 'center' },
   syllable: { fontSize: LABEL_SIZE, fontWeight: '600' },
+  flowSyllable: { fontWeight: '400' },
   caption: { fontSize: CAPTION_SIZE, color: '#6b7280' },
   hint: { fontSize: 14, fontWeight: '700', minHeight: 18 },
 });

@@ -82,6 +82,8 @@ export interface Lesson {
   summary: string;
   /** Any exercise may be opened at any time, and the arrows need no pass (repertoire pieces). */
   free?: boolean;
+  /** Shown as one whole scrolling score (as a piece of repertoire is), but still gated. */
+  score?: boolean;
   exercises: Exercise[];
 }
 

@@ -234,7 +234,7 @@ export function SingExercise({ lesson, index, tonic, onIndexChange, onExit, onBa
           : 'Keep going, following the notes.';
 
   // A piece of repertoire is one long score: shown whole at full size, scrolling to follow the singer.
-  const score = lesson.free;
+  const score = lesson.free || lesson.score;
   const focus = hearing ? playingNote ?? undefined : nextNote >= 0 ? nextNote : undefined;
   const follow = useCallback((top: number) => scroller.current?.scrollTo({ y: Math.max(0, top - 12), animated: true }), []);
 
