@@ -31,7 +31,7 @@ Say it three times. First lift your voice on **joy**. Then say it again and lift
 
 **Come, let us ring out our joy to the LORD.**
 
-Each time the sentence means something a little different. With **joy** it says: **Let's not only greet him, but do so with joy!** With **our**: **Let the joy that is rung out be truly ours!** With **LORD**: **Let us ring it out to the LORD, and not to anyone else!**
+Each time the sentence means something a little different. With **joy** it says: __Let's not only greet him, but do so with joy!__ With **our**: __Let the joy that is rung out be truly ours!__ With **LORD**: __Let us ring it out to the LORD, and not to anyone else!__
 
 How can you hear that one word matters more than the others? Your voice goes up on it. It is as if that one word had been given wings.`,
       source: `${instructor}, Lesson 1, p. 4`,

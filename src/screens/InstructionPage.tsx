@@ -101,10 +101,14 @@ export function InstructionPage({ exercise, paragraphs, page, pages, finish, ton
   );
 }
 
-/** A paragraph's text with `**bold**` made bold and `{{clef}}` drawn as the do clef. */
+/** A paragraph's text with `**bold**` made bold, `__italic__` italic and `{{clef}}` drawn as the do clef. */
 function inline(text: string) {
+  const withClefs = (part: string, key: string) =>
+    part.split('{{clef}}').flatMap((chunk, n) => (n === 0 ? [chunk] : [<InlineClef key={`${key}-c${n}`} />, chunk]));
   return text.split('**').flatMap((part, b) => {
-    const pieces = part.split('{{clef}}').flatMap((chunk, n) => (n === 0 ? [chunk] : [<InlineClef key={`c${b}-${n}`} />, chunk]));
+    const pieces = part.split('__').flatMap((piece, i) =>
+      i % 2 ? [<Text key={`i${b}-${i}`} style={{ fontStyle: 'italic' }}>{withClefs(piece, `${b}-${i}`)}</Text>] : withClefs(piece, `${b}-${i}`),
+    );
     return b % 2 ? [<Text key={`b${b}`} style={{ fontWeight: '700' }}>{pieces}</Text>] : pieces;
   });
 }
