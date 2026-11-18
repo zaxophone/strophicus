@@ -32,7 +32,7 @@ function Screens() {
   const { progress } = useProgress();
   const [route, setRoute] = useState<Route>({ name: 'home' });
   // The reference pitch is a preference, so it carries from one exercise to the next.
-  const [tonic, setTonic] = useState(57);
+  const [tonic, setTonic] = useState(60); // C4
 
   const home = () => setRoute({ name: 'home' });
 
