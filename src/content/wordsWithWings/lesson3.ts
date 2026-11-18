@@ -30,13 +30,13 @@ export const LESSON_3: Lesson = {
       instructions: `
 Gregorian chant is written on a staff of four lines, not five, and the notes are square.
 
-The {{clef}} sign at the start of the staff is the do clef. It sits on the top line, so the note on that line is do.
+The {{clef}} sign at the start of the staff is the do clef. It sits on the top line, so the note on that line is **do**.
 
 {{gabc: (c4) do(j)}}
 
 The notes of this scale go down the staff, from the highest to the lowest.
 
-Tap a note, then choose its name: do re mi fa sol la ti. The first one is given to you. Remember that the scale from do goes do re mi fa sol la ti do, so counting down from the top it runs do ti la sol fa mi re do.`,
+Tap a note, then choose its name: **do re mi fa sol la ti**. The first one is given to you. Remember that the scale from **do** goes **do re mi fa sol la ti do**, so counting down from the top it runs **do ti la sol fa mi re do**.`,
       source: `${workbook}, p. 4 (top); ${instructor}, Lesson 3, p. 9`,
     }),
     exercise({
