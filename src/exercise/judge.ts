@@ -73,7 +73,7 @@ const LATE_PENALTY = 0.001;
 const SHORTEST = 0.55;
 const LONGEST = 1.8;
 /** Most audible, unpitched sound between two notes (consonants) that is left out of the first note's length, in frames. */
-const MAX_CONSONANT_FRAMES = 12;
+const MAX_CONSONANT_FRAMES = 30;
 /** A note with an episema or tick must come to about the 1.5 beats asked for (a little slack for the measuring). */
 const SHORTEST_LENGTHENED = 0.75;
 /** A rest is the loosest part of the rhythm: singers often leave a little less than a beat. */
@@ -135,11 +135,32 @@ export function judgeMelody(
   toleranceCents = 50,
   timing?: TimingSpec,
 ): Judgement {
+  const first = judgeWithKey(sung, offsets, toleranceCents, timing, sung[0]?.midi ?? 0);
+  // The first note only roughly fixes the key (it often starts with a glide, or
+  // is cut short), so the key is settled on where the notes sung actually sit
+  // relative to the melody: the median error, once it is clearly off.
+  const errors = first.results.flatMap((r) => (r.errorCents === null ? [] : [r.errorCents]));
+  if (errors.length >= 8) {
+    const shift = median(errors);
+    if (Math.abs(shift) > 15 && Math.abs(shift) <= 100) {
+      return judgeWithKey(sung, offsets, toleranceCents, timing, sung[0].midi + shift / 100);
+    }
+  }
+  return first;
+}
+
+function judgeWithKey(
+  sung: SungNote[],
+  offsets: number[],
+  toleranceCents: number,
+  timing: TimingSpec | undefined,
+  key: number,
+): Judgement {
   const n = sung.length;
   const m = offsets.length;
   const expectedAt = (k: number) => offsets[k] - offsets[0];
   const errorAt = (i: number, k: number) =>
-    (sung[i].midi - sung[0].midi - expectedAt(k)) * 100;
+    (sung[i].midi - key - expectedAt(k)) * 100;
 
   const missCost = (i: number, k: number) =>
     Math.min(MISS_CAP, Math.abs(errorAt(i, k)) / 50) + LATE_PENALTY * k;
@@ -232,7 +253,7 @@ export function judgeMelody(
         results[k] = {
           status: Math.abs(errorCents) <= toleranceCents ? 'ok' : 'off',
           expected: expectedAt(k),
-          sung: note.midi - sung[0].midi,
+          sung: note.midi - key,
           errorCents,
           final: !note.open,
           frames: Math.floor(note.frames / size),
