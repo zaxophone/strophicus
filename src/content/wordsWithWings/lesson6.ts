@@ -46,7 +46,7 @@ export const FRAGMENTS: Fragment[] = [
     key: 'mi=f-sharp',
     meaning: '"And on earth peace to men of good will."',
     page: 10,
-    line: 'a-t-tt--t-ttt-t',
+    line: 'a-t-ttt-t-t-t-t',
   },
 ];
 
