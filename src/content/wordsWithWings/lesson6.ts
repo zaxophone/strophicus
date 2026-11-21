@@ -69,7 +69,7 @@ In this lesson we will sing and move, as if we had wings. Do what I do.
 
 Look at the first melody. A wavy line runs over the notes: it lifts over some and dips under others. Sing it, and let your hand draw that line in the air as you sing.
 
-{{gabc: (c4) Al(g)le(g)lú(h)ia(g)}}
+{{gabc: (c4) Al(g)le(g)lú(h)ia(g) @ - t - t}}
 
 "Alleluia" means "Praise God". The word is a contraction of "Hallelu" and "jah", and "Jah" is short for Yahweh, the Hebrew name of God.
 
