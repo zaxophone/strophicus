@@ -20,8 +20,7 @@ export interface Fragment {
   page: number;
   /**
    * The line the workbook draws over the staff, read from its scan: `a` where it loops
-   * round the note, `t` where it passes under it, `-` where it passes above. Not given
-   * where the scan is too tangled to read (melody 7).
+   * round the note, `t` where it passes under it, `-` where it passes above.
    */
   line?: string;
 }
@@ -47,6 +46,7 @@ export const FRAGMENTS: Fragment[] = [
     key: 'mi=f-sharp',
     meaning: '"And on earth peace to men of good will."',
     page: 10,
+    line: 'a---tt--t-ttt-t',
   },
 ];
 

@@ -386,7 +386,8 @@ describe('Lessons 6 and 7 as transcribed from the instructor edition', () => {
     expect(byId('wow-6-1').gestures).toEqual([null, 'thesis', null, 'thesis']);
     // the Kyrie: a loop round "Ký" and "lé", under the notes after them
     expect(byId('wow-6-4').gestures).toEqual(['arsis', null, 'thesis', 'thesis', 'arsis', null, 'thesis']);
-    expect(byId('wow-6-7').gestures).toBeUndefined();
+    expect(byId('wow-6-7').gestures?.filter((g) => g === 'arsis')).toEqual(['arsis']);
+    expect(byId('wow-6-7').gestures?.[0]).toBe('arsis');
   });
 
   it('never has more than two arses in a row', () => {
