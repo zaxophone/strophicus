@@ -31,8 +31,8 @@ export const FRAGMENTS: Fragment[] = [
   { n: 2, gabc: '(c3) Jo(e)seph(e) fi(e)li(g) Da(h)vid(i)', key: 'sol=e', meaning: '"Joseph, son of David."', page: 9, line: '-t-t-t' },
   {
     n: 3,
-    gabc: '(c4) Sal(h)ve(g) ra(f)dix,(e) sal(f)ve(h) por(i)ta(h)',
-    key: 'fa=a',
+    gabc: '(c3) Sal(h)ve(g) ra(f)dix,(e) sal(f)ve(h) por(i)ta(h)',
+    key: 'do=a',
     meaning: '"Hail, root; hail, gate."',
     page: 9,
     line: '-t-t-t-t',
